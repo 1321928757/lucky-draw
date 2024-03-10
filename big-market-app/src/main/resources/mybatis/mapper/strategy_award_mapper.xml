@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bugstack.infrastructure.persistent.dao.IStrategyAwardDao">
+
+    <resultMap id="dataMap" type="cn.bugstack.infrastructure.persistent.po.StrategyAward">
+        <id column="id" property="id"/>
+        <result column="strategy_id" property="strategyId"/>
+        <result column="award_id" property="awardId"/>
+        <result column="award_title" property="awardTitle"/>
+        <result column="award_subtitle" property="awardSubtitle"/>
+        <result column="award_count" property="awardCount"/>
+        <result column="award_count_surplus" property="awardCountSurplus"/>
+        <result column="award_rate" property="awardRate"/>
+        <result column="rule_models" property="ruleModels"/>
+        <result column="sort" property="sort"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="queryStrategyAwardList" resultMap="dataMap">
+        select strategy_id
+        from strategy_award
+        limit 10
+    </select>
+
+    <select id="queryStrategyAwardListByStrategyId" parameterType="java.lang.Long" resultMap="dataMap">
+        select strategy_id, award_id, award_title, award_subtitle, award_count, award_count_surplus, award_rate, sort
+        from strategy_award
+        where strategy_id = #{strategyId}
+        order by sort asc
+    </select>
+
+    <select id="queryStrategyAwardRuleModels" parameterType="cn.bugstack.infrastructure.persistent.po.StrategyAward" resultType="java.lang.String">
+        select rule_models from strategy_award
+        where strategy_id = #{strategyId} and award_id = #{awardId}
+    </select>
+
+    <update id="updateStrategyAwardStock" parameterType="cn.bugstack.infrastructure.persistent.po.StrategyAward">
+        update strategy_award
+        set award_count_surplus = award_count_surplus - 1
+        where strategy_id = #{strategyId} and award_id = #{awardId} and award_count_surplus > 0
+    </update>
+
+    <select id="queryStrategyAward" parameterType="cn.bugstack.infrastructure.persistent.po.StrategyAward" resultMap="dataMap">
+        select strategy_id, award_id, award_title, award_subtitle, award_count, award_count_surplus, award_rate, rule_models, sort
+        from strategy_award
+        where strategy_id = #{strategyId} and award_id = #{awardId}
+    </select>
+
+</mapper>

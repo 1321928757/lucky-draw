@@ -1,0 +1,1 @@
+24-03-05.09:19:59.927 [AMQP Connection 154.201.75.137:5672] WARN  ForgivingExceptionHandler - An unexpected connection driver error occurred (Exception message: Socket closed)

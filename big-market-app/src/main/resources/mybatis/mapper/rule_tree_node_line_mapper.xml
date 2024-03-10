@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bugstack.infrastructure.persistent.dao.IRuleTreeNodeLineDao">
+
+    <resultMap id="dataMap" type="cn.bugstack.infrastructure.persistent.po.RuleTreeNodeLine">
+        <id column="id" property="id"/>
+        <result column="tree_id" property="treeId"/>
+        <result column="rule_node_from" property="ruleNodeFrom"/>
+        <result column="rule_node_to" property="ruleNodeTo"/>
+        <result column="rule_limit_type" property="ruleLimitType"/>
+        <result column="rule_limit_value" property="ruleLimitValue"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="queryRuleTreeNodeLineListByTreeId" parameterType="java.lang.String" resultMap="dataMap">
+        select tree_id, rule_node_from, rule_node_to, rule_limit_type, rule_limit_value
+        from rule_tree_node_line
+        where tree_id = #{treeId}
+    </select>
+
+</mapper>

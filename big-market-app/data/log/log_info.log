@@ -1,0 +1,205 @@
+24-03-05.08:46:46.869 [main            ] INFO  MqTest                 - Starting MqTest using Java 17.0.6 on DESKTOP-BU4MLU6 with PID 17276 (started by kitie in D:\javaProject\big-market-240215-xfg-raffle-controller\big-market-app)
+24-03-05.08:46:46.871 [main            ] INFO  MqTest                 - The following 1 profile is active: "dev"
+24-03-05.08:46:48.127 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-03-05.08:46:48.130 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-03-05.08:46:48.167 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 22 ms. Found 0 Redis repository interfaces.
+24-03-05.08:46:49.793 [main            ] INFO  Version                - Redisson 3.26.0
+24-03-05.08:46:50.327 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.08:46:50.350 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.08:46:53.868 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-03-05.08:46:53.956 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.75.137:5672]
+24-03-05.08:46:55.033 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#1ab502f6:0/SimpleConnection@27691ee8 [delegate=amqp://admin@154.201.75.137:5672/, localPort= 51326]
+24-03-05.08:46:57.207 [main            ] INFO  MqTest                 - Started MqTest in 10.849 seconds (JVM running for 11.946)
+24-03-05.08:47:00.016 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-03-05.08:47:05.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-03-05.08:47:10.003 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-03-05.08:47:10.292 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-03-05.08:47:10.502 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-03-05.08:47:10.506 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-03-05.09:08:49.625 [main            ] INFO  MqTest                 - Starting MqTest using Java 17.0.6 on DESKTOP-BU4MLU6 with PID 3236 (started by kitie in D:\javaProject\big-market-240215-xfg-raffle-controller\big-market-app)
+24-03-05.09:08:49.627 [main            ] INFO  MqTest                 - The following 1 profile is active: "dev"
+24-03-05.09:08:50.911 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-03-05.09:08:50.915 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-03-05.09:08:50.957 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 22 ms. Found 0 Redis repository interfaces.
+24-03-05.09:08:52.568 [main            ] INFO  Version                - Redisson 3.26.0
+24-03-05.09:08:53.123 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.09:08:53.157 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.09:08:56.793 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-03-05.09:08:56.882 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.75.137:5672]
+24-03-05.09:08:58.476 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#73dd0f23:0/SimpleConnection@72c175f1 [delegate=amqp://admin@154.201.75.137:5672/, localPort= 53218]
+24-03-05.09:09:03.365 [main            ] INFO  MqTest                 - Started MqTest in 14.296 seconds (JVM running for 15.497)
+24-03-05.09:09:05.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-03-05.09:09:05.113 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-03-05.09:09:05.117 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-1] INFO  StockUpdateMqListener  - 接收到延迟消息：基本消息
+24-03-05.09:09:05.319 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-03-05.09:09:05.865 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-03-05.09:09:05.865 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-03-05.09:09:05.873 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-03-05.09:09:05.874 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-03-05.09:09:59.624 [main            ] INFO  MqTest                 - Starting MqTest using Java 17.0.6 on DESKTOP-BU4MLU6 with PID 21340 (started by kitie in D:\javaProject\big-market-240215-xfg-raffle-controller\big-market-app)
+24-03-05.09:09:59.625 [main            ] INFO  MqTest                 - The following 1 profile is active: "dev"
+24-03-05.09:10:00.929 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-03-05.09:10:00.932 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-03-05.09:10:00.978 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 24 ms. Found 0 Redis repository interfaces.
+24-03-05.09:10:02.676 [main            ] INFO  Version                - Redisson 3.26.0
+24-03-05.09:10:03.233 [redisson-netty-1-5] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.09:10:03.258 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.09:10:06.850 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-03-05.09:10:07.005 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.75.137:5672]
+24-03-05.09:10:08.202 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#31c56721:0/SimpleConnection@27691ee8 [delegate=amqp://admin@154.201.75.137:5672/, localPort= 53546]
+24-03-05.09:10:12.630 [main            ] INFO  MqTest                 - Started MqTest in 13.554 seconds (JVM running for 14.559)
+24-03-05.09:10:14.151 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-03-05.09:10:14.759 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-03-05.09:10:14.762 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-03-05.09:10:15.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-03-05.09:10:15.058 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-03-05.09:10:15.062 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-03-05.09:10:15.062 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-03-05.09:19:39.950 [main            ] INFO  MqTest                 - Starting MqTest using Java 17.0.6 on DESKTOP-BU4MLU6 with PID 7540 (started by kitie in D:\javaProject\big-market-240215-xfg-raffle-controller\big-market-app)
+24-03-05.09:19:39.951 [main            ] INFO  MqTest                 - The following 1 profile is active: "dev"
+24-03-05.09:19:41.104 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-03-05.09:19:41.107 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-03-05.09:19:41.150 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 24 ms. Found 0 Redis repository interfaces.
+24-03-05.09:19:42.824 [main            ] INFO  Version                - Redisson 3.26.0
+24-03-05.09:19:43.290 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.09:19:43.312 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.09:19:47.107 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-03-05.09:19:47.363 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.75.137:5672]
+24-03-05.09:19:59.927 [AMQP Connection 154.201.75.137:5672] WARN  ForgivingExceptionHandler - An unexpected connection driver error occurred (Exception message: Socket closed)
+24-03-05.09:19:59.929 [main            ] INFO  SimpleMessageListenerContainer - Broker not available; cannot force queue declarations during start: java.util.concurrent.TimeoutException
+24-03-05.09:19:59.939 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.75.137:5672]
+24-03-05.09:20:02.450 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#160546b1:1/SimpleConnection@2a74a225 [delegate=amqp://admin@154.201.75.137:5672/, localPort= 56314]
+24-03-05.09:20:12.980 [main            ] INFO  MqTest                 - Started MqTest in 33.561 seconds (JVM running for 34.612)
+24-03-05.09:20:14.413 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-03-05.09:20:14.414 [rabbitConnectionFactory1] INFO  RabbitConfig           - 消息丢失:exchange(delay_exchange),route(delay_key),replyCode(312),replyText(NO_ROUTE),message:(Body:'123123' MessageProperties [headers={}, contentType=text/plain, contentEncoding=UTF-8, contentLength=0, receivedDeliveryMode=PERSISTENT, priority=0, receivedDelay=15000, deliveryTag=0])
+24-03-05.09:20:14.415 [rabbitConnectionFactory2] INFO  RabbitConfig           - 消息发送成功:correlationData(null),ack(true),cause(null)
+24-03-05.09:20:14.707 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-03-05.09:20:14.715 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-03-05.09:20:14.928 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-03-05.09:20:14.974 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-03-05.09:20:15.005 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-03-05.09:20:15.351 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-03-05.09:20:15.354 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-03-05.09:20:15.354 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-03-05.09:20:15.354 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-03-05.09:25:48.926 [main            ] INFO  MqTest                 - Starting MqTest using Java 17.0.6 on DESKTOP-BU4MLU6 with PID 3644 (started by kitie in D:\javaProject\big-market-240215-xfg-raffle-controller\big-market-app)
+24-03-05.09:25:48.927 [main            ] INFO  MqTest                 - The following 1 profile is active: "dev"
+24-03-05.09:25:50.192 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-03-05.09:25:50.196 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-03-05.09:25:50.231 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 20 ms. Found 0 Redis repository interfaces.
+24-03-05.09:25:52.007 [main            ] INFO  Version                - Redisson 3.26.0
+24-03-05.09:25:52.498 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.09:25:52.520 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.09:25:56.186 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-03-05.09:25:56.308 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.75.137:5672]
+24-03-05.09:25:57.880 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#25df2014:0/SimpleConnection@2941631f [delegate=amqp://admin@154.201.75.137:5672/, localPort= 57951]
+24-03-05.09:26:06.893 [main            ] INFO  MqTest                 - Started MqTest in 18.552 seconds (JVM running for 19.559)
+24-03-05.09:26:08.424 [rabbitConnectionFactory1] INFO  RabbitConfig           - 消息丢失:exchange(delay_exchange),route(delay_key),replyCode(312),replyText(NO_ROUTE),message:(Body:'123123' MessageProperties [headers={}, contentType=text/plain, contentEncoding=UTF-8, contentLength=0, receivedDeliveryMode=PERSISTENT, priority=0, receivedDelay=15000, deliveryTag=0])
+24-03-05.09:26:08.425 [rabbitConnectionFactory2] INFO  RabbitConfig           - 消息发送成功:correlationData(null),ack(true),cause(null)
+24-03-05.09:26:08.426 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-03-05.09:26:08.654 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-03-05.09:26:08.763 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-03-05.09:26:08.764 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-03-05.09:26:09.035 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-03-05.09:26:09.035 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-03-05.09:26:09.040 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-03-05.09:26:09.040 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-03-05.09:26:09.040 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-03-05.09:27:39.068 [main            ] INFO  MqTest                 - Starting MqTest using Java 17.0.6 on DESKTOP-BU4MLU6 with PID 20504 (started by kitie in D:\javaProject\big-market-240215-xfg-raffle-controller\big-market-app)
+24-03-05.09:27:39.069 [main            ] INFO  MqTest                 - The following 1 profile is active: "dev"
+24-03-05.09:27:40.247 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-03-05.09:27:40.250 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-03-05.09:27:40.285 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 21 ms. Found 0 Redis repository interfaces.
+24-03-05.09:27:42.025 [main            ] INFO  Version                - Redisson 3.26.0
+24-03-05.09:27:42.561 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.09:27:42.584 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.09:27:45.936 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-03-05.09:27:46.043 [main            ] INFO  MqTest                 - Started MqTest in 7.498 seconds (JVM running for 8.463)
+24-03-05.09:27:46.665 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.75.137:5672]
+24-03-05.09:27:47.969 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#174e1b99:0/SimpleConnection@55b78dad [delegate=amqp://admin@154.201.75.137:5672/, localPort= 58455]
+24-03-05.09:27:50.004 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-03-05.09:27:50.523 [rabbitConnectionFactory1] INFO  RabbitConfig           - 消息丢失:exchange(delay_exchange),route(delay_key),replyCode(312),replyText(NO_ROUTE),message:(Body:'123123' MessageProperties [headers={}, contentType=text/plain, contentEncoding=UTF-8, contentLength=0, receivedDeliveryMode=PERSISTENT, priority=0, receivedDelay=15000, deliveryTag=0])
+24-03-05.09:27:50.524 [rabbitConnectionFactory2] INFO  RabbitConfig           - 消息发送成功:correlationData(null),ack(true),cause(null)
+24-03-05.09:27:51.104 [rabbitConnectionFactory1] INFO  RabbitConfig           - 消息发送成功:correlationData(null),ack(true),cause(null)
+24-03-05.09:27:51.104 [rabbitConnectionFactory2] INFO  RabbitConfig           - 消息丢失:exchange(delay_exchange),route(delay_key),replyCode(312),replyText(NO_ROUTE),message:(Body:'123123' MessageProperties [headers={}, contentType=text/plain, contentEncoding=UTF-8, contentLength=0, receivedDeliveryMode=PERSISTENT, priority=0, receivedDelay=15000, deliveryTag=0])
+24-03-05.09:28:45.816 [main            ] INFO  MqTest                 - Starting MqTest using Java 17.0.6 on DESKTOP-BU4MLU6 with PID 10600 (started by kitie in D:\javaProject\big-market-240215-xfg-raffle-controller\big-market-app)
+24-03-05.09:28:45.818 [main            ] INFO  MqTest                 - The following 1 profile is active: "dev"
+24-03-05.09:28:47.065 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-03-05.09:28:47.067 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-03-05.09:28:47.107 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 24 ms. Found 0 Redis repository interfaces.
+24-03-05.09:28:48.801 [main            ] INFO  Version                - Redisson 3.26.0
+24-03-05.09:28:49.339 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.09:28:49.363 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.09:28:52.956 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-03-05.09:28:53.040 [main            ] INFO  MqTest                 - Started MqTest in 7.754 seconds (JVM running for 8.729)
+24-03-05.09:28:53.680 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.75.137:5672]
+24-03-05.09:28:55.010 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-03-05.09:28:55.237 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#174e1b99:0/SimpleConnection@689fcf08 [delegate=amqp://admin@154.201.75.137:5672/, localPort= 58773]
+24-03-05.09:28:58.531 [rabbitConnectionFactory3] INFO  RabbitConfig           - 消息发送成功:correlationData(null),ack(false),cause(clean channel shutdown; protocol method: #method<channel.close>(reply-code=200, reply-text=OK, class-id=0, method-id=0))
+24-03-05.11:37:23.885 [main            ] INFO  MqTest                 - Starting MqTest using Java 17.0.6 on DESKTOP-BU4MLU6 with PID 25580 (started by kitie in D:\javaProject\big-market-240215-xfg-raffle-controller\big-market-app)
+24-03-05.11:37:23.886 [main            ] INFO  MqTest                 - The following 1 profile is active: "dev"
+24-03-05.11:37:24.645 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-03-05.11:37:24.647 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-03-05.11:37:24.680 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 19 ms. Found 0 Redis repository interfaces.
+24-03-05.11:37:25.716 [main            ] INFO  Version                - Redisson 3.26.0
+24-03-05.11:37:26.040 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.11:37:26.056 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.11:37:27.975 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-03-05.11:37:28.050 [main            ] INFO  MqTest                 - Started MqTest in 4.484 seconds (JVM running for 5.109)
+24-03-05.11:37:28.432 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.75.137:5672]
+24-03-05.11:37:29.185 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#ad5cffa:0/SimpleConnection@3c39c739 [delegate=amqp://admin@154.201.75.137:5672/, localPort= 62588]
+24-03-05.11:37:30.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-03-05.11:37:30.550 [rabbitConnectionFactory3] INFO  RabbitConfig           - 消息发送成功:correlationData(null),ack(false),cause(clean channel shutdown; protocol method: #method<channel.close>(reply-code=200, reply-text=OK, class-id=0, method-id=0))
+24-03-05.11:38:56.013 [main            ] INFO  MqTest                 - Starting MqTest using Java 17.0.6 on DESKTOP-BU4MLU6 with PID 2912 (started by kitie in D:\javaProject\big-market-240215-xfg-raffle-controller\big-market-app)
+24-03-05.11:38:56.014 [main            ] INFO  MqTest                 - The following 1 profile is active: "dev"
+24-03-05.11:38:56.767 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-03-05.11:38:56.769 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-03-05.11:38:56.805 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 24 ms. Found 0 Redis repository interfaces.
+24-03-05.11:38:57.813 [main            ] INFO  Version                - Redisson 3.26.0
+24-03-05.11:38:58.145 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.11:38:58.160 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.11:39:00.105 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-03-05.11:39:00.163 [main            ] INFO  MqTest                 - Started MqTest in 4.476 seconds (JVM running for 5.099)
+24-03-05.11:39:00.618 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.75.137:5672]
+24-03-05.11:39:01.383 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#79445efb:0/SimpleConnection@238d27ef [delegate=amqp://admin@154.201.75.137:5672/, localPort= 63055]
+24-03-05.11:39:02.685 [rabbitConnectionFactory3] INFO  RabbitConfig           - 消息发送成功:correlationData(null),ack(false),cause(clean channel shutdown; protocol method: #method<channel.close>(reply-code=200, reply-text=OK, class-id=0, method-id=0))
+24-03-05.11:40:17.022 [main            ] INFO  MqTest                 - Starting MqTest using Java 17.0.6 on DESKTOP-BU4MLU6 with PID 23440 (started by kitie in D:\javaProject\big-market-240215-xfg-raffle-controller\big-market-app)
+24-03-05.11:40:17.023 [main            ] INFO  MqTest                 - The following 1 profile is active: "dev"
+24-03-05.11:40:17.757 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-03-05.11:40:17.759 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-03-05.11:40:17.787 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
+24-03-05.11:40:18.753 [main            ] INFO  Version                - Redisson 3.26.0
+24-03-05.11:40:19.072 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.11:40:19.086 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.11:40:21.197 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-03-05.11:40:21.268 [main            ] INFO  MqTest                 - Started MqTest in 4.563 seconds (JVM running for 5.209)
+24-03-05.11:40:21.695 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.75.137:5672]
+24-03-05.11:40:22.443 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#1dfe5dd1:0/SimpleConnection@4b3b2a4f [delegate=amqp://admin@154.201.75.137:5672/, localPort= 63454]
+24-03-05.11:40:23.742 [rabbitConnectionFactory3] INFO  RabbitConfig           - 消息发送成功:correlationData(null),ack(false),cause(clean channel shutdown; protocol method: #method<channel.close>(reply-code=200, reply-text=OK, class-id=0, method-id=0))
+24-03-05.11:43:27.859 [main            ] INFO  MqTest                 - Starting MqTest using Java 17.0.6 on DESKTOP-BU4MLU6 with PID 23872 (started by kitie in D:\javaProject\big-market-240215-xfg-raffle-controller\big-market-app)
+24-03-05.11:43:27.859 [main            ] INFO  MqTest                 - The following 1 profile is active: "dev"
+24-03-05.11:43:28.608 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-03-05.11:43:28.611 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-03-05.11:43:28.649 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 18 ms. Found 0 Redis repository interfaces.
+24-03-05.11:43:29.700 [main            ] INFO  Version                - Redisson 3.26.0
+24-03-05.11:43:30.046 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.11:43:30.067 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.11:43:32.160 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-03-05.11:43:32.230 [main            ] INFO  MqTest                 - Started MqTest in 4.713 seconds (JVM running for 5.34)
+24-03-05.11:43:32.697 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.75.137:5672]
+24-03-05.11:43:33.412 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#93f15f6:0/SimpleConnection@7004cd44 [delegate=amqp://admin@154.201.75.137:5672/, localPort= 64373]
+24-03-05.11:43:34.640 [rabbitConnectionFactory3] INFO  RabbitConfig           - 消息发送成功:correlationData(null),ack(false),cause(clean channel shutdown; protocol method: #method<channel.close>(reply-code=200, reply-text=OK, class-id=0, method-id=0))
+24-03-05.11:45:49.172 [main            ] INFO  MqTest                 - Starting MqTest using Java 17.0.6 on DESKTOP-BU4MLU6 with PID 25196 (started by kitie in D:\javaProject\big-market-240215-xfg-raffle-controller\big-market-app)
+24-03-05.11:45:49.173 [main            ] INFO  MqTest                 - The following 1 profile is active: "dev"
+24-03-05.11:45:49.879 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-03-05.11:45:49.882 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-03-05.11:45:49.908 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
+24-03-05.11:45:50.865 [main            ] INFO  Version                - Redisson 3.26.0
+24-03-05.11:45:51.189 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.11:45:51.206 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:6379
+24-03-05.11:45:53.181 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-03-05.11:45:53.255 [main            ] INFO  MqTest                 - Started MqTest in 4.403 seconds (JVM running for 5.067)
+24-03-05.11:45:53.705 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.75.137:5672]
+24-03-05.11:45:54.383 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#79445efb:0/SimpleConnection@1a3611b1 [delegate=amqp://admin@154.201.75.137:5672/, localPort= 65069]
+24-03-05.11:45:55.016 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存【延迟队列获取，降低对数据库的更新频次，不要产生竞争】
+24-03-05.11:45:55.523 [rabbitConnectionFactory3] INFO  RabbitConfig           - 消息发送成功:correlationData(null),ack(false),cause(clean channel shutdown; protocol method: #method<channel.close>(reply-code=200, reply-text=OK, class-id=0, method-id=0))
