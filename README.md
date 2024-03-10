@@ -1,8 +1,16 @@
-# xfg-frame-archetype - DDD 脚手架
+# 大营销抽奖系统 - By 刘仕杰
 
 项目介绍：大营销平台是各个互联网公司用于拉新、促活、留存、转化的重要手段，此项目针对高并发场景，搭建为各平台促销提效的大营销平台，管理员可通过后台管理活动与奖品，用户可以通过抽奖的方式获取奖品，在寻常抽奖的基础上扩展了黑名单用户兜底，用户权重分析，次数解锁奖品，兜底奖品随机积分等功能。整体采用DDD架构设计，支持分布式水平扩展，单实例部署下QPS实测1000左右。
 
 核心技术：SpringBoot、MyBatis、MySQL、Redis、Redisson、Guava、RabbitMQ、Xxl-job。
+
+---
+
+>**作者**：LuckySJ-刘仕杰 - 在线演示地址 [**www.luckylottery.site**](www.luckylottery.site)
+
+## 运行配置
+
+- 运行环境：JDK 1.8+
 
 业务实现：
 
