@@ -29,8 +29,8 @@ thread:
 spring:
   datasource:
     username: root
-    password: lsj114514
-    url: jdbc:mysql://154.201.80.213:3306/big_market?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
+    password: 123123
+    url: jdbc:mysql://123123:3306/big_market?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
     driver-class-name: com.mysql.cj.jdbc.Driver
   hikari:
     pool-name: Retail_HikariCP
@@ -44,10 +44,10 @@ spring:
   type: com.zaxxer.hikari.HikariDataSource
   # RabbitMQ 配置
   rabbitmq:
-    addresses: 154.12.27.76
+    addresses: 123123
     port: 5672
     username: admin
-    password: lsj114514
+    password: 123123
     listener:
       simple:
         prefetch: 1 # 每次投递n个消息，消费完在投递n个
@@ -60,8 +60,8 @@ mybatis:
 redis:
   sdk:
     config:
-      host: 154.201.80.213
-      port: 6379
+      host: 123123
+      port: 123123
       pool-size: 10
       min-idle-size: 5
       idle-timeout: 30000
@@ -70,7 +70,7 @@ redis:
       retry-interval: 1000
       ping-interval: 60000
       keep-alive: true
-      password: lsj114514
+      password: 123123
 
 # 日志
 logging:
