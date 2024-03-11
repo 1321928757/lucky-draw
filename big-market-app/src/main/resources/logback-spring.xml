@@ -98,7 +98,7 @@
     </appender>
 
     <!-- 开发环境：控制台打印 -->
-    <springProfile name="dev">
+    <springProfile name="dev,local">
         <logger name="com.nmys.view" level="debug"/>
     </springProfile>
 

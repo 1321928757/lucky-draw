@@ -10,9 +10,11 @@ import cn.bugstack.infrastructure.persistent.po.*;
 import cn.bugstack.infrastructure.persistent.redis.IRedisService;
 import cn.bugstack.types.common.Constants;
 import cn.bugstack.types.exception.AppException;
+import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RDelayedQueue;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -47,6 +49,9 @@ public class StrategyRepository implements IStrategyRepository {
     private IRuleTreeNodeDao ruleTreeNodeDao;
     @Resource
     private IRuleTreeNodeLineDao ruleTreeNodeLineDao;
+
+    @Resource
+    private RabbitTemplate rabbitTemplate;
 
     @Override
     public List<StrategyAwardEntity> queryStrategyAwardList(Long strategyId) {
@@ -239,10 +244,17 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Override
     public void awardStockConsumeSendQueue(StrategyAwardStockKeyVO strategyAwardStockKeyVO) {
-        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY;
-        RBlockingQueue<StrategyAwardStockKeyVO> blockingQueue = redisService.getBlockingQueue(cacheKey);
-        RDelayedQueue<StrategyAwardStockKeyVO> delayedQueue = redisService.getDelayedQueue(blockingQueue);
-        delayedQueue.offer(strategyAwardStockKeyVO, 3, TimeUnit.SECONDS);
+        // 获取redisson的延迟队列，将消息放入延迟队列中，等待定时任务消费，后续优化为rabbitmq
+        // String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY;
+        // RBlockingQueue<StrategyAwardStockKeyVO> blockingQueue = redisService.getBlockingQueue(cacheKey);
+        // RDelayedQueue<StrategyAwardStockKeyVO> delayedQueue = redisService.getDelayedQueue(blockingQueue);
+        // delayedQueue.offer(strategyAwardStockKeyVO, 3, TimeUnit.SECONDS);
+
+        // 将对象序列化为Json
+        String jsonString = JSON.toJSONString(strategyAwardStockKeyVO);
+        // 发送到rabbit消息队列中
+        rabbitTemplate.convertAndSend(Constants.MessageQueueKey.StockUpdateExchange, Constants.MessageQueueKey.StockUpdateKey, jsonString);
+
     }
 
     @Override

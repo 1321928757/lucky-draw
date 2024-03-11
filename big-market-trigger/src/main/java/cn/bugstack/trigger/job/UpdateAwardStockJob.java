@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 /**
  * @author Luckysj @刘仕杰
  * @description 更新奖品库存任务；为了不让更新库存的压力打到数据库中，这里采用了redis更新缓存库存，异步队列更新数据库，数据库表最终一致即可。
+ * 后续会改为MQ消息队列
  * @create 2024-02-09 12:13
  */
 @Slf4j

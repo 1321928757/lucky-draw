@@ -19,4 +19,10 @@ public class Constants {
 
     }
 
+    public static class MessageQueueKey {
+        public static String StockUpdateExchange = "bigmarket.stock.update.exchange";
+        public static String StockUpdateQueue = "bigmarket.stock.update.queue";
+        public static String StockUpdateKey = "bigmarket.stock.update.key";
+    }
+
 }
