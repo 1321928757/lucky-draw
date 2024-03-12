@@ -1,0 +1,79 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "3789178",
+      "name": "自行车",
+      "font_class": "zihangche",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "3882801",
+      "name": "自行车",
+      "font_class": "zihangche1",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "5075656",
+      "name": "电池",
+      "font_class": "dianchi",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "6677880",
+      "name": "土壤温度",
+      "font_class": "turangwendu",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "9572487",
+      "name": "电压",
+      "font_class": "IOTtubiao_huabanfuben",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "20299512",
+      "name": "超电压报警",
+      "font_class": "chaodianyabaojing",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "23719418",
+      "name": "自行车",
+      "font_class": "zihangche2",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "24275426",
+      "name": "电流",
+      "font_class": "dianliu",
+      "unicode": "e674",
+      "unicode_decimal": 58996
+    },
+    {
+      "icon_id": "24736944",
+      "name": "电池",
+      "font_class": "dianchi1",
+      "unicode": "ed0b",
+      "unicode_decimal": 60683
+    },
+    {
+      "icon_id": "27105292",
+      "name": "电池",
+      "font_class": "dianchi2",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    }
+  ]
+}

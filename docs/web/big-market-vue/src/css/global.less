@@ -1,0 +1,127 @@
+
+html, body{
+  padding: 0;
+  margin: 0;
+}
+// 主题样式
+element.style {
+  --el-button-bg-color: rgb(234, 246, 248);
+  --el-button-text-color: #2fa7b9;
+  --el-button-border-color: rgb(151, 211, 220);
+  --el-button-hover-text-color: var(--el-color-white);
+  --el-button-hover-bg-color: #2fa7b9;
+  --el-button-hover-border-color: #2fa7b9;
+  --el-button-active-bg-color: rgb(42, 138, 152);
+  --el-button-active-text-color: var(--el-color-white);
+  --el-button-active-border-color: rgb(42, 138, 152);
+}
+
+// 加载条遮罩层高度
+.el-loading-mask{
+  z-index: 200 !important;
+}
+
+
+// elementui部分组件移动端适配
+@media screen and (max-width: 500px) {
+  .el-message {
+    min-width: 300px !important;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .el-message-box{
+    width: 300px !important;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .el-dialog__wrapper .el-dialog {
+     width: 300px !important;
+     .el-dialog__body{
+       padding: 10px 20px!important;
+       .el-form-item__label{
+         width: 68px!important;
+       }
+       .el-select,.el-input{
+         width: 180px!important;
+       }
+     }
+   }
+}
+
+// 自定义滚动条样式
+::-webkit-scrollbar {
+  width: 10px; 
+}
+//滚动条的滑块
+::-webkit-scrollbar-thumb {
+  background-image: -moz-linear-gradient(0deg, rgb(179, 185, 255), rgb(153, 201, 255));
+
+  background-image: -webkit-linear-gradient(0deg, rgb(179, 185, 255), rgb(153, 201, 255));
+  
+  background-image: linear-gradient(0deg, rgb(179, 185, 255), rgb(153, 201, 255));
+  border-radius: 3px;
+}
+
+p,h1,h2,h3,h4,h5{
+  cursor:default;
+}
+
+// 代码块样式
+/* 代码显示行号 */
+pre code.hljs {
+  margin: 10px 0px;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  border-radius: 10px;
+}
+
+.hljs ol {
+  margin: 0 0 0 45px;
+  padding: 0;
+}
+
+.hljs ol li {
+  padding-left: 10px;
+  list-style: decimal-leading-zero;
+  border-left: 1px solid #676767;
+  line-height: 30px;
+}
+
+@media screen and(max-width: 500px) {
+  pre code.hljs {
+    margin: 10px 0px;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+  
+  .hljs ol {
+    margin: 0 0 0 45px;
+    padding: 0;
+  }
+  
+  .hljs ol li {
+    padding-left: 10px;
+    list-style: decimal-leading-zero;
+    border-left: 1px solid #676767;
+    line-height: 30px;
+  }
+}
+
+// 鼠标悬浮高亮样式
+.icon-hover-light:hover{
+  color: #2fa7b9;
+  cursor: pointer;
+}
+
+// 字体设置
+@font-face {
+  font-family: "font-1";
+  src: url(../assets/font/font1.ttf);
+}
+
+
+
+
+

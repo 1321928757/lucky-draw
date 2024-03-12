@@ -1,0 +1,93 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1104539",
+      "name": "其它类_灯光",
+      "font_class": "qitaleidengguang",
+      "unicode": "e9e2",
+      "unicode_decimal": 59874
+    },
+    {
+      "icon_id": "1470964",
+      "name": "灯",
+      "font_class": "deng",
+      "unicode": "e66d",
+      "unicode_decimal": 58989
+    },
+    {
+      "icon_id": "2532954",
+      "name": "风扇",
+      "font_class": "fengshan",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "3987453",
+      "name": "电机",
+      "font_class": "dianji",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "5001822",
+      "name": "风扇",
+      "font_class": "fengshan1",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "5170873",
+      "name": "风扇",
+      "font_class": "fengshan2",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "5179182",
+      "name": "风扇",
+      "font_class": "fengshan3",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "17120498",
+      "name": "风扇",
+      "font_class": "fengshan-05",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "22898796",
+      "name": "2.8a通风风扇",
+      "font_class": "a-28atongfengfengshan",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "23254973",
+      "name": "电机",
+      "font_class": "dianji1",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "34003830",
+      "name": "柴油发电机",
+      "font_class": "chaiyoufadianji",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "35257355",
+      "name": "灯光",
+      "font_class": "dengguang",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    }
+  ]
+}
