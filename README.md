@@ -52,6 +52,4 @@ yarn run dev
 - 实现后台-活动发布
 - 实现后台-数据统计
 
-
-
-
+![](https://img-blog.csdnimg.cn/direct/9816127cb88f4e5aafd996c8ee32efbf.png)
