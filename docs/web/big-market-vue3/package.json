@@ -1,0 +1,27 @@
+{
+  "name": "vite-test",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --mode dev",
+    "build": "vite build --mode product",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@lucky-canvas/vue": "^0.1.11",
+    "@types/node": "^20.3.3",
+    "axios": "^1.6.7",
+    "echarts": "^5.4.2",
+    "element-plus": "^2.3.7",
+    "less": "^4.2.0",
+    "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.1",
+    "vue": "^3.2.47",
+    "vue-router": "^4.2.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.1.0",
+    "vite": "^4.3.9"
+  }
+}

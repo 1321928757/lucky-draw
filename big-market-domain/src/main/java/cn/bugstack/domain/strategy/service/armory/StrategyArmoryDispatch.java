@@ -33,6 +33,9 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
     public boolean assembleLotteryStrategy(Long strategyId) {
         // 1. 查询策略配置
         List<StrategyAwardEntity> strategyAwardEntities = repository.queryStrategyAwardList(strategyId);
+        if(strategyAwardEntities.isEmpty()){
+            throw new AppException(ResponseCode.STRATEGY_ID_ERROR.getCode(), ResponseCode.STRATEGY_ID_ERROR.getInfo());
+        }
 
         // 2 缓存奖品库存【用于decr扣减库存使用】
         for (StrategyAwardEntity strategyAward : strategyAwardEntities) {
@@ -89,6 +92,7 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
             Integer awardId = strategyAward.getAwardId();
             BigDecimal awardRate = strategyAward.getAwardRate();
             // 计算出每个概率值需要存放到查找表的数量，循环填充
+            log.info("概率装配，奖品{}的装配范围为{},总范围为{}", awardId, rateRange.multiply(awardRate),rateRange);
             for (int i = 0; i < rateRange.multiply(awardRate).intValue(); i++) {
                 strategyAwardSearchRateTables.add(awardId);
             }
