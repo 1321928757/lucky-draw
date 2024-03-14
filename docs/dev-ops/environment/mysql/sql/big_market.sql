@@ -1,16 +1,3 @@
-# ************************************************************
-# Sequel Ace SQL dump
-# 版本号： 20050
-#
-# https://sequel-ace.com/
-# https://github.com/Sequel-Ace/Sequel-Ace
-#
-# 主机: 127.0.0.1 (MySQL 5.6.39)
-# 数据库: big_market
-# 生成时间: 2024-03-02 04:59:01 +0000
-# ************************************************************
-
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -83,6 +70,15 @@ CREATE TABLE `raffle_activity` (
   KEY `idx_end_date_time` (`end_date_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='抽奖活动表';
 
+LOCK TABLES `raffle_activity` WRITE;
+/*!40000 ALTER TABLE `raffle_activity` DISABLE KEYS */;
+
+INSERT INTO `raffle_activity` (`id`, `activity_id`, `activity_name`, `activity_desc`, `begin_date_time`, `end_date_time`, `stock_count`, `stock_count_surplus`, `activity_count_id`, `strategy_id`, `state`, `create_time`, `update_time`)
+VALUES
+	(1,100301,'测试活动','测试活动','2024-03-09 10:15:10','2034-03-09 10:15:10',1000,1000,1,100006,'0','2024-03-09 10:15:10','2024-03-09 10:15:17');
+
+/*!40000 ALTER TABLE `raffle_activity` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # 转储表 raffle_activity_count
@@ -102,6 +98,15 @@ CREATE TABLE `raffle_activity_count` (
   UNIQUE KEY `uq_activity_count_id` (`activity_count_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='抽奖活动次数配置表';
 
+LOCK TABLES `raffle_activity_count` WRITE;
+/*!40000 ALTER TABLE `raffle_activity_count` DISABLE KEYS */;
+
+INSERT INTO `raffle_activity_count` (`id`, `activity_count_id`, `total_count`, `day_count`, `month_count`, `create_time`, `update_time`)
+VALUES
+	(1,1,100,2,60,'2024-03-09 10:15:42','2024-03-09 10:15:42');
+
+/*!40000 ALTER TABLE `raffle_activity_count` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # 转储表 rule_tree

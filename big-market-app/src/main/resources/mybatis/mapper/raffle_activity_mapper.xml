@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bugstack.infrastructure.persistent.dao.IRaffleActivityDao">
+
+    <resultMap id="dataMap" type="cn.bugstack.infrastructure.persistent.po.RaffleActivity">
+        <id column="id" property="id"/>
+        <result column="activity_id" property="activityId"/>
+        <result column="activity_name" property="activityName"/>
+        <result column="activity_desc" property="activityDesc"/>
+        <result column="begin_date_time" property="beginDateTime"/>
+        <result column="end_date_time" property="endDateTime"/>
+        <result column="stock_count" property="stockCount"/>
+        <result column="stock_count_surplus" property="stockCountSurplus"/>
+        <result column="activity_count_id" property="activityCountId"/>
+        <result column="strategy_id" property="strategyId"/>
+        <result column="state" property="state"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="queryRaffleActivityByActivityId" parameterType="java.lang.Long" resultMap="dataMap">
+        select activity_id, activity_name, activity_desc, begin_date_time, end_date_time, stock_count, stock_count_surplus, activity_count_id, strategy_id, state
+        from raffle_activity
+        where activity_id = #{activityId}
+    </select>
+
+
+</mapper>
