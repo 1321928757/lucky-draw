@@ -25,125 +25,13 @@
 - ✅概率预装配，权重概率预装配
 - ✅抽奖前，责任链规则校验(黑名单处理，权重处理，抽取处理)
 - ✅抽奖后，配合数据库构建决策树，完成次数锁判断，库存扣减判断，兜底处理等分支流程
-- ✅实现活动与用户的库表设计
-- 🔥实现分库分表(利用一个小巧的分库分组开源组件，个人认为shardingsphere使用起来比较麻烦不灵活)
+- ✅实现活动与用户的库表设计，设计分库分表的库表设计
+- ✅实现分库分表的路由(利用一个小巧的分库分组开源组件，个人认为shardingsphere使用起来比较麻烦不灵活)
+- 🔥实现用户登录，用户通过扫码从微信公众号获取验证码来进行身份验证，liushijie-20240314-events分支开发中
+- 用户登录后，可点击参与活动，参与活动后为用户生成活动账户
 - 实现活动发布流程(后台发布活动 -> 概率区间等缓存数据预热 -> 等待到开启活动时间)
 - 实现获奖数据入库
 - 实现发货功能(完成获奖人信息填写，进行奖品发货，这里有时间的话会尝试对接大语言模型平台)
-
-## 本章节分库分表组件使用教程
-
-**依赖导入**
-
-```xml
-<dependency>
-    <groupId>cn.bugstack.middleware</groupId>
-    <artifactId>db-router-spring-boot-starter</artifactId>
-    <version>1.0.2</version>
-</dependency>
-```
-
-**路由配置 **
-
-```yaml
-# 多数据源路由配置，库数量 * 表数量 为2的次幂，如2库4表
-# mysql 5.x 配置 driver-class-name: com.mysql.jdbc.Driver    mysql-connector-java 5.1.34
-# mysql 8.x 配置 driver-class-name: com.mysql.cj.jdbc.Driver mysql-connector-java 8.0.22
-mini-db-router:
-  jdbc:
-    datasource:
-      dbCount: 2 #分库数量(必需配置，路由组件会根据这个值计算出路由值)
-      tbCount: 4 #分表数量(必需配置，路由组件会根据这个值计算出路由值)
-      default: db00	#主库(这个库不存放分表相关信息，作为一个配置主表)
-      routerKey: userId  #根据哪个属性来进行路由操作，用户id用得比较多
-      list: db01,db02 #分库
-      db00:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/big_market?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
-        username: root
-        password: 123123
-        type-class-name: com.zaxxer.hikari.HikariDataSource #连接池配置
-        pool:
-          pool-name: Retail_HikariCP
-          minimum-idle: 15 #最小空闲连接数量
-          idle-timeout: 180000 #空闲连接存活最大时间，默认600000（10分钟）
-          maximum-pool-size: 25 #连接池最大连接数，默认是10
-          auto-commit: true  #此属性控制从池返回的连接的默认自动提交行为,默认值：true
-          max-lifetime: 1800000 #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
-          connection-timeout: 30000 #数据库连接超时时间,默认30秒，即30000
-          connection-test-query: SELECT 1
-      db01:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/big_market_01?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
-        username: root
-        password: lsj20030222
-        type-class-name: com.zaxxer.hikari.HikariDataSource
-        pool:
-          pool-name: Retail_HikariCP
-          minimum-idle: 15 #最小空闲连接数量
-          idle-timeout: 180000 #空闲连接存活最大时间，默认600000（10分钟）
-          maximum-pool-size: 25 #连接池最大连接数，默认是10
-          auto-commit: true  #此属性控制从池返回的连接的默认自动提交行为,默认值：true
-          max-lifetime: 1800000 #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
-          connection-timeout: 30000 #数据库连接超时时间,默认30秒，即30000
-          connection-test-query: SELECT 1
-      db02:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/big_market_02?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
-        username: root
-        password: lsj20030222
-        type-class-name: com.zaxxer.hikari.HikariDataSource
-        pool:
-          pool-name: Retail_HikariCP
-          minimum-idle: 15 #最小空闲连接数量
-          idle-timeout: 180000 #空闲连接存活最大时间，默认600000（10分钟）
-          maximum-pool-size: 25 #连接池最大连接数，默认是10
-          auto-commit: true  #此属性控制从池返回的连接的默认自动提交行为,默认值：true
-          max-lifetime: 1800000 #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
-          connection-timeout: 30000 #数据库连接超时时间,默认30秒，即30000
-          connection-test-query: SELECT 1
-```
-
-**在dao层使用注解指定是否走路由规则**
-
-这是我认为这个组件最好用的一点就是，通过注解可以指定哪些dao要走路由
-
-```java
-@Mapper
-@DBRouterStrategy(splitTable = true) //开启分库分表(splitTable属性代表是否开启分表)
-public interface IRaffleActivityOrderDao {
-
-    @DBRouter(key = "userId") //路由键
-    void insert(RaffleActivityOrder raffleActivityOrder);
-
-    @DBRouter
-    List<RaffleActivityOrder> queryRaffleActivityOrderByUserId(String userId);
-
-}
-
-```
-
-**单元测试**
-
-```java
-// 测试分库分表插入元素
-    @Test
-    public void test_insert_random() {
-        for (int i = 0; i < 5; i++) {
-            RaffleActivityOrder raffleActivityOrder = new RaffleActivityOrder();
-            // EasyRandom 可以通过指定对象类的方式，随机生成对象值。如；easyRandom.nextObject(String.class)、easyRandom.nextObject(RaffleActivityOrder.class)
-            raffleActivityOrder.setUserId(easyRandom.nextObject(String.class));
-            raffleActivityOrder.setActivityId(100301L);
-            raffleActivityOrder.setActivityName("测试活动");
-            raffleActivityOrder.setStrategyId(100006L);
-            raffleActivityOrder.setOrderId(RandomStringUtils.randomNumeric(12));
-            raffleActivityOrder.setOrderTime(new Date());
-            raffleActivityOrder.setState("not_used");
-            // 插入数据
-            raffleActivityOrderDao.insert(raffleActivityOrder);
-        }
-    }
-```
 
 
 
@@ -163,8 +51,11 @@ vue3版本
 yarn install
 yarn run dev
 ```
-- ✅实现抽奖功能
-- 🔥实现活动说明，活动概率说明等信息
+- ✅对接后端抽奖接口实现转盘抽奖功能
+- 🔥实现扫码登录界面
+- 实现主界面，通过主界面公示当前所有的活动
+- 用户可通过点击活动，参与活动，进入活动界面
+- 在活动界面展示活动信息(抽奖，活动说明，概率声明等)
 - 实现后台-活动发布
 - 实现后台-数据统计
 
