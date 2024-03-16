@@ -68,6 +68,8 @@ yarn run dev
 
 ![](https://img-blog.csdnimg.cn/direct/9816127cb88f4e5aafd996c8ee32efbf.png)
 
+
+
 ## 🫧项目架构
 
 项目整体根据DDD架构架构搭建，感兴趣的小伙伴可以看下我另外一个仓库([Spring DDD架构基础骨架](https://github.com/1321928757/spring-ddd-archetype))
@@ -90,7 +92,7 @@ DDD四层架构主要是app应用层，domain领域层，trigger触发器层，i
 
 触发器层主要是定义对触发动作的监听，比如Http请求接口，RPC服务，MQ消息监听，定时任务等触发动作。
 
-✨**spring-ddd-archetype-domain**：**领域层**
+✨**spring-ddd-archetype-domain**：**领域层 **
 
 DDD架构最核心的部分，根据不同业务划分不同的领域包，为infrastructure层提供仓储接口，实现依赖倒置
 
@@ -106,9 +108,11 @@ DDD架构最核心的部分，根据不同业务划分不同的领域包，为in
 
 ## 🐾业务流程
 
-### 抽奖概率装配流程图
+### 奖品概率装配流程
 
+这里用到的抽奖算法大概是为每个奖品分配其范围，然后装配对应范围数量的元素到Map中，value即为奖品id，我们通过生成总范围内的一个随机数，再通过该随机数作为key从map中取，就实现了奖品的抽取，这种方式空间换时间，优点是速度快，缺点是数据不能太苛刻，假如总范围为1000000，那么装配到map中就很容易OOM爆内存，不过在正常的情况下还是没问题的
 
+![](https://github.com/1321928757/static-resources/blob/main/yuque_diagram%20(4).jpg?raw=true)
 
 ### 抽奖业务流程图
 
