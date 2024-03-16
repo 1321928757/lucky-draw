@@ -13,10 +13,11 @@ import java.util.List;
  * @create 2024/03/14 14:48:15
  */
 @Mapper
-@DBRouterStrategy(splitTable = true)
+@DBRouterStrategy(splitTable = true) // 开启分库分表路由，splitTable参数为true就代表开启分库
 public interface IRaffleActivityOrderDao {
 
-    @DBRouter(key = "userId")
+
+    @DBRouter(key = "userId") //DBRouter注解指定哪些方法需要走分表，key就是路由关键字
     void insert(RaffleActivityOrder raffleActivityOrder);
 
     @DBRouter

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bugstack.infrastructure.persistent.dao.IRaffleActivitySkuDao">
+    <resultMap id="dataMap" type="cn.bugstack.infrastructure.persistent.po.RaffleActivitySku">
+        <id column="id" property="id"/>
+        <result column="sku" property="sku"/>
+        <result column="activity_id" property="activityId"/>
+        <result column="activity_count_id" property="activityCountId"/>
+        <result column="stock_count" property="stockCount"/>
+        <result column="stock_count_surplus" property="stockCountSurplus"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="queryActivitySku" parameterType="java.lang.Long" resultMap="dataMap">
+        select sku, activity_id, activity_count_id, stock_count, stock_count_surplus
+        from raffle_activity_sku
+        where sku = #{sku}
+    </select>
+</mapper>

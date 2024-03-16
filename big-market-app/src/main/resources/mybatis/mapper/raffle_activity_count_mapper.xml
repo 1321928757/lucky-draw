@@ -11,6 +11,11 @@
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
+    <select id="queryRaffleActivityCountByActivityCountId" parameterType="java.lang.Long" resultMap="dataMap">
+        select activity_count_id, total_count, day_count, month_count
+        from raffle_activity_count
+        where activity_count_id = #{activityCountId}
+    </select>
 
 
 </mapper>

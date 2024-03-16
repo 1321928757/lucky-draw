@@ -9,9 +9,6 @@
         <result column="activity_desc" property="activityDesc"/>
         <result column="begin_date_time" property="beginDateTime"/>
         <result column="end_date_time" property="endDateTime"/>
-        <result column="stock_count" property="stockCount"/>
-        <result column="stock_count_surplus" property="stockCountSurplus"/>
-        <result column="activity_count_id" property="activityCountId"/>
         <result column="strategy_id" property="strategyId"/>
         <result column="state" property="state"/>
         <result column="create_time" property="createTime"/>
@@ -19,7 +16,7 @@
     </resultMap>
 
     <select id="queryRaffleActivityByActivityId" parameterType="java.lang.Long" resultMap="dataMap">
-        select activity_id, activity_name, activity_desc, begin_date_time, end_date_time, stock_count, stock_count_surplus, activity_count_id, strategy_id, state
+        select activity_id, activity_name, activity_desc, begin_date_time, end_date_time, strategy_id, state
         from raffle_activity
         where activity_id = #{activityId}
     </select>
