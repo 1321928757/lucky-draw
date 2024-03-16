@@ -55,6 +55,7 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
             throw new AppException(ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL.getCode(), ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL.getInfo());
         }
 
+        // 每个权重都需要装配一个概率区间，比如1000积分的权重的奖品概率区间，2000积分的权重奖品概率区间
         Map<String, List<Integer>> ruleWeightValueMap = strategyRuleEntity.getRuleWeightValues();
         for (String key : ruleWeightValueMap.keySet()) {
             List<Integer> ruleWeightValues = ruleWeightValueMap.get(key);
