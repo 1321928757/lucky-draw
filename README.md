@@ -68,8 +68,6 @@ yarn run dev
 
 ![](https://img-blog.csdnimg.cn/direct/9816127cb88f4e5aafd996c8ee32efbf.png)
 
-
-
 ## 🫧项目架构
 
 项目整体根据DDD架构架构搭建，感兴趣的小伙伴可以看下我另外一个仓库([Spring DDD架构基础骨架](https://github.com/1321928757/spring-ddd-archetype))
@@ -92,7 +90,7 @@ DDD四层架构主要是app应用层，domain领域层，trigger触发器层，i
 
 触发器层主要是定义对触发动作的监听，比如Http请求接口，RPC服务，MQ消息监听，定时任务等触发动作。
 
-✨**spring-ddd-archetype-domain**：**领域层 **
+✨**spring-ddd-archetype-domain**：**领域层**
 
 DDD架构最核心的部分，根据不同业务划分不同的领域包，为infrastructure层提供仓储接口，实现依赖倒置
 
