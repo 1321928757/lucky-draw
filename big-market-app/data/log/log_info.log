@@ -1447,3 +1447,21 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 24-03-16.21:17:07.554 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
 24-03-16.21:17:07.726 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
 24-03-16.21:17:07.728 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-03-16.21:44:06.432 [main            ] INFO  RaffleActivityDaoTest  - Starting RaffleActivityDaoTest using Java 17.0.6 on DESKTOP-BU4MLU6 with PID 31648 (started by kitie in D:\javaProject\big-market\big-market-app)
+24-03-16.21:44:06.433 [main            ] INFO  RaffleActivityDaoTest  - The following 1 profile is active: "local"
+24-03-16.21:44:07.255 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-03-16.21:44:07.258 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-03-16.21:44:07.294 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 20 ms. Found 0 Redis repository interfaces.
+24-03-16.21:44:08.569 [main            ] INFO  Version                - Redisson 3.26.0
+24-03-16.21:44:08.895 [redisson-netty-1-5] INFO  ConnectionsHolder      - 1 connections initialized for localhost/127.0.0.1:6379
+24-03-16.21:44:08.911 [redisson-netty-1-14] INFO  ConnectionsHolder      - 5 connections initialized for localhost/127.0.0.1:6379
+24-03-16.21:44:11.557 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-03-16.21:44:11.735 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.80.213:5672]
+24-03-16.21:44:11.923 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#50ac1249:0/SimpleConnection@28c00acd [delegate=amqp://admin@154.201.80.213:5672/, localPort= 51258]
+24-03-16.21:44:12.291 [main            ] INFO  RaffleActivityDaoTest  - Started RaffleActivityDaoTest in 6.234 seconds (JVM running for 6.856)
+24-03-16.21:44:12.651 [main            ] INFO  HikariDataSource       - Retail_HikariCP - Starting...
+24-03-16.21:44:12.807 [main            ] INFO  HikariDataSource       - Retail_HikariCP - Start completed.
+24-03-16.21:44:12.968 [main            ] INFO  RaffleActivityDaoTest  - 测试结果：{"activityDesc":"测试活动","activityId":100301,"activityName":"测试活动","beginDateTime":"2024-03-09 18:15:10","endDateTime":"2034-03-09 18:15:10","state":"create","strategyId":100006}
+24-03-16.21:44:13.014 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-03-16.21:44:13.303 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-03-16.21:44:13.305 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
