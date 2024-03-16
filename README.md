@@ -126,6 +126,10 @@ DDD架构最核心的部分，根据不同业务划分不同的领域包，为in
 ![](https://github.com/1321928757/static-resources/blob/main/yuque_diagram%20(6).jpg?raw=true)
 
 ### 库表设计
+活动订单库表设计
+
+![](https://github.com/1321928757/static-resources/blob/main/table.png?raw=true)
+
 
 ### 具体代码分析
 
