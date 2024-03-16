@@ -1,4 +1,4 @@
-# 营销抽奖系统 - By 刘仕杰
+# ✨营销抽奖系统 - By 刘仕杰✨
 
 项目介绍：营销抽奖系统是各个互联网公司用于拉新、促活、留存、转化的重要手段，此项目针对高并发场景，搭建为各平台促销提效的营销抽奖平台，管理员可通过后台管理活动与奖品，用户可以通过抽奖的方式获取奖品，在寻常抽奖的基础上扩展了黑名单用户兜底，用户权重分析，次数解锁奖品，兜底奖品随机积分等功能。整体采用DDD架构设计，支持分布式水平扩展，单实例部署下QPS实测1000左右。
 
@@ -12,14 +12,17 @@
 
 >**作者**：LuckySJ-刘仕杰 - 在线演示地址 [**www.luckylottery.site**](www.luckylottery.site)
 
-## 运行配置
+## 💫运行配置
 
 - 运行环境：JDK 1.8+
 - Springboot：2.7.12
 - mysql：8.2
 - redis：5.0
 
-## 后端开发进度
+
+
+## ⭐后端开发进度
+
 - ✅抽奖策略和奖品库表设计
 - ✅抽取概率区间算法实现
 - ✅概率预装配，权重概率预装配
@@ -35,7 +38,8 @@
 
 
 
-## 前端开发进度
+## 🪐前端开发进度
+
 前端提供了vue2 vue3两个版本，/docs/web/vue和/docs/web/vue3
 
 vue2版本
@@ -51,6 +55,7 @@ vue3版本
 yarn install
 yarn run dev
 ```
+
 - ✅对接后端抽奖接口实现转盘抽奖功能
 - 🔥实现扫码登录界面
 - 实现主界面，通过主界面公示当前所有的活动
@@ -59,5 +64,62 @@ yarn run dev
 - 实现后台-活动发布
 - 实现后台-数据统计
 
+**效果图预览**
+
+![](https://img-blog.csdnimg.cn/direct/9816127cb88f4e5aafd996c8ee32efbf.png)
 
 
+
+## 🫧项目架构
+
+项目整体根据DDD架构架构搭建，感兴趣的小伙伴可以看下我另外一个仓库([Spring DDD架构基础骨架](https://github.com/1321928757/spring-ddd-archetype))
+
+### 架构分层
+
+![](https://img-blog.csdnimg.cn/direct/e367e120dc7543d385f518fd5ff67267.png)
+
+DDD四层架构主要是app应用层，domain领域层，trigger触发器层，infrastructure基础建设层，本项目的架构在这基础上新增了api接口标准层，type通用类型层
+
+**✨spring-ddd-archetype-app**：**应用层**
+
+主要负责管理整个系统的配置，项目启动。对于一些第三方Bean的声明，AOP切面都可在这层完成
+
+**✨spring-ddd-archetype-api**：**接口标准层**
+
+该层的目的是为了让 HTTP 接口、RPC 接口，都能在一个标准下开发，为trigger层提供标准接口，这一层是为了编码规范，也可以不要这一层在trigger层直接编写对应实现类
+
+✨**spring-ddd-archetype-trigger**：**触发器层**
+
+触发器层主要是定义对触发动作的监听，比如Http请求接口，RPC服务，MQ消息监听，定时任务等触发动作。
+
+✨**spring-ddd-archetype-domain**：**领域层 **
+
+DDD架构最核心的部分，根据不同业务划分不同的领域包，为infrastructure层提供仓储接口，实现依赖倒置
+
+✨**spring-ddd-archetype-infrastructure**：**基础建设层**
+
+基础建设层主要负责与底层数据库的交互，消息的生产等，如mysql和缓存。实现了领域层提供的仓储接口，为领域层提供仓储服务，依赖倒置
+
+✨**spring-ddd-archetype-types**：**通用类型层**
+
+基础类型层是为了让提供一些像工具类的通用类，提高代码复用
+
+
+
+## 🐾业务流程
+
+### 奖品概率装配流程
+
+这里用到的抽奖算法大概是为每个奖品分配其范围，然后装配对应范围数量的元素到Map中，value即为奖品id，我们通过生成总范围内的一个随机数，再通过该随机数作为key从map中取，就实现了奖品的抽取，这种方式空间换时间，优点是速度快，缺点是数据不能太苛刻，假如总范围为1000000，那么装配到map中就很容易OOM爆内存，不过在正常的情况下还是没问题的
+
+![](https://github.com/1321928757/static-resources/blob/main/yuque_diagram%20(4).jpg?raw=true)
+
+### 抽奖业务流程图
+
+![](https://github.com/1321928757/static-resources/blob/main/yuque_diagram%20(2).jpg?raw=true)
+
+### 具体代码分析
+
+## 🕊作者动态
+
+最近需要准备竞赛，先鸽一段时间，会抽空把整体项目一些相关的信息补充上来，包括抽奖业务的整体流程(还没和活动用户结合)，以及项目整体的架构分层
