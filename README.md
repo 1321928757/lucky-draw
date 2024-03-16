@@ -19,6 +19,8 @@
 - mysql：8.2
 - redis：5.0
 
+
+
 ## ⭐后端开发进度
 
 - ✅抽奖策略和奖品库表设计
@@ -65,6 +67,56 @@ yarn run dev
 **效果图预览**
 
 ![](https://img-blog.csdnimg.cn/direct/9816127cb88f4e5aafd996c8ee32efbf.png)
+
+
+
+## 🫧项目架构
+
+项目整体根据DDD架构架构搭建，感兴趣的小伙伴可以看下我另外一个仓库([Spring DDD架构基础骨架](https://github.com/1321928757/spring-ddd-archetype))
+
+### 架构分层
+
+![](https://img-blog.csdnimg.cn/direct/e367e120dc7543d385f518fd5ff67267.png)
+
+DDD四层架构主要是app应用层，domain领域层，trigger触发器层，infrastructure基础建设层，本项目的架构在这基础上新增了api接口标准层，type通用类型层
+
+**✨spring-ddd-archetype-app**：**应用层**
+
+主要负责管理整个系统的配置，项目启动。对于一些第三方Bean的声明，AOP切面都可在这层完成
+
+**✨spring-ddd-archetype-api**：**接口标准层**
+
+该层的目的是为了让 HTTP 接口、RPC 接口，都能在一个标准下开发，为trigger层提供标准接口，这一层是为了编码规范，也可以不要这一层在trigger层直接编写对应实现类
+
+✨**spring-ddd-archetype-trigger**：**触发器层**
+
+触发器层主要是定义对触发动作的监听，比如Http请求接口，RPC服务，MQ消息监听，定时任务等触发动作。
+
+✨**spring-ddd-archetype-domain**：**领域层 **
+
+DDD架构最核心的部分，根据不同业务划分不同的领域包，为infrastructure层提供仓储接口，实现依赖倒置
+
+✨**spring-ddd-archetype-infrastructure**：**基础建设层**
+
+基础建设层主要负责与底层数据库的交互，消息的生产等，如mysql和缓存。实现了领域层提供的仓储接口，为领域层提供仓储服务，依赖倒置
+
+✨**spring-ddd-archetype-types**：**通用类型层**
+
+基础类型层是为了让提供一些像工具类的通用类，提高代码复用
+
+
+
+## 🐾业务流程
+
+### 抽奖概率装配流程图
+
+
+
+### 抽奖业务流程图
+
+![](https://github.com/1321928757/static-resources/blob/main/yuque_diagram%20(2).jpg?raw=true)
+
+### 具体代码分析
 
 ## 🕊作者动态
 
