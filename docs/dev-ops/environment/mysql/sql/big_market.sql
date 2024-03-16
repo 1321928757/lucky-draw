@@ -1,3 +1,16 @@
+# ************************************************************
+# Sequel Ace SQL dump
+# 版本号： 20050
+#
+# https://sequel-ace.com/
+# https://github.com/Sequel-Ace/Sequel-Ace
+#
+# 主机: 127.0.0.1 (MySQL 5.6.39)
+# 数据库: big_market
+# 生成时间: 2024-03-16 07:12:54 +0000
+# ************************************************************
+
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -57,11 +70,8 @@ CREATE TABLE `raffle_activity` (
   `activity_desc` varchar(128) NOT NULL COMMENT '活动描述',
   `begin_date_time` datetime NOT NULL COMMENT '开始时间',
   `end_date_time` datetime NOT NULL COMMENT '结束时间',
-  `stock_count` int(11) NOT NULL COMMENT '库存总量',
-  `stock_count_surplus` int(11) NOT NULL COMMENT '剩余库存',
-  `activity_count_id` bigint(12) NOT NULL COMMENT '活动参与次数配置',
   `strategy_id` bigint(8) NOT NULL COMMENT '抽奖策略ID',
-  `state` varchar(8) NOT NULL COMMENT '活动状态',
+  `state` varchar(8) NOT NULL DEFAULT 'create' COMMENT '活动状态',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
@@ -73,9 +83,9 @@ CREATE TABLE `raffle_activity` (
 LOCK TABLES `raffle_activity` WRITE;
 /*!40000 ALTER TABLE `raffle_activity` DISABLE KEYS */;
 
-INSERT INTO `raffle_activity` (`id`, `activity_id`, `activity_name`, `activity_desc`, `begin_date_time`, `end_date_time`, `stock_count`, `stock_count_surplus`, `activity_count_id`, `strategy_id`, `state`, `create_time`, `update_time`)
+INSERT INTO `raffle_activity` (`id`, `activity_id`, `activity_name`, `activity_desc`, `begin_date_time`, `end_date_time`, `strategy_id`, `state`, `create_time`, `update_time`)
 VALUES
-	(1,100301,'测试活动','测试活动','2024-03-09 10:15:10','2034-03-09 10:15:10',1000,1000,1,100006,'0','2024-03-09 10:15:10','2024-03-09 10:15:17');
+	(1,100301,'测试活动','测试活动','2024-03-09 10:15:10','2034-03-09 10:15:10',100006,'create','2024-03-09 10:15:10','2024-03-16 11:17:13');
 
 /*!40000 ALTER TABLE `raffle_activity` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -103,9 +113,39 @@ LOCK TABLES `raffle_activity_count` WRITE;
 
 INSERT INTO `raffle_activity_count` (`id`, `activity_count_id`, `total_count`, `day_count`, `month_count`, `create_time`, `update_time`)
 VALUES
-	(1,1,100,2,60,'2024-03-09 10:15:42','2024-03-09 10:15:42');
+	(1,11101,1,1,1,'2024-03-09 10:15:42','2024-03-16 12:30:54');
 
 /*!40000 ALTER TABLE `raffle_activity_count` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# 转储表 raffle_activity_sku
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `raffle_activity_sku`;
+
+CREATE TABLE `raffle_activity_sku` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `sku` bigint(12) NOT NULL COMMENT '商品sku - 把每一个组合当做一个商品',
+  `activity_id` bigint(12) NOT NULL COMMENT '活动ID',
+  `activity_count_id` bigint(12) NOT NULL COMMENT '活动个人参与次数ID',
+  `stock_count` int(11) NOT NULL COMMENT '商品库存',
+  `stock_count_surplus` int(11) NOT NULL COMMENT '剩余库存',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_sku` (`sku`),
+  KEY `idx_activity_id_activity_count_id` (`activity_id`,`activity_count_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+LOCK TABLES `raffle_activity_sku` WRITE;
+/*!40000 ALTER TABLE `raffle_activity_sku` DISABLE KEYS */;
+
+INSERT INTO `raffle_activity_sku` (`id`, `sku`, `activity_id`, `activity_count_id`, `stock_count`, `stock_count_surplus`, `create_time`, `update_time`)
+VALUES
+	(1,9011,100301,11101,0,0,'2024-03-16 11:41:09','2024-03-16 11:59:21');
+
+/*!40000 ALTER TABLE `raffle_activity_sku` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
