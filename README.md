@@ -112,11 +112,19 @@ DDD架构最核心的部分，根据不同业务划分不同的领域包，为in
 
 这里用到的抽奖算法大概是为每个奖品分配其范围，然后装配对应范围数量的元素到Map中，value即为奖品id，我们通过生成总范围内的一个随机数，再通过该随机数作为key从map中取，就实现了奖品的抽取，这种方式空间换时间，优点是速度快，缺点是数据不能太苛刻，假如总范围为1000000，那么装配到map中就很容易OOM爆内存，不过在正常的情况下还是没问题的
 
-![](https://github.com/1321928757/static-resources/blob/main/yuque_diagram%20(4).jpg?raw=true)
+![](https://github.com/1321928757/static-resources/blob/main/yuque_diagram%20(5).jpg?raw=true)
 
 ### 抽奖业务流程图
 
 ![](https://github.com/1321928757/static-resources/blob/main/yuque_diagram%20(2).jpg?raw=true)
+
+### 后续整体的流程(具体代码目前只完成了策略抽奖部分，路漫漫啊)
+
+我们把用户每次抽奖看转为一次订单下单操作
+
+![](https://github.com/1321928757/static-resources/blob/main/yuque_diagram%20(6).jpg?raw=true)
+
+### 库表设计
 
 ### 具体代码分析
 
