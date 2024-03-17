@@ -13,7 +13,7 @@ import java.util.List;
  * @create 2024/03/14 14:48:15
  */
 @Mapper
-@DBRouterStrategy(splitTable = true) // 开启分库分表路由，splitTable参数为true就代表开启分库
+@DBRouterStrategy(splitTable = true) // 订单流水开启分库分表
 public interface IRaffleActivityOrderDao {
 
 
