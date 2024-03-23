@@ -68,6 +68,11 @@ public class RaffleActivityOrder {
     private String state;
 
     /**
+     * 外部业务唯一ID，方便保持幂等
+     */
+    private String outBusinessNo;
+
+    /**
      * 创建时间
      */
     private Date createTime;
