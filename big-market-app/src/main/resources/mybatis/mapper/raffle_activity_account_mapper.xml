@@ -15,7 +15,24 @@
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
-
+    <insert id="insert">
+        insert into raffle_activity_account(user_id, activity_id, total_count, total_count_surplus, day_count,
+                                            day_count_surplus,
+                                            month_count, month_count_surplus, create_time, update_time)
+        values (#{userId}, #{activityId}, #{totalCount}, #{totalCountSurplus}, #{dayCount},
+                #{dayCountSurplus}, #{monthCount}, #{monthCountSurplus}, now(), now())
+    </insert>
+    <update id="updateAccountQuota">
+        update raffle_activity_account
+        set total_count = total_count + #{totalCount},
+            total_count_surplus = total_count_surplus + #{totalCountSurplus},
+            day_count = day_count + #{dayCount},
+            day_count_surplus = day_count_surplus + #{dayCountSurplus},
+            month_count = month_count + #{monthCount},
+            month_count_surplus = month_count_surplus + #{monthCountSurplus},
+            update_time = now()
+        where user_id = #{userId} and activity_id = #{activityId}
+    </update>
 
 
 </mapper>

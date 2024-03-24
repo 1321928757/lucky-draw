@@ -1,7 +1,9 @@
 package cn.bugstack.domain.activity.repository;
 
+import cn.bugstack.domain.activity.model.aggregate.CreateOrderAggregate;
 import cn.bugstack.domain.activity.model.entity.ActivityCountEntity;
 import cn.bugstack.domain.activity.model.entity.ActivityEntity;
+import cn.bugstack.domain.activity.model.entity.ActivityOrderEntity;
 import cn.bugstack.domain.activity.model.entity.ActivitySkuEntity;
 
 public interface IActivityRepository {
@@ -13,4 +15,7 @@ public interface IActivityRepository {
 
     // 根据活动参与次数id查询活动参与次数
     ActivityCountEntity queryRaffleActivityCountByActivityCountId(Long activityCountId);
+
+    // 保存订单
+    void saveOrder(CreateOrderAggregate createOrderAggregate);
 }

@@ -23,6 +23,11 @@ public class RaffleActivityOrder {
     private String userId;
 
     /**
+     * 活动sku
+     */
+    private Long sku;
+
+    /**
      * 活动ID
      */
     private Long activityId;
