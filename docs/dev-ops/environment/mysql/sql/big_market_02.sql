@@ -72,7 +72,7 @@ CREATE TABLE `raffle_activity_order_000`
     `activity_id`     bigint(12)          NOT NULL COMMENT '活动ID',
     `activity_name`   varchar(64)         NOT NULL COMMENT '活动名称',
     `strategy_id`     bigint(8)           NOT NULL COMMENT '抽奖策略ID',
-    `order_id`        varchar(12)         NOT NULL COMMENT '订单ID',
+    `order_id`        varchar(19)         NOT NULL COMMENT '订单ID',
     `order_time`      datetime            NOT NULL COMMENT '下单时间',
     `total_count`     int(8)              NOT NULL COMMENT '总次数',
     `day_count`       int(8)              NOT NULL COMMENT '日次数',
@@ -103,7 +103,7 @@ CREATE TABLE `raffle_activity_order_001`
     `activity_id`     bigint(12)          NOT NULL COMMENT '活动ID',
     `activity_name`   varchar(64)         NOT NULL COMMENT '活动名称',
     `strategy_id`     bigint(8)           NOT NULL COMMENT '抽奖策略ID',
-    `order_id`        varchar(12)         NOT NULL COMMENT '订单ID',
+    `order_id`        varchar(19)         NOT NULL COMMENT '订单ID',
     `order_time`      datetime            NOT NULL COMMENT '下单时间',
     `total_count`     int(8)              NOT NULL COMMENT '总次数',
     `day_count`       int(8)              NOT NULL COMMENT '日次数',
@@ -119,19 +119,6 @@ CREATE TABLE `raffle_activity_order_001`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='抽奖活动单';
 
-LOCK TABLES `raffle_activity_order_001` WRITE;
-/*!40000 ALTER TABLE `raffle_activity_order_001`
-    DISABLE KEYS */;
-
-INSERT INTO `raffle_activity_order_001` (`id`, `user_id`, `sku`, `activity_id`, `activity_name`, `strategy_id`,
-                                         `order_id`, `order_time`, `total_count`, `day_count`, `month_count`, `state`,
-                                         `out_business_no`, `create_time`, `update_time`)
-VALUES (3, 'xiaofuge', 9011, 100301, '测试活动', 100006, '383240888158', '2024-03-23 04:38:23', 1, 1, 1, 'completed',
-        '700091009111', '2024-03-23 12:38:23', '2024-03-23 12:38:23');
-
-/*!40000 ALTER TABLE `raffle_activity_order_001`
-    ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # 转储表 raffle_activity_order_002
@@ -147,7 +134,7 @@ CREATE TABLE `raffle_activity_order_002`
     `activity_id`     bigint(12)          NOT NULL COMMENT '活动ID',
     `activity_name`   varchar(64)         NOT NULL COMMENT '活动名称',
     `strategy_id`     bigint(8)           NOT NULL COMMENT '抽奖策略ID',
-    `order_id`        varchar(12)         NOT NULL COMMENT '订单ID',
+    `order_id`        varchar(19)         NOT NULL COMMENT '订单ID',
     `order_time`      datetime            NOT NULL COMMENT '下单时间',
     `total_count`     int(8)              NOT NULL COMMENT '总次数',
     `day_count`       int(8)              NOT NULL COMMENT '日次数',
@@ -178,7 +165,7 @@ CREATE TABLE `raffle_activity_order_003`
     `activity_id`     bigint(12)          NOT NULL COMMENT '活动ID',
     `activity_name`   varchar(64)         NOT NULL COMMENT '活动名称',
     `strategy_id`     bigint(8)           NOT NULL COMMENT '抽奖策略ID',
-    `order_id`        varchar(12)         NOT NULL COMMENT '订单ID',
+    `order_id`        varchar(19)         NOT NULL COMMENT '订单ID',
     `order_time`      datetime            NOT NULL COMMENT '下单时间',
     `total_count`     int(8)              NOT NULL COMMENT '总次数',
     `day_count`       int(8)              NOT NULL COMMENT '日次数',
