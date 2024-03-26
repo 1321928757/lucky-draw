@@ -2,6 +2,7 @@ package cn.bugstack.domain.activity.service.rule;
 import cn.bugstack.domain.activity.model.entity.ActivitySkuEntity;
 import cn.bugstack.domain.activity.model.entity.ActivityEntity;
 import cn.bugstack.domain.activity.model.entity.ActivityCountEntity;
+import cn.bugstack.domain.activity.service.rule.factory.DefaultActivityChainFactory;
 
 /**
  * @author Luckysj @刘仕杰
@@ -10,6 +11,6 @@ import cn.bugstack.domain.activity.model.entity.ActivityCountEntity;
  */
 public interface IActionChain extends IActionChainArmory {
 
-    boolean action(ActivitySkuEntity activitySkuEntity, ActivityEntity activityEntity, ActivityCountEntity activityCountEntity);
+    DefaultActivityChainFactory.LogicCheckTypeVo action(ActivitySkuEntity activitySkuEntity, ActivityEntity activityEntity, ActivityCountEntity activityCountEntity);
 
 }

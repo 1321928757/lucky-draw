@@ -1,14 +1,13 @@
 package cn.bugstack.domain.activity.service.rule.factory;
 
 import cn.bugstack.domain.activity.service.rule.IActionChain;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 /**
- * @author Fuzhengwei bugstack.cn @小傅哥
+ * @author  Luckysj @刘仕杰
  * @description 责任链工厂
  * @create 2024-03-23 10:30
  */
@@ -43,6 +42,20 @@ public class DefaultActivityChainFactory {
         private final String code;
         private final String info;
 
+    }
+
+
+    @Getter
+    @AllArgsConstructor
+    public enum LogicCheckTypeVo{
+        SUCCESS("0000", "活动状态校验通过"),
+        REFUSE_INVALID_STATE("0001","校验拒绝,无效的活动状态"),
+        REFUSE_NOBEGIN_TIME("0002","校验拒绝,活动未开启"),
+        REFUSE_END_TIME("0002","校验拒绝,活动已结束")
+        ;
+
+        private final String code;
+        private final String info;
     }
 
 }

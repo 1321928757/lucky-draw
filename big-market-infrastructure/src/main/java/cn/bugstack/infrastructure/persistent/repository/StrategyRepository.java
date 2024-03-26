@@ -257,6 +257,7 @@ public class StrategyRepository implements IStrategyRepository {
 
     }
 
+    // 这个方法是用来获取堵塞队列的，换成mq后就用不到了
     @Override
     public StrategyAwardStockKeyVO takeQueueValue() throws InterruptedException {
         String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY;

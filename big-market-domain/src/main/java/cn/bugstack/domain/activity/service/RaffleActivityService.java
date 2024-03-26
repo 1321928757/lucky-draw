@@ -7,7 +7,6 @@ import cn.bugstack.domain.activity.repository.IActivityRepository;
 import cn.bugstack.domain.activity.service.rule.IActionChain;
 import cn.bugstack.domain.activity.service.rule.factory.DefaultActivityChainFactory;
 import cn.hutool.core.lang.generator.SnowflakeGenerator;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -62,7 +61,7 @@ public class RaffleActivityService extends AbstractRaffleActivity {
     }
 
     @Override
-    protected Boolean activityCheckChain(ActivitySkuEntity activitySkuEntity, ActivityEntity activityEntity, ActivityCountEntity activityCountEntity) {
+    protected DefaultActivityChainFactory.LogicCheckTypeVo activityCheckChain(ActivitySkuEntity activitySkuEntity, ActivityEntity activityEntity, ActivityCountEntity activityCountEntity) {
         IActionChain iActionChain = activityChainFactory.openActionChain();
         return iActionChain.action(activitySkuEntity, activityEntity, activityCountEntity);
     }

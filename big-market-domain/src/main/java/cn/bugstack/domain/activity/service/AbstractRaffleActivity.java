@@ -7,7 +7,6 @@ import cn.bugstack.domain.activity.service.rule.factory.DefaultActivityChainFact
 import cn.bugstack.types.enums.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import cn.hutool.core.lang.generator.SnowflakeGenerator;
-import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 
@@ -41,9 +40,11 @@ public abstract class AbstractRaffleActivity extends RaffleActivitySupport imple
         ActivityCountEntity activityCountEntity = queryActivityCount(activitySkuEntity.getActivityCountId());
 
         // 3.活动责任链规则校验(主要是判断活动的有效性),这里我们暂时返回Boolean值，实际会返回校验结果实体
-        Boolean result = this.activityCheckChain(activitySkuEntity, activityEntity, activityCountEntity);
-        if(!result){
-            throw new AppException("fail");//后面会改，先写个大概
+        DefaultActivityChainFactory.LogicCheckTypeVo checkType = this.activityCheckChain(activitySkuEntity, activityEntity, activityCountEntity);
+
+        // 3.1校验结果判断
+        if(!DefaultActivityChainFactory.LogicCheckTypeVo.SUCCESS.equals(checkType)){
+            throw new AppException(checkType.getCode(), checkType.getInfo());
         }
 
         // 4.构建抽奖订单聚合对象
@@ -61,7 +62,7 @@ public abstract class AbstractRaffleActivity extends RaffleActivitySupport imple
     protected abstract CreateOrderAggregate buildCreateOrderAggregate(SkuRechargeEntity skuRechargeEntity, ActivitySkuEntity activitySkuEntity, ActivityEntity activityEntity, ActivityCountEntity activityCountEntity);
 
 
-    protected abstract Boolean activityCheckChain(ActivitySkuEntity activitySkuEntity, ActivityEntity activityEntity, ActivityCountEntity activityCountEntity);
+    protected abstract DefaultActivityChainFactory.LogicCheckTypeVo activityCheckChain(ActivitySkuEntity activitySkuEntity, ActivityEntity activityEntity, ActivityCountEntity activityCountEntity);
 
     
 }
