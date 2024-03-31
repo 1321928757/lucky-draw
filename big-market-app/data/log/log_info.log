@@ -1244,3 +1244,173 @@ Caused by: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '7
 24-03-31.22:12:32.145 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
 24-03-31.22:12:33.118 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
 24-03-31.22:12:33.120 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-03-31.22:12:36.683 [main            ] INFO  RaffleOrderTest        - Starting RaffleOrderTest using Java 17.0.6 on DESKTOP-BU4MLU6 with PID 5476 (started by kitie in D:\javaProject\big-market\big-market-app)
+24-03-31.22:12:36.684 [main            ] INFO  RaffleOrderTest        - The following 1 profile is active: "local"
+24-03-31.22:12:37.377 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-03-31.22:12:37.379 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-03-31.22:12:37.404 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 17 ms. Found 0 Redis repository interfaces.
+24-03-31.22:12:38.492 [main            ] INFO  Version                - Redisson 3.26.0
+24-03-31.22:12:38.800 [redisson-netty-1-6] INFO  ConnectionsHolder      - 1 connections initialized for localhost/127.0.0.1:6379
+24-03-31.22:12:38.813 [redisson-netty-1-14] INFO  ConnectionsHolder      - 5 connections initialized for localhost/127.0.0.1:6379
+24-03-31.22:12:40.847 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-03-31.22:12:40.981 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.80.213:5672]
+24-03-31.22:12:41.137 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#17332039:0/SimpleConnection@436d2bb9 [delegate=amqp://admin@154.201.80.213:5672/, localPort= 56515]
+24-03-31.22:12:41.419 [main            ] INFO  RaffleOrderTest        - Started RaffleOrderTest in 5.051 seconds (JVM running for 5.612)
+24-03-31.22:12:41.737 [main            ] INFO  HikariDataSource       - Retail_HikariCP - Starting...
+24-03-31.22:12:41.878 [main            ] INFO  HikariDataSource       - Retail_HikariCP - Start completed.
+24-03-31.22:12:41.948 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:41.948 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:41.948 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.122 [main            ] INFO  EventPublisher         - 发送MQ消息 topic:bigmarket.activity_sku_stock_zero message:{"data":9011,"id":"82013572643","timestamp":1711894361950}
+24-03-31.22:12:42.123 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.126 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.126 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.126 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.128 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.130 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.130 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.130 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.132 [main            ] INFO  EventPublisher         - 发送MQ消息 topic:bigmarket.activity_sku_stock_zero message:{"data":9011,"id":"08515420875","timestamp":1711894362131}
+24-03-31.22:12:42.133 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.136 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.136 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.136 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.137 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.140 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.140 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.140 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.141 [main            ] INFO  EventPublisher         - 发送MQ消息 topic:bigmarket.activity_sku_stock_zero message:{"data":9011,"id":"37061203605","timestamp":1711894362141}
+24-03-31.22:12:42.141 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.144 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.144 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.144 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.145 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.148 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.148 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.148 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.149 [main            ] INFO  EventPublisher         - 发送MQ消息 topic:bigmarket.activity_sku_stock_zero message:{"data":9011,"id":"66016390539","timestamp":1711894362149}
+24-03-31.22:12:42.149 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.152 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.153 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.153 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.153 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"82013572643","timestamp":1711894361950}
+24-03-31.22:12:42.154 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.157 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.157 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.157 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.158 [main            ] INFO  EventPublisher         - 发送MQ消息 topic:bigmarket.activity_sku_stock_zero message:{"data":9011,"id":"59947181039","timestamp":1711894362158}
+24-03-31.22:12:42.159 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.161 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.161 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.161 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.162 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.165 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.165 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.165 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.167 [main            ] INFO  EventPublisher         - 发送MQ消息 topic:bigmarket.activity_sku_stock_zero message:{"data":9011,"id":"78348537986","timestamp":1711894362167}
+24-03-31.22:12:42.167 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.169 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.170 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.170 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.171 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.173 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.173 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.173 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.174 [main            ] INFO  EventPublisher         - 发送MQ消息 topic:bigmarket.activity_sku_stock_zero message:{"data":9011,"id":"20915356177","timestamp":1711894362174}
+24-03-31.22:12:42.174 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.177 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.177 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.177 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.179 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.182 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，消费完成，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"82013572643","timestamp":1711894361950}
+24-03-31.22:12:42.185 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.185 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.185 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.186 [main            ] INFO  EventPublisher         - 发送MQ消息 topic:bigmarket.activity_sku_stock_zero message:{"data":9011,"id":"70213269963","timestamp":1711894362186}
+24-03-31.22:12:42.186 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.188 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.188 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.188 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.190 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.191 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.192 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.192 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.193 [main            ] INFO  EventPublisher         - 发送MQ消息 topic:bigmarket.activity_sku_stock_zero message:{"data":9011,"id":"49025475362","timestamp":1711894362193}
+24-03-31.22:12:42.193 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.195 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.195 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.195 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.197 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.199 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.199 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.199 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.201 [main            ] INFO  EventPublisher         - 发送MQ消息 topic:bigmarket.activity_sku_stock_zero message:{"data":9011,"id":"44993179310","timestamp":1711894362201}
+24-03-31.22:12:42.201 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.203 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.203 [main            ] INFO  ActivityBaseActionChain - 活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：100301，活动SKU：100301
+24-03-31.22:12:42.203 [main            ] INFO  ActivitySkuStockActionChain - 活动责任链-活动次数库存处理开始，sku：9011，activityId：100301
+24-03-31.22:12:42.204 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.208 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"08515420875","timestamp":1711894362131}
+24-03-31.22:12:42.209 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，消费完成，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"08515420875","timestamp":1711894362131}
+24-03-31.22:12:42.236 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"37061203605","timestamp":1711894362141}
+24-03-31.22:12:42.239 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，消费完成，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"37061203605","timestamp":1711894362141}
+24-03-31.22:12:42.264 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"66016390539","timestamp":1711894362149}
+24-03-31.22:12:42.267 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，消费完成，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"66016390539","timestamp":1711894362149}
+24-03-31.22:12:42.303 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"59947181039","timestamp":1711894362158}
+24-03-31.22:12:42.307 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，消费完成，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"59947181039","timestamp":1711894362158}
+24-03-31.22:12:42.331 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"78348537986","timestamp":1711894362167}
+24-03-31.22:12:42.334 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，消费完成，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"78348537986","timestamp":1711894362167}
+24-03-31.22:12:42.358 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"20915356177","timestamp":1711894362174}
+24-03-31.22:12:42.362 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，消费完成，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"20915356177","timestamp":1711894362174}
+24-03-31.22:12:42.386 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"70213269963","timestamp":1711894362186}
+24-03-31.22:12:42.389 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，消费完成，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"70213269963","timestamp":1711894362186}
+24-03-31.22:12:42.415 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"49025475362","timestamp":1711894362193}
+24-03-31.22:12:42.418 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，消费完成，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"49025475362","timestamp":1711894362193}
+24-03-31.22:12:42.444 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"44993179310","timestamp":1711894362201}
+24-03-31.22:12:42.447 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] INFO  ActivitySkuStockZeroCustomer - 监听活动sku库存消耗为0消息，消费完成，topic: bigmarket.activity_sku_stock_zero message: {"data":9011,"id":"44993179310","timestamp":1711894362201}
+24-03-31.22:12:45.003 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:12:45.006 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:12:50.012 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:12:50.013 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:12:55.013 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:12:55.015 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:13:00.010 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:13:00.012 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:13:05.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:13:05.016 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:13:10.001 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:13:10.002 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:13:15.010 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:13:15.011 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:13:20.002 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:13:20.003 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:13:25.004 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:13:25.005 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:13:30.012 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:13:30.017 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:13:35.005 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:13:35.007 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:13:40.003 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:13:40.004 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:13:45.012 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:13:45.014 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:13:50.014 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:13:50.015 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:13:55.007 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:13:55.008 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:14:00.014 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:14:00.016 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:14:05.014 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:14:05.015 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:14:10.008 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:14:10.010 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:14:15.008 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:14:15.009 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:14:20.004 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:14:20.005 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:14:25.015 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:14:25.016 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:14:30.014 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:14:30.015 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
+24-03-31.22:14:35.011 [scheduling-1    ] INFO  UpdateAwardStockJob    - 定时任务，更新奖品消耗库存 开始
+24-03-31.22:14:35.011 [scheduling-1    ] INFO  UpdateActivitySkuStockJob - 定时任务，更新活动sku消耗库存 开始
