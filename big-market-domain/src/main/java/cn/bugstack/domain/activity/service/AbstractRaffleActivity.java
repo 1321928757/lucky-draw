@@ -39,13 +39,9 @@ public abstract class AbstractRaffleActivity extends RaffleActivitySupport imple
         // 2.3 查询次数信息
         ActivityCountEntity activityCountEntity = queryActivityCount(activitySkuEntity.getActivityCountId());
 
-        // 3.活动责任链规则校验(主要是判断活动的有效性),这里我们暂时返回Boolean值，实际会返回校验结果实体
-        DefaultActivityChainFactory.LogicCheckTypeVo checkType = this.activityCheckChain(activitySkuEntity, activityEntity, activityCountEntity);
-
-        // 3.1校验结果判断
-        if(!DefaultActivityChainFactory.LogicCheckTypeVo.SUCCESS.equals(checkType)){
-            throw new AppException(checkType.getCode(), checkType.getInfo());
-        }
+        // 3.活动责任链规则校验(活动状态，时间，库存)，如果校验不通过会抛出业务异常
+        // 我们这里不需要返回结果，就直接抛出异常了，也在可以返回一个校验结果类，完成校验后再判断校验结果
+        this.activityCheckChain(activitySkuEntity, activityEntity, activityCountEntity);
 
         // 4.构建抽奖订单聚合对象
         CreateOrderAggregate createOrderAggregate = this.buildCreateOrderAggregate(skuRechargeEntity, activitySkuEntity,activityEntity,activityCountEntity);
@@ -62,7 +58,7 @@ public abstract class AbstractRaffleActivity extends RaffleActivitySupport imple
     protected abstract CreateOrderAggregate buildCreateOrderAggregate(SkuRechargeEntity skuRechargeEntity, ActivitySkuEntity activitySkuEntity, ActivityEntity activityEntity, ActivityCountEntity activityCountEntity);
 
 
-    protected abstract DefaultActivityChainFactory.LogicCheckTypeVo activityCheckChain(ActivitySkuEntity activitySkuEntity, ActivityEntity activityEntity, ActivityCountEntity activityCountEntity);
+    protected abstract void activityCheckChain(ActivitySkuEntity activitySkuEntity, ActivityEntity activityEntity, ActivityCountEntity activityCountEntity);
 
     
 }

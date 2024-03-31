@@ -14,8 +14,8 @@ public enum ActivityStateVO {
 
     // 这里后续根据业务场景改动
     created("create", "创建"),
-    posted("create", "发布"),
-    closed("create", "关闭");
+    opened("open", "开启"),
+    closed("closed", "关闭");
 
     private final String code;
     private final String desc;

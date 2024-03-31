@@ -44,18 +44,4 @@ public class DefaultActivityChainFactory {
 
     }
 
-
-    @Getter
-    @AllArgsConstructor
-    public enum LogicCheckTypeVo{
-        SUCCESS("0000", "活动状态校验通过"),
-        REFUSE_INVALID_STATE("0001","校验拒绝,无效的活动状态"),
-        REFUSE_NOBEGIN_TIME("0002","校验拒绝,活动未开启"),
-        REFUSE_END_TIME("0002","校验拒绝,活动已结束")
-        ;
-
-        private final String code;
-        private final String info;
-    }
-
 }

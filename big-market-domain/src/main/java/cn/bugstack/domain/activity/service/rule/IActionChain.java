@@ -11,6 +11,6 @@ import cn.bugstack.domain.activity.service.rule.factory.DefaultActivityChainFact
  */
 public interface IActionChain extends IActionChainArmory {
 
-    DefaultActivityChainFactory.LogicCheckTypeVo action(ActivitySkuEntity activitySkuEntity, ActivityEntity activityEntity, ActivityCountEntity activityCountEntity);
+    void action(ActivitySkuEntity activitySkuEntity, ActivityEntity activityEntity, ActivityCountEntity activityCountEntity);
 
 }

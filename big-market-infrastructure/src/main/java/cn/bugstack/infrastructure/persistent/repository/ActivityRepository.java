@@ -14,12 +14,15 @@ import cn.bugstack.middleware.db.router.strategy.IDBRouterStrategy;
 import cn.bugstack.types.common.Constants;
 import cn.bugstack.types.enums.ResponseCode;
 import cn.bugstack.types.exception.AppException;
+import jodd.time.TimeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Luckysj @刘仕杰
@@ -54,25 +57,17 @@ public class ActivityRepository implements IActivityRepository {
 
     @Override
     public ActivitySkuEntity queryActivitySku(Long sku) {
-        // 1.首先从缓存中读取
-        String cacheKey = Constants.RedisKey.ACTIVITY_SKU_KEY + sku;
-        ActivitySkuEntity activitySkuEntity = redisService.getValue(cacheKey);
-        if(activitySkuEntity != null) return activitySkuEntity;
 
-        // 2.缓存不存在，查库
         RaffleActivitySku raffleActivitySku = raffleActivitySkuDao.queryActivitySku(sku);
-        activitySkuEntity = ActivitySkuEntity.builder()
+        if(raffleActivitySku == null) return null;
+
+        return ActivitySkuEntity.builder()
                 .sku(raffleActivitySku.getSku())
                 .activityId(raffleActivitySku.getActivityId())
                 .activityCountId(raffleActivitySku.getActivityCountId())
                 .stockCount(raffleActivitySku.getStockCount())
                 .stockCountSurplus(raffleActivitySku.getStockCountSurplus())
                 .build();
-
-        // 3.存入缓存
-        redisService.setValue(cacheKey, activitySkuEntity);
-
-        return activitySkuEntity;
     }
 
     @Override
@@ -180,5 +175,34 @@ public class ActivityRepository implements IActivityRepository {
             // 记得清除分库分表路由，防止干扰本次连接的其他请求
             dbRouter.clear();
         }
+    }
+
+    @Override
+    public void cacheActivityStock(String cacheKey, Integer stockCount) {
+        if(redisService.isExists(cacheKey)) return;
+        redisService.setAtomicLong(cacheKey, stockCount);
+    }
+
+    @Override
+    public boolean subtractionActivitySkuStock(Long sku, String cacheKey, Date endDateTime) {
+        // 1.使用decr原子操作扣减库存,返回值为扣减后的库存
+        long surplus = redisService.decr(cacheKey);
+        if(surplus == 0){
+            // 库存消耗没了以后，发送MQ消息，更新数据库库存
+            return false;
+        }else if(surplus < 0){
+            // 恢复库存到0，直接返回false
+            redisService.setAtomicLong(cacheKey, 0);
+            return false;
+        }
+
+        // 2.我们这里需要加锁来预防超卖问题，锁的过期时间为活动结束时间 + 延迟一段时间，这样在活动结束后会自动释放锁
+        String lockKey = cacheKey + Constants.UNDERLINE + surplus;
+        // 计算锁存活时间(活动结束时间 + 1天 - 当前时间)
+        Long expiresMills = endDateTime.getTime() + TimeUnit.DAYS.toMillis(1) - System.currentTimeMillis();
+        Boolean lock = redisService.setNx(lockKey, expiresMills, TimeUnit.MILLISECONDS);
+        if(!lock) log.warn("活动SKU次数库存上锁失败，SKU:{}，库存数:{}", sku, surplus);
+
+        return lock; //加锁成功即说明本次扣减的库存是有效的
     }
 }

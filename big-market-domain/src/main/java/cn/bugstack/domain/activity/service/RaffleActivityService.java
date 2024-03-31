@@ -61,8 +61,8 @@ public class RaffleActivityService extends AbstractRaffleActivity {
     }
 
     @Override
-    protected DefaultActivityChainFactory.LogicCheckTypeVo activityCheckChain(ActivitySkuEntity activitySkuEntity, ActivityEntity activityEntity, ActivityCountEntity activityCountEntity) {
+    protected void activityCheckChain(ActivitySkuEntity activitySkuEntity, ActivityEntity activityEntity, ActivityCountEntity activityCountEntity) {
         IActionChain iActionChain = activityChainFactory.openActionChain();
-        return iActionChain.action(activitySkuEntity, activityEntity, activityCountEntity);
+        iActionChain.action(activitySkuEntity, activityEntity, activityCountEntity);
     }
 }
