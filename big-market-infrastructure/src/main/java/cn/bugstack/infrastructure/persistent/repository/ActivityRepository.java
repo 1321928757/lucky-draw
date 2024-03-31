@@ -5,6 +5,7 @@ import cn.bugstack.domain.activity.model.entity.ActivityCountEntity;
 import cn.bugstack.domain.activity.model.entity.ActivityEntity;
 import cn.bugstack.domain.activity.model.entity.ActivityOrderEntity;
 import cn.bugstack.domain.activity.model.entity.ActivitySkuEntity;
+import cn.bugstack.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import cn.bugstack.domain.activity.model.valobj.ActivityStateVO;
 import cn.bugstack.domain.activity.repository.IActivityRepository;
 import cn.bugstack.infrastructure.persistent.dao.*;
@@ -204,5 +205,15 @@ public class ActivityRepository implements IActivityRepository {
         if(!lock) log.warn("活动SKU次数库存上锁失败，SKU:{}，库存数:{}", sku, surplus);
 
         return lock; //加锁成功即说明本次扣减的库存是有效的
+    }
+
+    @Override
+    public void skuCountStockConsumeSendQueue(ActivitySkuStockKeyVO activitySkuStockKeyVO) {
+
+    }
+
+    @Override
+    public ActivitySkuStockKeyVO takeQueueValue() throws InterruptedException {
+        return null;
     }
 }
