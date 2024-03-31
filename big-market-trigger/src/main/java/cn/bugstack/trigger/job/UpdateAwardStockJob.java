@@ -15,12 +15,13 @@ import javax.annotation.Resource;
  * @create 2024-02-09 12:13
  */
 @Slf4j
-// @Component()
+@Component()
 public class UpdateAwardStockJob {
 
     @Resource
     private IRaffleStock raffleStock;
 
+    // 每五秒消费一次redisson等待队列中的库存更新任务
     @Scheduled(cron = "0/5 * * * * ?")
     public void exec() {
         try {
