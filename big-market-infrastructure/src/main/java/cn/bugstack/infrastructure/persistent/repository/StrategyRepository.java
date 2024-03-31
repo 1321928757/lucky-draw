@@ -247,12 +247,13 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Override
     public void awardStockConsumeSendQueue(StrategyAwardStockKeyVO strategyAwardStockKeyVO) {
-        // 获取redisson的延迟队列，将消息放入延迟队列中，等待定时任务消费，相比于mq方式，这种方式消费降速效果更加明显，
+        // 获取redisson的延迟队列，将消息放入延迟队列中，等待定时任务消费，相比于mq方式
         String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY;
         RBlockingQueue<StrategyAwardStockKeyVO> blockingQueue = redisService.getBlockingQueue(cacheKey);
         RDelayedQueue<StrategyAwardStockKeyVO> delayedQueue = redisService.getDelayedQueue(blockingQueue);
         delayedQueue.offer(strategyAwardStockKeyVO, 3, TimeUnit.SECONDS);
 
+        // 以下方式为使用Mq来进行更新降速，但不好控制消费速度
         // // 将对象序列化为Json
         // String jsonString = JSON.toJSONString(strategyAwardStockKeyVO);
         // // 发送到rabbit消息队列中
