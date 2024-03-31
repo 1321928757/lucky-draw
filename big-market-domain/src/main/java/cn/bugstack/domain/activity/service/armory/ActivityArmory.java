@@ -3,6 +3,7 @@ package cn.bugstack.domain.activity.service.armory;
 import cn.bugstack.domain.activity.model.entity.ActivitySkuEntity;
 import cn.bugstack.domain.activity.repository.IActivityRepository;
 import cn.bugstack.types.common.Constants;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Date;
  * @description 
  * @create 2024/03/31 14:04:12
  */
+@Component
 public class ActivityArmory implements IActivityArmory, IActivityDispatch{
     @Resource
     private IActivityRepository activityRepository;
@@ -29,6 +31,7 @@ public class ActivityArmory implements IActivityArmory, IActivityDispatch{
         return null;
     }
 
+
     private void cacheActivityStock(Long sku, Integer stockCount) {
         // 1.拼接key
         String cacheKey = Constants.RedisKey.ACTIVITY_SKU_STOCK_COUNT_KEY + sku;
@@ -40,5 +43,11 @@ public class ActivityArmory implements IActivityArmory, IActivityDispatch{
     public boolean subtractionActivitySkuStock(Long sku, Date endDateTime) {
         String cacheKey = Constants.RedisKey.ACTIVITY_SKU_STOCK_COUNT_KEY + sku;
         return activityRepository.subtractionActivitySkuStock(sku, cacheKey, endDateTime);
+    }
+
+    @Override
+    public Boolean skuStockAssembleCheck(Long sku) {
+        String cacheKey = Constants.RedisKey.ACTIVITY_SKU_STOCK_COUNT_KEY + sku;
+        return activityRepository.skuStockAssembleCheck(cacheKey);
     }
 }

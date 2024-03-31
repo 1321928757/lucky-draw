@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.annotation.Resource;
 
 /**
- * @author Fuzhengwei bugstack.cn @小傅哥
+ * @author Luckysj @刘仕杰
  * @description 抽奖活动配置Dao测试
  * @create 2024-03-09 11:30
  */

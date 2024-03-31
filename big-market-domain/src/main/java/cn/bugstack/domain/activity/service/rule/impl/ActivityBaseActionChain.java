@@ -27,7 +27,7 @@ public class ActivityBaseActionChain extends AbstractActionChain {
     public void action(ActivitySkuEntity activitySkuEntity, ActivityEntity activityEntity, ActivityCountEntity activityCountEntity) {
         log.info("活动责任链-基础信息【有效期、状态、库存】校验开始，活动ID：{}，活动SKU：{}", activityEntity.getActivityId(), activitySkuEntity.getActivityId());
         // 1.校验活动的状态
-        if(ActivityStateVO.opened != activityEntity.getState()){
+        if(ActivityStateVO.open != activityEntity.getState()){
             throw new AppException(ResponseCode.ACTIVITY_NO_OPEN.getCode(), ResponseCode.ACTIVITY_NO_OPEN.getInfo());
         }
         // 2.校验时间是否合法
@@ -40,6 +40,10 @@ public class ActivityBaseActionChain extends AbstractActionChain {
         if(activitySkuEntity.getStockCount() <= 0){
             throw new AppException(ResponseCode.ACTIVITY_NO_STOCK.getCode(), ResponseCode.ACTIVITY_NO_STOCK.getInfo());
         }
+
+        log.info("活动责任链-基础信息【有效期、状态、库存】校验完成，活动ID：{}，活动SKU：{}", activityEntity.getActivityId(), activitySkuEntity.getActivityId());
+
+        if(next() != null) next().action(activitySkuEntity, activityEntity, activityCountEntity);
     }
 
 }

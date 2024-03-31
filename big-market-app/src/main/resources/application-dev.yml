@@ -92,6 +92,8 @@ spring:
     listener:
       simple:
         prefetch: 1 # 每次投递n个消息，消费完在投递n个
+    topic:
+      activity_sku_stock_zero: bigmarket.activity_sku_stock_zero  # 库存消耗为0的通知主题
 
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml

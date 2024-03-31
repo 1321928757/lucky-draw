@@ -18,7 +18,8 @@ public enum ResponseCode {
     STRATEGY_ID_ERROR("ERR_BIZ_003", "对应的抽奖策略未配置"),
     ACTIVITY_NO_OPEN("ERR_BIZ_004", "活动未开启"),
     ACTIVITY_NOT_TIME("ERR_BIZ_005", "非活动日期范围"),
-    ACTIVITY_NO_STOCK("ERR_BIZ_006", "活动库存不足");
+    ACTIVITY_NO_STOCK("ERR_BIZ_006", "活动库存不足"),
+    ACTIVITY_SKU_NO_ASSEMBLE("ERR_BIZ_007", "活动对应sku配置未装配，请通过IActivityArmory完成装配");
 
 
     private String code;

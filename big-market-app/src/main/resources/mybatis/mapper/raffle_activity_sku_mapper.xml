@@ -11,6 +11,14 @@
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
+    <update id="updateActivitySkuStock" parameterType="java.lang.Long">
+        update raffle_activity_sku set stock_count_surplus = stock_count_surplus - 1, update_time = now()
+        where sku = #{sku} and stock_count_surplus > 0
+    </update>
+    <update id="clearActivitySkuStock">
+        update raffle_activity_sku set stock_count_surplus = 0, update_time = now()
+        where sku = #{sku}
+    </update>
 
     <select id="queryActivitySku" parameterType="java.lang.Long" resultMap="dataMap">
         select sku, activity_id, activity_count_id, stock_count, stock_count_surplus
