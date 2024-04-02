@@ -2,6 +2,8 @@ package cn.bugstack.infrastructure.persistent.redis;
 
 import org.redisson.api.*;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Redis 服务
  *
@@ -261,5 +263,17 @@ public interface IRedisService {
      */
     <T> RBloomFilter<T> getBloomFilter(String key);
 
+    /**
+     * setNX操作
+     * @param key 键
+     * @return Boolean 是否设置成功
+     */
     Boolean setNx(String key);
+
+    /**
+     * 带有存活时间的setNX操作
+     * @param key 键
+     * @return Boolean 是否设置成功
+     */
+    Boolean setNx(String key, Long expiresMills, TimeUnit timeUnit);
 }

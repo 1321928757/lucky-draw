@@ -93,9 +93,27 @@
             <artifactId>big-market-infrastructure</artifactId>
         </dependency>
 
+        <!--rabbitmq-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+        <!--分库分表路由组件-->
+        <dependency>
+            <groupId>cn.bugstack.middleware</groupId>
+            <artifactId>db-router-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jeasy</groupId>
+            <artifactId>easy-random-core</artifactId>
+        </dependency>
+
+        <!--hutool工具包-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
     </dependencies>
 

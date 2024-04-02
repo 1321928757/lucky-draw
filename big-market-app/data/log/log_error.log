@@ -1,1 +1,258 @@
-24-03-05.09:19:59.927 [AMQP Connection 154.201.75.137:5672] WARN  ForgivingExceptionHandler - An unexpected connection driver error occurred (Exception message: Socket closed)
+24-03-24.10:18:47.926 [Retail_HikariCP housekeeper] WARN  HikariPool             - Retail_HikariCP - Thread starvation or clock leap detected (housekeeper delta=49s852ms438µs200ns).
+24-03-24.10:22:23.112 [main            ] ERROR ActivityRepository     - 写入订单记录，唯一索引冲突 userId: 123123123123 activityId: 100301 sku: 9011
+org.springframework.dao.DuplicateKeyException: 
+### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '700091009111' for key 'raffle_activity_order_000.uq_out_business_no'
+### The error may exist in file [D:\javaProject\big-market\big-market-app\target\classes\mybatis\mapper\raffle_activity_order_mapper.xml]
+### The error may involve cn.bugstack.infrastructure.persistent.dao.IRaffleActivityOrderDao.insert-Inline
+### The error occurred while setting parameters
+### SQL: insert into raffle_activity_order_000         (user_id, sku, activity_id, activity_name, strategy_id, order_id, order_time, state, out_business_no,          total_count, day_count, month_count,          create_time, update_time)         values (?, ?, ?, ?, ?, ?, ?, ?,                 ?, ?, ?, ?,                 now(), now())
+### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '700091009111' for key 'raffle_activity_order_000.uq_out_business_no'
+; Duplicate entry '700091009111' for key 'raffle_activity_order_000.uq_out_business_no'; nested exception is java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '700091009111' for key 'raffle_activity_order_000.uq_out_business_no'
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:247)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:70)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:91)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:441)
+	at jdk.proxy2/jdk.proxy2.$Proxy109.insert(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.insert(SqlSessionTemplate.java:272)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:62)
+	at org.apache.ibatis.binding.MapperProxy$PlainMethodInvoker.invoke(MapperProxy.java:152)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:85)
+	at jdk.proxy2/jdk.proxy2.$Proxy129.insert(Unknown Source)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:344)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:198)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at cn.bugstack.middleware.db.router.DBRouterJoinPoint.doRouter(DBRouterJoinPoint.java:65)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:634)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:624)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:72)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:220)
+	at jdk.proxy2/jdk.proxy2.$Proxy130.insert(Unknown Source)
+	at cn.bugstack.infrastructure.persistent.repository.ActivityRepository.lambda$saveOrder$0(ActivityRepository.java:165)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
+	at cn.bugstack.infrastructure.persistent.repository.ActivityRepository.saveOrder(ActivityRepository.java:162)
+	at cn.bugstack.infrastructure.persistent.repository.ActivityRepository$$FastClassBySpringCGLIB$$5fc4459a.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:137)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at cn.bugstack.infrastructure.persistent.repository.ActivityRepository$$EnhancerBySpringCGLIB$$f61f795.saveOrder(<generated>)
+	at cn.bugstack.domain.activity.service.RaffleActivityService.doCreateOrder(RaffleActivityService.java:30)
+	at cn.bugstack.domain.activity.service.AbstractRaffleActivity.createSkuRechargeOrder(AbstractRaffleActivity.java:53)
+	at cn.bugstack.test.domain.activity.RaffleOrderTest.test_createSkuRechargeOrder(RaffleOrderTest.java:34)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestExecutionCallbacks.evaluate(RunBeforeTestExecutionCallbacks.java:74)
+	at org.springframework.test.context.junit4.statements.RunAfterTestExecutionCallbacks.evaluate(RunAfterTestExecutionCallbacks.java:84)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:75)
+	at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:86)
+	at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:84)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:251)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:97)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:190)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:69)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater$1.execute(IdeaTestRunner.java:38)
+	at com.intellij.rt.execution.junit.TestsRepeater.repeat(TestsRepeater.java:11)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35)
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:232)
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:55)
+Caused by: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '700091009111' for key 'raffle_activity_order_000.uq_out_business_no'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:370)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.execute(HikariProxyPreparedStatement.java)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:47)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:74)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:63)
+	at jdk.proxy2/jdk.proxy2.$Proxy205.update(Unknown Source)
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:50)
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:117)
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:76)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:197)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.insert(DefaultSqlSession.java:184)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:427)
+	... 76 common frames omitted
+24-03-31.21:54:24.060 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.064 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.068 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.071 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.075 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.078 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.081 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.085 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.088 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.091 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.094 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.097 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.104 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.106 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.112 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.115 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.118 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.120 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.122 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:54:24.124 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.288 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.290 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.293 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.296 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.298 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.300 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.303 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.305 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.308 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.314 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.318 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.321 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.324 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.328 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.340 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.344 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.347 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.351 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.353 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:55:31.356 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.387 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.389 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.393 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.396 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.398 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.400 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.403 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.405 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.407 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.409 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.411 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.415 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.417 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.419 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.422 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.424 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.426 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.431 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.437 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:57:23.441 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.739 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.743 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.746 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.749 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.751 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.754 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.756 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.758 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.761 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.763 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.765 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.768 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.770 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.772 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.777 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.781 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.786 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.789 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.793 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.21:58:12.795 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.325 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.328 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.331 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.333 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.336 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.339 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.342 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.346 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.350 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.355 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.359 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.362 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.365 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.367 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.376 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.379 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.382 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.384 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.388 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:00:01.392 [main            ] WARN  RaffleOrderTest        - 活动未开启
+24-03-31.22:03:19.373 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.467 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.471 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.475 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.479 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.482 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.486 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.489 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.494 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.500 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.504 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.509 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.513 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.517 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.520 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.529 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.534 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.538 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.542 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.546 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:10:01.550 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.123 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.128 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.133 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.137 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.141 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.145 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.149 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.154 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.159 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.162 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.167 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.171 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.174 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.179 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.186 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.190 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.193 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.197 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.201 [main            ] WARN  RaffleOrderTest        - 活动库存不足
+24-03-31.22:12:42.204 [main            ] WARN  RaffleOrderTest        - 活动库存不足

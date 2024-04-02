@@ -39,3 +39,5 @@ build/
 /data/
 /.idea/
 /big-market-app/src/main/resources/application-local.yml
+/big-market-app/data/log/
+/big-market-app/data/log/

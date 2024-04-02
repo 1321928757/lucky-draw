@@ -20,7 +20,7 @@ import java.io.IOException;
  * @create 2024/03/11 20:43:39
  */
 @Slf4j
-@Component
+// @Component
 public class StockUpdateMqListener {
     @Resource
     private IRaffleStock raffleStock;

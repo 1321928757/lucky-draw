@@ -27,6 +27,12 @@
             <groupId>cn.bugstack</groupId>
             <artifactId>big-market-domain</artifactId>
         </dependency>
+
+        <!--分库分表路由组件-->
+        <dependency>
+            <groupId>cn.bugstack.middleware</groupId>
+            <artifactId>db-router-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -30,8 +30,9 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
     public DefaultTreeFactory.StrategyAwardVO process(String userId, Long strategyId, Integer awardId) {
         DefaultTreeFactory.StrategyAwardVO strategyAwardData = null;
 
-        // 获取基础信息
+        // 获取决策树根节点名称
         String nextNode = ruleTreeVO.getTreeRootRuleNode();
+        // 获取决策树所有的结点信息
         Map<String, RuleTreeNodeVO> treeNodeMap = ruleTreeVO.getTreeNodeMap();
 
         // 获取起始节点「根节点记录了第一个要执行的规则」
@@ -52,11 +53,12 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
             ruleTreeNode = treeNodeMap.get(nextNode);
         }
 
-        // 返回最终结果
+        // 决策树校验完成，返回最终结果
         return strategyAwardData;
     }
 
     public String nextNode(String matterValue, List<RuleTreeNodeLineVO> treeNodeLineVOList) {
+        // 根据设定的匹配规则匹配下一个结点(比如等于)
         if (null == treeNodeLineVOList || treeNodeLineVOList.isEmpty()) return null;
         for (RuleTreeNodeLineVO nodeLine : treeNodeLineVOList) {
             if (decisionLogic(matterValue, nodeLine)) {

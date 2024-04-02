@@ -60,7 +60,13 @@ public class RaffleController implements IRaffleService {
                     .build();
             log.info("抽奖策略装配完成 strategyId：{} response: {}", strategyId, JSON.toJSONString(response));
             return response;
-        } catch (Exception e) {
+        } catch (AppException e) {
+            log.error("抽奖策略装配失败 strategyId：{}", strategyId, e);
+            return Response.<Boolean>builder()
+                    .code(e.getCode())
+                    .info(e.getInfo())
+                    .build();
+        } catch (Exception e){
             log.error("抽奖策略装配失败 strategyId：{}", strategyId, e);
             return Response.<Boolean>builder()
                     .code(ResponseCode.UN_ERROR.getCode())

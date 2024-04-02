@@ -167,17 +167,17 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Override
     public RuleTreeVO queryRuleTreeVOByTreeId(String treeId) {
-        // 优先从缓存获取
+        // 优先从缓存获取组装好的决策树
         String cacheKey = Constants.RedisKey.RULE_TREE_VO_KEY + treeId;
         RuleTreeVO ruleTreeVOCache = redisService.getValue(cacheKey);
         if (null != ruleTreeVOCache) return ruleTreeVOCache;
 
-        // 从数据库获取
+        // 从数据库获取决策树，决策树结点，决策树路径等信息
         RuleTree ruleTree = ruleTreeDao.queryRuleTreeByTreeId(treeId);
         List<RuleTreeNode> ruleTreeNodes = ruleTreeNodeDao.queryRuleTreeNodeListByTreeId(treeId);
         List<RuleTreeNodeLine> ruleTreeNodeLines = ruleTreeNodeLineDao.queryRuleTreeNodeLineListByTreeId(treeId);
 
-        // 1. tree node line 转换Map结构
+        // 1. 我们根据决策树下的节点和路径信息，将路径信息转为map结构，key为当前位置，value为当前位置的下级路径
         Map<String, List<RuleTreeNodeLineVO>> ruleTreeNodeLineMap = new HashMap<>();
         for (RuleTreeNodeLine ruleTreeNodeLine : ruleTreeNodeLines) {
             RuleTreeNodeLineVO ruleTreeNodeLineVO = RuleTreeNodeLineVO.builder()
@@ -188,11 +188,13 @@ public class StrategyRepository implements IStrategyRepository {
                     .ruleLimitValue(RuleLogicCheckTypeVO.valueOf(ruleTreeNodeLine.getRuleLimitValue()))
                     .build();
 
+            // 从map中取出对应key的list(如果不存在就会自动创建，如果存在会直接返回拿取到)
             List<RuleTreeNodeLineVO> ruleTreeNodeLineVOList = ruleTreeNodeLineMap.computeIfAbsent(ruleTreeNodeLine.getRuleNodeFrom(), k -> new ArrayList<>());
+            // 向List中添加路径
             ruleTreeNodeLineVOList.add(ruleTreeNodeLineVO);
         }
 
-        // 2. tree node 转换为Map结构
+        // 2. 将所有的结点转为Map结构，我们利用了第一步生成的ruleTreeNodeLineMap，可获取到本结点下的所有路径
         Map<String, RuleTreeNodeVO> treeNodeMap = new HashMap<>();
         for (RuleTreeNode ruleTreeNode : ruleTreeNodes) {
             RuleTreeNodeVO ruleTreeNodeVO = RuleTreeNodeVO.builder()
@@ -214,6 +216,7 @@ public class StrategyRepository implements IStrategyRepository {
                 .treeNodeMap(treeNodeMap)
                 .build();
 
+        // 4. 存入缓存中，减少下次组装决策树的时耗
         redisService.setValue(cacheKey, ruleTreeVODB);
         return ruleTreeVODB;
     }
@@ -244,19 +247,21 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Override
     public void awardStockConsumeSendQueue(StrategyAwardStockKeyVO strategyAwardStockKeyVO) {
-        // 获取redisson的延迟队列，将消息放入延迟队列中，等待定时任务消费，后续优化为rabbitmq
-        // String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY;
-        // RBlockingQueue<StrategyAwardStockKeyVO> blockingQueue = redisService.getBlockingQueue(cacheKey);
-        // RDelayedQueue<StrategyAwardStockKeyVO> delayedQueue = redisService.getDelayedQueue(blockingQueue);
-        // delayedQueue.offer(strategyAwardStockKeyVO, 3, TimeUnit.SECONDS);
+        // 获取redisson的延迟队列，将消息放入延迟队列中，等待定时任务消费，相比于mq方式
+        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY;
+        RBlockingQueue<StrategyAwardStockKeyVO> blockingQueue = redisService.getBlockingQueue(cacheKey);
+        RDelayedQueue<StrategyAwardStockKeyVO> delayedQueue = redisService.getDelayedQueue(blockingQueue);
+        delayedQueue.offer(strategyAwardStockKeyVO, 3, TimeUnit.SECONDS);
 
-        // 将对象序列化为Json
-        String jsonString = JSON.toJSONString(strategyAwardStockKeyVO);
-        // 发送到rabbit消息队列中
-        rabbitTemplate.convertAndSend(Constants.MessageQueueKey.StockUpdateExchange, Constants.MessageQueueKey.StockUpdateKey, jsonString);
+        // 以下方式为使用Mq来进行更新降速，但不好控制消费速度
+        // // 将对象序列化为Json
+        // String jsonString = JSON.toJSONString(strategyAwardStockKeyVO);
+        // // 发送到rabbit消息队列中
+        // rabbitTemplate.convertAndSend(Constants.MessageQueueKey.StockUpdateExchange, Constants.MessageQueueKey.StockUpdateKey, jsonString);
 
     }
 
+    // 这个方法是用来获取堵塞队列的，换成mq后就用不到了
     @Override
     public StrategyAwardStockKeyVO takeQueueValue() throws InterruptedException {
         String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY;
