@@ -13,7 +13,7 @@
 
 ---
 
->**作者**：LuckySJ-刘仕杰 - 在线演示地址 [**www.luckylottery.site**](www.luckylottery.site)
+>在线演示地址 [**www.luckylottery.site**](www.luckylottery.site)
 
 ## 💫运行配置
 
