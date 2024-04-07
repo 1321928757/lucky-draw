@@ -49,6 +49,7 @@ public class ActivityRepository implements IActivityRepository {
 
     @Resource
     private IRaffleActivityAccountDao raffleActivityAccountDao;
+
     @Resource
     private IRaffleActivityCountDao raffleActivityCountDao;
 
