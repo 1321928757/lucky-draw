@@ -7,7 +7,7 @@
 
 核心技术：SpringBoot、MyBatis、MySQL、Redis、Redisson、Guava、RabbitMQ。
 
-项目尚未完结，只完成了一个简单的抽奖功能，仍在持续迭代，小伙伴可以先行扩展
+代码不会上传全部，感兴趣的同学可以加入小傅哥的星球学习，谢谢理解
 
 前端很简单，故就没有上传了，使用了 https://100px.net/ 这个大转盘插件，vue/react/原生js都可以实现的
 
