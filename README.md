@@ -74,7 +74,7 @@ yarn run dev
 
 
 
-## 🫧项目架构
+## 🐾部分业务流程(详细内容请加入小傅哥星球)
 
 项目整体根据DDD架构架构搭建，感兴趣的小伙伴可以看下我另外一个仓库([Spring DDD架构基础骨架](https://github.com/1321928757/spring-ddd-archetype))
 
