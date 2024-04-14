@@ -1,5 +1,8 @@
 package cn.bugstack.infrastructure.persistent.dao;
 
+import cn.bugstack.infrastructure.persistent.po.RaffleActivityAccountDay;
+import cn.bugstack.infrastructure.persistent.po.RaffleActivityAccountMonth;
+import cn.bugstack.middleware.db.router.annotation.DBRouter;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -9,4 +12,13 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface IRaffleActivityAccountDayDao {
+
+    // 根据用户id和活动id查询对应日次数账户
+    @DBRouter
+    RaffleActivityAccountDay queryActivityAccountMonthByUserId(RaffleActivityAccountDay activityAccountDay);
+
+    // 扣减日次数账户额度
+    int updateActivityAccountDaySubtractionQuota(RaffleActivityAccountDay raffleActivityAccountMonth);
+
+    void insertActivityAccountDay(RaffleActivityAccountDay build);
 }

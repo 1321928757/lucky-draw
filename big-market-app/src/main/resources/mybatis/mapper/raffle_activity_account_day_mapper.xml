@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.bugstack.infrastructure.persistent.dao.IRaffleActivityAccountDayDao">
+
+    <resultMap id="dateMap" type="cn.bugstack.infrastructure.persistent.po.RaffleActivityAccountDay">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="activityId" column="activity_id"/>
+        <result property="day" column="day"/>
+        <result property="dayCount" column="day_count"/>
+        <result property="dayCountSurplus" column="day_count_surplus"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <insert id="insertActivityAccountDay">
+        insert into raffle_activity_account_day(user_id, activity_id, day, day_count, day_count_surplus, create_time,
+                                                update_time)
+        values(#{userId}, #{activityId}, #{day}, #{dayCount}, #{dayCountSurplus}, now(), now())
+    </insert>
+    <update id="updateActivityAccountDaySubtractionQuota">
+        update raffle_activity_account_day
+        set day_count_surplus = day_count_surplus - 1, update_time = now()
+        where user_id = #{userId} and activity_id = #{activityId} and day = #{day} and day_count_surplus > 0
+
+    </update>
+    <select id="queryActivityAccountMonthByUserId"
+            resultType="cn.bugstack.infrastructure.persistent.po.RaffleActivityAccountDay">
+        select id, user_id, activity_id, day, day_count, day_count_surplus, create_time, update_time
+        from raffle_activity_account_day
+        where user_id = #{userId} and activity_id = #{activityId}
+    </select>
 </mapper>

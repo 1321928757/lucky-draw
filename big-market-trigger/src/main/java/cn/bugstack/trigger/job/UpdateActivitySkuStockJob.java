@@ -1,9 +1,7 @@
 package cn.bugstack.trigger.job;
 
 import cn.bugstack.domain.activity.model.valobj.ActivitySkuStockKeyVO;
-import cn.bugstack.domain.activity.service.ISkuStock;
-import cn.bugstack.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
-import cn.bugstack.domain.strategy.service.IRaffleStock;
+import cn.bugstack.domain.activity.service.IRaffleActivitySkuStockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -19,7 +17,7 @@ import javax.annotation.Resource;
 @Component()
 public class UpdateActivitySkuStockJob {
     @Resource
-    private ISkuStock skuStock;
+    private IRaffleActivitySkuStockService skuStock;
 
     // 每五秒消费一次redisson等待队列中的库存更新任务
     @Scheduled(cron = "0/5 * * * * ?")

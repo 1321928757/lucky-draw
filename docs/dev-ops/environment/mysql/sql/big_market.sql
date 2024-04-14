@@ -1,3 +1,16 @@
+# ************************************************************
+# Sequel Ace SQL dump
+# 版本号： 20050
+#
+# https://sequel-ace.com/
+# https://github.com/Sequel-Ace/Sequel-Ace
+#
+# 主机: 127.0.0.1 (MySQL 5.6.39)
+# 数据库: big_market
+# 生成时间: 2024-04-06 08:42:11 +0000
+# ************************************************************
+
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -130,7 +143,7 @@ LOCK TABLES `raffle_activity_sku` WRITE;
 
 INSERT INTO `raffle_activity_sku` (`id`, `sku`, `activity_id`, `activity_count_id`, `stock_count`, `stock_count_surplus`, `create_time`, `update_time`)
 VALUES
-    (1,9011,100301,11101,20,0,'2024-03-16 11:41:09','2024-03-30 17:10:07');
+    (1,9011,100301,11101,20,19,'2024-03-16 11:41:09','2024-04-05 15:57:50');
 
 /*!40000 ALTER TABLE `raffle_activity_sku` ENABLE KEYS */;
 UNLOCK TABLES;

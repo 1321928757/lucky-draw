@@ -1,4 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.bugstack.infrastructure.persistent.dao.IRaffleActivityAccountMonthDao">
+    <resultMap id="dateMap" type="cn.bugstack.infrastructure.persistent.po.RaffleActivityAccountMonth">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="activityId" column="activity_id"/>
+        <result property="month" column="month"/>
+        <result property="monthCount" column="month_count"/>
+        <result property="monthCountSurplus" column="month_count_surplus"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <insert id="insertActivityAccountMonth" parameterType="cn.bugstack.infrastructure.persistent.po.RaffleActivityAccountMonth">
+        insert into raffle_activity_account_month(user_id, activity_id, month, month_count, month_count_surplus,
+                                                  create_time, update_time)
+        values(#{userId},#{activityId},#{month},#{monthCount},#{monthCountSurplus},now(),now())
+    </insert>
+    <update id="updateActivityAccountMonthSubtractionQuota" parameterType="cn.bugstack.infrastructure.persistent.po.RaffleActivityAccountMonth">
+        update raffle_activity_account_month
+        set month_count_surplus = month_count_surplus - 1, update_time = now()
+        where user_id = #{userId} and activity_id = #{activityId} and month = #{month} and month_count_surplus > 0
+    </update>
+    <select id="queryActivityAccountMonthByUserId"
+            resultType="cn.bugstack.infrastructure.persistent.po.RaffleActivityAccountMonth">
+        select id, user_id, activity_id, month, month_count, month_count_surplus, create_time, update_time
+        from raffle_activity_account_month
+        where user_id = #{userId} and activity_id = #{activityId}
+    </select>
 </mapper>

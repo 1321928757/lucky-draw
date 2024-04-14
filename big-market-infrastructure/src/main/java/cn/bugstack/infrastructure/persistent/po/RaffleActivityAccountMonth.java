@@ -1,6 +1,9 @@
 package cn.bugstack.infrastructure.persistent.po;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -10,6 +13,9 @@ import java.util.Date;
  * @create 2024/04/07 09:23:47
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class RaffleActivityAccountMonth {
     /**
      * 自增ID
