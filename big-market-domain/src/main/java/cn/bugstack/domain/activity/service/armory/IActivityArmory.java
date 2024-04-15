@@ -21,4 +21,12 @@ public interface IActivityArmory {
     * @date 2024/03/31 21:34:20
     */
     Boolean skuStockAssembleCheck(Long sku);
+
+    /**
+    * @description 根据活动id装配活动
+    * @param activityId 活动id
+    * @return Boolean 是否装配
+    * @date 2024/04/15 20:59:55
+    */
+    Boolean assembleActivitySkuByActivityId(Long activityId);
 }

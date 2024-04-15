@@ -51,6 +51,9 @@ public class StrategyRepository implements IStrategyRepository {
     private IRuleTreeNodeLineDao ruleTreeNodeLineDao;
 
     @Resource
+    private IRaffleActivityDao raffleActivityDao;
+
+    @Resource
     private RabbitTemplate rabbitTemplate;
 
     @Override
@@ -303,6 +306,11 @@ public class StrategyRepository implements IStrategyRepository {
         redisService.setValue(cacheKey, strategyAwardEntity);
         // 返回数据
         return strategyAwardEntity;
+    }
+
+    @Override
+    public Long queryStrategyIdByActivityId(Long activityId) {
+        return raffleActivityDao.queryStrategyIdByActivityId(activityId);
     }
 
 }

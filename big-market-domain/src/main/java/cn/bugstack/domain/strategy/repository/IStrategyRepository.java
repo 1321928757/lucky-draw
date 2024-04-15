@@ -90,4 +90,5 @@ public interface IStrategyRepository {
      */
     StrategyAwardEntity queryStrategyAwardEntity(Long strategyId, Integer awardId);
 
+    Long queryStrategyIdByActivityId(Long activityId);
 }

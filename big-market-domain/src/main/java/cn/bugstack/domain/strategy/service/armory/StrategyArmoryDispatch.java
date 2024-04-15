@@ -69,6 +69,14 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
         return true;
     }
 
+    @Override
+    public boolean assembleLotteryStrategyByActivityId(Long activityId) {
+        // 1.首先根据活动id查出策略id
+        Long strategyId = repository.queryStrategyIdByActivityId(activityId);
+        // 2.根据策略id装配策略
+        return assembleLotteryStrategy(strategyId);
+    }
+
     /**
      * 计算公式；
      * 1. 找到范围内最小的概率值，比如 0.1、0.02、0.003，需要找到的值是 0.003
@@ -83,7 +91,7 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
                 .min(BigDecimal::compareTo)
                 .orElse(BigDecimal.ZERO);
 
-        // 2. 循环计算找到概率范围值
+        // 2. 总值 / 最小值 求得概率范围值
         BigDecimal rateRange = BigDecimal.valueOf(convert(minAwardRate.doubleValue()));
 
         // 3. 生成策略奖品概率查找表「这里指需要在list集合中，存放上对应的奖品占位即可，占位越多等于概率越高」

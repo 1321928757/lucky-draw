@@ -28,7 +28,9 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author Luckysj @刘仕杰
@@ -310,14 +312,14 @@ public class ActivityRepository implements IActivityRepository {
                     raffleActivityAccount.setActivityId(activityId);
                     int totalUpdateState = raffleActivityAccountDao.updateActivityAccountSubtractionQuota(raffleActivityAccount);
 
-                    if (totalUpdateState == 0){
+                    if (totalUpdateState == 0) {
                         status.setRollbackOnly();
                         log.warn("写入创建参与活动记录，更新总账户额度不足，异常 userId: {} activityId: {}", userId, activityId);
                         throw new AppException(ResponseCode.ACCOUNT_TOTAL_QUOTA_ERROR.getCode(), ResponseCode.ACCOUNT_TOTAL_QUOTA_ERROR.getInfo());
 
                     }
                     // 2.更新月次数额度账户
-                    if(createPartakeOrderAggregate.isExistAccountDay()){
+                    if (createPartakeOrderAggregate.isExistAccountDay()) {
                         // 2.1 存在月次数额度账户，扣减额度
                         RaffleActivityAccountMonth raffleActivityAccountMonth = new RaffleActivityAccountMonth();
                         raffleActivityAccountMonth.setUserId(userId);
@@ -325,13 +327,13 @@ public class ActivityRepository implements IActivityRepository {
                         raffleActivityAccountMonth.setMonth(activityAccountMonthEntity.getMonth());
                         int monthUpdateState = raffleActivityAccountMonthDao.updateActivityAccountMonthSubtractionQuota(raffleActivityAccountMonth);
 
-                        if (monthUpdateState == 0){
+                        if (monthUpdateState == 0) {
                             status.setRollbackOnly();
                             log.warn("写入创建参与活动记录，更新月账户额度不足，异常 userId: {} activityId: {}", userId, activityId);
                             throw new AppException(ResponseCode.ACCOUNT_MONTH_QUOTA_ERROR.getCode(), ResponseCode.ACCOUNT_MONTH_QUOTA_ERROR.getInfo());
 
                         }
-                    }else{
+                    } else {
                         // 2.1 不存在月次数额度账户，插入扣减次数后的记录
                         raffleActivityAccountMonthDao.insertActivityAccountMonth(RaffleActivityAccountMonth.builder()
                                 .userId(activityAccountMonthEntity.getUserId())
@@ -465,5 +467,20 @@ public class ActivityRepository implements IActivityRepository {
                 .dayCountSurplus(activityAccountDay.getDayCountSurplus())
                 .day(activityAccountDay.getDay())
                 .build();
+    }
+
+    @Override
+    public List<ActivitySkuEntity> queryActivitySkuListByActivityId(Long activityId) {
+        // 1.查询数据
+        List<RaffleActivitySku> activitySkus = raffleActivitySkuDao.queryActivitySkuListByActivityId(activityId);
+        // 2.转换为实体对象
+        return activitySkus.stream().map(raffleActivitySku -> ActivitySkuEntity.builder()
+                .activityId(raffleActivitySku.getActivityId())
+                .sku(raffleActivitySku.getSku())
+                .activityCountId(raffleActivitySku.getActivityCountId())
+                .stockCount(raffleActivitySku.getStockCount())
+                .stockCountSurplus(raffleActivitySku.getStockCountSurplus())
+                .build()
+        ).collect(Collectors.toList());
     }
 }

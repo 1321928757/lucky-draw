@@ -14,8 +14,8 @@ import java.util.List;
 @Mapper
 public interface IStrategyDao {
 
-    List<Strategy> queryStrategyList();
 
     Strategy queryStrategyByStrategyId(Long strategyId);
 
+    Long queryStrategyIdByActivityId(Long activityId);
 }
