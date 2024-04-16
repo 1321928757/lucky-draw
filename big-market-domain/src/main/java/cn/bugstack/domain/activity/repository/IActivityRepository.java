@@ -1,14 +1,13 @@
 package cn.bugstack.domain.activity.repository;
 
-import cn.bugstack.domain.activity.model.aggregate.CreateOrderAggregate;
-import cn.bugstack.domain.activity.model.entity.ActivityCountEntity;
-import cn.bugstack.domain.activity.model.entity.ActivityEntity;
-import cn.bugstack.domain.activity.model.entity.ActivityOrderEntity;
-import cn.bugstack.domain.activity.model.entity.ActivitySkuEntity;
+import cn.bugstack.domain.activity.model.aggregate.CreatePartakeOrderAggregate;
+import cn.bugstack.domain.activity.model.aggregate.CreateQuotaOrderAggregate;
+import cn.bugstack.domain.activity.model.entity.*;
 import cn.bugstack.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import cn.bugstack.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 
 import java.util.Date;
+import java.util.List;
 
 public interface IActivityRepository {
     // 根据SKU号查询活动sku信息
@@ -21,7 +20,7 @@ public interface IActivityRepository {
     ActivityCountEntity queryRaffleActivityCountByActivityCountId(Long activityCountId);
 
     // 保存订单
-    void saveOrder(CreateOrderAggregate createOrderAggregate);
+    void saveOrder(CreateQuotaOrderAggregate createOrderAggregate);
 
     // 缓存活动sku库存数据
     void cacheActivityStock(String cacheKey, Integer stockCount);
@@ -47,4 +46,20 @@ public interface IActivityRepository {
 
     // 检查对应sku的库存数据是否已经装配
     Boolean skuStockAssembleCheck(String cacheKey);
+
+    // 查询未使用的的活动抽奖订单
+    UserRaffleOrderEntity queryNoUsedRaffleOrder(PartakeRaffleActivityEntity partakeRaffleActivityEntity);
+
+    void saveCreatePartakeOrderAggregate(CreatePartakeOrderAggregate createPartakeOrderAggregate);
+
+    // 根据id查询次数账户
+    ActivityAccountEntity queryActivityAccountByUserId(String userId, Long activityId);
+
+    // 根据id查询月次数账户
+    ActivityAccountMonthEntity queryActivityAccountMonthByUserId(String userId, Long activityId, String month);
+
+    // 根据id查询日次数账户
+    ActivityAccountDayEntity queryActivityAccountDayByUserId(String userId, Long activityId, String day);
+
+    List<ActivitySkuEntity> queryActivitySkuListByActivityId(Long activityId);
 }

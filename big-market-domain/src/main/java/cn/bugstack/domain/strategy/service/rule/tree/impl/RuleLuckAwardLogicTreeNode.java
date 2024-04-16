@@ -19,6 +19,7 @@ public class RuleLuckAwardLogicTreeNode implements ILogicTreeNode {
     @Override
     public DefaultTreeFactory.TreeActionEntity logic(String userId, Long strategyId, Integer awardId, String ruleValue) {
         log.info("规则过滤-兜底奖品 userId:{} strategyId:{} awardId:{} ruleValue:{}", userId, strategyId, awardId, ruleValue);
+        // 1.解析兜底奖励规则，split第一个元素为兜底奖品id，第二个参数为范围
         String[] split = ruleValue.split(Constants.COLON);
         if (split.length == 0) {
             log.error("规则过滤-兜底奖品，兜底奖品未配置告警 userId:{} strategyId:{} awardId:{}", userId, strategyId, awardId);

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Luckysj @刘仕杰
@@ -49,5 +50,21 @@ public class ActivityArmory implements IActivityArmory, IActivityDispatch{
     public Boolean skuStockAssembleCheck(Long sku) {
         String cacheKey = Constants.RedisKey.ACTIVITY_SKU_STOCK_COUNT_KEY + sku;
         return activityRepository.skuStockAssembleCheck(cacheKey);
+    }
+
+    @Override
+    public Boolean assembleActivitySkuByActivityId(Long activityId) {
+        // 1.查询出活动所有的sku信息
+        List<ActivitySkuEntity> skuEntities =  activityRepository.queryActivitySkuListByActivityId(activityId);
+
+        // 2.装配sku信息和对应的次数信息
+        for (ActivitySkuEntity skuEntity : skuEntities) {
+            cacheActivityStock(skuEntity.getSku(), skuEntity.getStockCount());
+            activityRepository.queryRaffleActivityCountByActivityCountId(skuEntity.getActivityCountId());
+        }
+
+        // 3.缓存活动信息
+        activityRepository.queryRaffleActivityByActivityId(activityId);
+        return true;
     }
 }

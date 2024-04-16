@@ -25,4 +25,11 @@
         from raffle_activity_sku
         where sku = #{sku}
     </select>
+    <select id="queryActivitySkuListByActivityId"
+            parameterType="Long"
+            resultMap="dataMap">
+        select id, sku, activity_id, activity_count_id, stock_count, stock_count_surplus, create_time, update_time
+        from raffle_activity_sku
+        where activity_id = #{activityId}
+    </select>
 </mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bugstack.infrastructure.persistent.dao.ITaskDao">
+    <resultMap id="dataMap" type="cn.bugstack.infrastructure.persistent.po.Task">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="topic" property="topic"/>
+        <result column="message" property="message"/>
+        <result column="message_id" property="messageId"/>
+        <result column="state" property="state"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="cn.bugstack.infrastructure.persistent.po.Task">
+        insert into task(user_id, topic, message, message_id, state, create_time, update_time)
+        values (#{userId}, #{topic}, #{message}, #{messageId}, #{state}, now(), now())
+    </insert>
+    <update id="updateTaskSendMessageCompleted" parameterType="cn.bugstack.infrastructure.persistent.po.Task">
+        update task set state = 'complete'
+        where user_id = #{userId} and message_id = #{messageId}
+    </update>
+    <update id="updateTaskSendMessageFailed" parameterType="cn.bugstack.infrastructure.persistent.po.Task">
+        update task set state = 'fail'
+        where user_id = #{userId} and message_id = #{messageId}
+    </update>
+    <select id="queryNoSendMessageTaskList" resultType="cn.bugstack.infrastructure.persistent.po.Task">
+        select id, user_id, topic, message, message_id, state, create_time, update_time
+        from task
+        where state = 'fail' or (state = 'create' and now() - update_time > 6)
+    </select>
+</mapper>

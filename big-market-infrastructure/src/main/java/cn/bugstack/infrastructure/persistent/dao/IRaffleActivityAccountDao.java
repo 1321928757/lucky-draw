@@ -1,6 +1,9 @@
 package cn.bugstack.infrastructure.persistent.dao;
 
+import cn.bugstack.domain.activity.model.entity.ActivityAccountEntity;
 import cn.bugstack.infrastructure.persistent.po.RaffleActivityAccount;
+import cn.bugstack.infrastructure.persistent.po.RaffleActivityAccountMonth;
+import cn.bugstack.middleware.db.router.annotation.DBRouter;
 import cn.bugstack.middleware.db.router.annotation.DBRouterStrategy;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,7 +14,20 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface IRaffleActivityAccountDao {
+    // 为次数账户添加次数
     int updateAccountQuota(RaffleActivityAccount raffleActivityAccount);
 
+    // 插入次数账户记录
     void insert(RaffleActivityAccount raffleActivityAccount);
+
+    // 根据用户id和活动id查询对应总次数账户
+    @DBRouter
+    RaffleActivityAccount queryActivityAccountByUserId(RaffleActivityAccount activityAccount);
+
+    // 扣减总账户额度
+    int updateActivityAccountSubtractionQuota(RaffleActivityAccount raffleActivityAccount);
+
+    void updateActivityAccountMonthSurplusImageQuota(RaffleActivityAccount raffleActivityAccount);
+
+    void updateActivityAccountDaySurplusImageQuota(RaffleActivityAccount raffleActivityAccount);
 }
