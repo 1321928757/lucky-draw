@@ -54,7 +54,13 @@ public class StrategyRepository implements IStrategyRepository {
     private IRaffleActivityDao raffleActivityDao;
 
     @Resource
-    private RabbitTemplate rabbitTemplate;
+    private IRaffleActivityAccountDayDao raffleActivityAccountDayDao;
+
+    @Resource
+    private IRaffleActivityAccountDao raffleActivityAccountDao;
+
+    @Resource
+    private IRaffleActivityAccountMonthDao raffleActivityAccountMonthDao;
 
     @Override
     public List<StrategyAwardEntity> queryStrategyAwardList(Long strategyId) {
@@ -312,5 +318,53 @@ public class StrategyRepository implements IStrategyRepository {
     public Long queryStrategyIdByActivityId(Long activityId) {
         return raffleActivityDao.queryStrategyIdByActivityId(activityId);
     }
+
+    @Override
+    public Integer queryTodayUserRaffleCount(String userId, Long strategyId) {
+        // 1.首先根据策略id查询出活动id
+        Long activityId = raffleActivityDao.queryActivityIdByStrategyId(strategyId);
+
+        // 2.根据活动id和用户id查询出用户日次数账户
+        RaffleActivityAccountDay raffleActivityAccountDayReq = new RaffleActivityAccountDay();
+        raffleActivityAccountDayReq.setDay(raffleActivityAccountDayReq.currentDay());
+        raffleActivityAccountDayReq.setUserId(userId);
+        raffleActivityAccountDayReq.setActivityId(activityId);
+        RaffleActivityAccountDay raffleActivityAccountDay = raffleActivityAccountDayDao.queryActivityAccountDayByUserId(raffleActivityAccountDayReq);
+
+        // 3.总次数 - 剩余次数 = 使用次数
+        return raffleActivityAccountDay.getDayCount() - raffleActivityAccountDay.getDayCountSurplus();
+    }
+
+    @Override
+    public Integer queryMonthUserRaffleCount(String userId, Long strategyId) {
+        // 1.首先根据策略id查询出活动id
+        Long activityId = raffleActivityDao.queryActivityIdByStrategyId(strategyId);
+
+        // 2.根据活动id和用户id查询出用户日次数账户
+        RaffleActivityAccountMonth raffleActivityAccountMonthReq = new RaffleActivityAccountMonth();
+        raffleActivityAccountMonthReq.setMonth(raffleActivityAccountMonthReq.currentMonth());
+        raffleActivityAccountMonthReq.setUserId(userId);
+        raffleActivityAccountMonthReq.setActivityId(activityId);
+        RaffleActivityAccountMonth raffleActivityAccountMonth = raffleActivityAccountMonthDao.queryActivityAccountMonthByUserId(raffleActivityAccountMonthReq);
+
+        // 3.总次数 - 剩余次数 = 使用次数
+        return raffleActivityAccountMonth.getMonthCount() - raffleActivityAccountMonth.getMonthCountSurplus();
+    }
+
+    @Override
+    public Integer queryAllUserRaffleCount(String userId, Long strategyId) {
+        // 1.首先根据策略id查询出活动id
+        Long activityId = raffleActivityDao.queryActivityIdByStrategyId(strategyId);
+
+        // 2.根据活动id和用户id查询出用户总次数账户
+        RaffleActivityAccount raffleActivityAccountReq = new RaffleActivityAccount();
+        raffleActivityAccountReq.setUserId(userId);
+        raffleActivityAccountReq.setActivityId(activityId);
+        RaffleActivityAccount raffleActivityAccount = raffleActivityAccountDao.queryActivityAccountByUserId(raffleActivityAccountReq);
+
+        // 3.总次数 - 剩余次数 = 使用次数
+        return raffleActivityAccount.getMonthCount() - raffleActivityAccount.getMonthCountSurplus();
+    }
+
 
 }

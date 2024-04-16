@@ -8,6 +8,7 @@ import cn.bugstack.domain.award.repository.IAwardRepository;
 import cn.bugstack.infrastructure.event.EventPublisher;
 import cn.bugstack.infrastructure.persistent.dao.ITaskDao;
 import cn.bugstack.infrastructure.persistent.dao.IUserAwardRecordDao;
+import cn.bugstack.infrastructure.persistent.dao.IUserRaffleOrderDao;
 import cn.bugstack.infrastructure.persistent.po.Task;
 import cn.bugstack.infrastructure.persistent.po.UserAwardRecord;
 import cn.bugstack.middleware.db.router.strategy.IDBRouterStrategy;
@@ -33,6 +34,9 @@ public class AwardRepository implements IAwardRepository {
     private ITaskDao taskDao;
 
     @Resource
+    private IUserRaffleOrderDao userRaffleOrderDao;
+
+    @Resource
     private ThreadPoolExecutor threadPoolExecutor;
 
     @Resource
@@ -53,6 +57,8 @@ public class AwardRepository implements IAwardRepository {
         String userId = userAwardRecordEntity.getUserId();
         Long activityId = userAwardRecordEntity.getActivityId();
         Integer awardId = userAwardRecordEntity.getAwardId();
+        String orderId = userAwardRecordAggregate.getOrderId();
+
         UserAwardRecord userAwardRecord = new UserAwardRecord();
         userAwardRecord.setUserId(userAwardRecordEntity.getUserId());
         userAwardRecord.setActivityId(userAwardRecordEntity.getActivityId());
@@ -79,6 +85,11 @@ public class AwardRepository implements IAwardRepository {
                 try {
                     // 2.3 中奖记录入库
                     userAwardRecordDao.insert(userAwardRecord);
+                    // 2.4 修改订单状态
+                    if(userRaffleOrderDao.updateOrderStateUsed(orderId) == 0){
+                        status.setRollbackOnly();
+                        log.error("抽奖订单状态流转为Used时失败，唯一索引冲突 userId: {} activityId: {} orderID: {}", userId, activityId, orderId);
+                    }
                     // 2.4 任务记录入库
                     taskDao.insert(task);
 

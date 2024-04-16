@@ -20,7 +20,10 @@
         values (#{userId}, #{activityId}, #{activityName}, #{strategyId}, #{orderId}, #{orderTime},
                 #{orderState}, now(), now())
     </insert>
-    <select id="queryNoUsedRaffleOrder" resultType="cn.bugstack.infrastructure.persistent.po.UserRaffleOrder">
+    <update id="updateOrderStateUsed" parameterType="String">
+        update user_raffle_order set order_state='used' where order_id = #{orderId}
+    </update>
+    <select id="queryNoUsedRaffleOrder" resultMap="dataMap">
         select id, user_id, activity_id, activity_name, strategy_id, order_id, order_time,
                order_state, create_time, update_time from user_raffle_order
         where user_id = #{userId} and activity_id = #{activityId} and order_state = 'create'

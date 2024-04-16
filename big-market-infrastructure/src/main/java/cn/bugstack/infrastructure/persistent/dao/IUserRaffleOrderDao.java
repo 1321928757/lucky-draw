@@ -15,4 +15,6 @@ public interface IUserRaffleOrderDao {
     @DBRouter
     UserRaffleOrder queryNoUsedRaffleOrder(UserRaffleOrder userRaffleOrderReq);
 
+    // 修改对应抽奖订单的状态为完成
+    int updateOrderStateUsed(String orderId);
 }

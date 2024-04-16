@@ -19,4 +19,5 @@ import lombok.NoArgsConstructor;
 public class UserAwardRecordAggregate {
     private TaskEntity taskEntity;
     private UserAwardRecordEntity userAwardRecordEntity;
+    private String orderId;
 }

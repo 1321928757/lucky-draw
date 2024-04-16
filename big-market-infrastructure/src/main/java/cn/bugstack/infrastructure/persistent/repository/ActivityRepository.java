@@ -456,7 +456,7 @@ public class ActivityRepository implements IActivityRepository {
         RaffleActivityAccountDay activityAccountDay = new RaffleActivityAccountDay();
         activityAccountDay.setActivityId(activityId);
         activityAccountDay.setUserId(userId);
-        activityAccountDay = raffleActivityAccountDayDao.queryActivityAccountMonthByUserId(activityAccountDay);
+        activityAccountDay = raffleActivityAccountDayDao.queryActivityAccountDayByUserId(activityAccountDay);
         if (activityAccountDay == null) return null;
 
         // 2.转换为实体对象返回

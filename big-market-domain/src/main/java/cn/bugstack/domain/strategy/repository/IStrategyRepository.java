@@ -90,5 +90,38 @@ public interface IStrategyRepository {
      */
     StrategyAwardEntity queryStrategyAwardEntity(Long strategyId, Integer awardId);
 
+    /**
+     * 根据活动id查询策略id
+     *
+     * @param activityId 活动id
+     * @return 奖品信息
+     */
     Long queryStrategyIdByActivityId(Long activityId);
+
+    /**
+     * 查询用户在活动中当天抽奖过的次数
+     *
+     * @param userId 用户id
+     * @param strategyId 抽奖策略id
+     * @return 奖品信息
+     */
+    Integer queryTodayUserRaffleCount(String userId, Long strategyId);
+
+    /**
+     * 查询用户在活动中当月抽奖过的次数
+     *
+     * @param userId 用户id
+     * @param strategyId 抽奖策略id
+     * @return 奖品信息
+     */
+    Integer queryMonthUserRaffleCount(String userId, Long strategyId);
+
+    /**
+     * 查询用户在活动中总共抽奖过的次数
+     *
+     * @param userId 用户id
+     * @param strategyId 抽奖策略id
+     * @return 奖品信息
+     */
+    Integer queryAllUserRaffleCount(String userId, Long strategyId);
 }

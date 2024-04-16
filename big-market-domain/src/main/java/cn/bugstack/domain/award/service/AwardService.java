@@ -43,6 +43,7 @@ public class AwardService implements IAwardService{
         UserAwardRecordAggregate userAwardRecordAggregate = new UserAwardRecordAggregate();
         userAwardRecordAggregate.setTaskEntity(taskEntity);
         userAwardRecordAggregate.setUserAwardRecordEntity(userAwardRecordEntity);
+        userAwardRecordAggregate.setOrderId(userAwardRecordEntity.getOrderId());
 
         // 4.中奖记录聚合对象处理(在一个事务下)
         awardRepository.saveUserAwardRecord(userAwardRecordAggregate);

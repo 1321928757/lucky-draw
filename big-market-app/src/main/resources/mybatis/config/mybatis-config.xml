@@ -4,6 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <!-- 暂时未使用 文档：https://mybatis.org/mybatis-3/zh/configuration.html#typeAliases -->
+<!--    <settings>-->
+<!--        &lt;!&ndash; 开启 SQL 日志输出到控制台 &ndash;&gt;-->
+<!--        <setting name="logImpl" value="STDOUT_LOGGING"/>-->
+<!--    </settings>-->
     <typeAliases>
+        <typeAlias type="java.lang.Long" alias="Long"/>
+        <typeAlias type="java.lang.String" alias="String"/>
     </typeAliases>
 </configuration>

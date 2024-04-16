@@ -22,7 +22,7 @@
         where user_id = #{userId} and activity_id = #{activityId} and month = #{month} and month_count_surplus > 0
     </update>
     <select id="queryActivityAccountMonthByUserId"
-            resultType="cn.bugstack.infrastructure.persistent.po.RaffleActivityAccountMonth">
+            resultMap="dateMap">
         select id, user_id, activity_id, month, month_count, month_count_surplus, create_time, update_time
         from raffle_activity_account_month
         where user_id = #{userId} and activity_id = #{activityId}

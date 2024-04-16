@@ -15,7 +15,7 @@ public interface IRaffleActivityAccountDayDao {
 
     // 根据用户id和活动id查询对应日次数账户
     @DBRouter
-    RaffleActivityAccountDay queryActivityAccountMonthByUserId(RaffleActivityAccountDay activityAccountDay);
+    RaffleActivityAccountDay queryActivityAccountDayByUserId(RaffleActivityAccountDay activityAccountDay);
 
     // 扣减日次数账户额度
     int updateActivityAccountDaySubtractionQuota(RaffleActivityAccountDay raffleActivityAccountMonth);
