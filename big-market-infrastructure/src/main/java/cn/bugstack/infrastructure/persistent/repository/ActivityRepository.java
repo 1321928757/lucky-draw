@@ -437,6 +437,7 @@ public class ActivityRepository implements IActivityRepository {
         RaffleActivityAccountMonth activityAccountMonth = new RaffleActivityAccountMonth();
         activityAccountMonth.setActivityId(activityId);
         activityAccountMonth.setUserId(userId);
+        activityAccountMonth.setMonth(month);
         activityAccountMonth = raffleActivityAccountMonthDao.queryActivityAccountMonthByUserId(activityAccountMonth);
         if (activityAccountMonth == null) return null;
 
@@ -452,10 +453,11 @@ public class ActivityRepository implements IActivityRepository {
 
     @Override
     public ActivityAccountDayEntity queryActivityAccountDayByUserId(String userId, Long activityId, String day) {
-        // 1.根据用户id和活动id查询对应月次数账户
+        // 1.根据用户id和活动id查询对应日次数账户
         RaffleActivityAccountDay activityAccountDay = new RaffleActivityAccountDay();
         activityAccountDay.setActivityId(activityId);
         activityAccountDay.setUserId(userId);
+        activityAccountDay.setDay(day);
         activityAccountDay = raffleActivityAccountDayDao.queryActivityAccountDayByUserId(activityAccountDay);
         if (activityAccountDay == null) return null;
 

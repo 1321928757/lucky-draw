@@ -25,6 +25,6 @@
             resultMap="dateMap">
         select id, user_id, activity_id, month, month_count, month_count_surplus, create_time, update_time
         from raffle_activity_account_month
-        where user_id = #{userId} and activity_id = #{activityId}
+        where user_id = #{userId} and activity_id = #{activityId} and month = #{month}
     </select>
 </mapper>
