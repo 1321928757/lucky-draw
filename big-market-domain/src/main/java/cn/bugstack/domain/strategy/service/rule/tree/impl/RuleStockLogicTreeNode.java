@@ -35,7 +35,6 @@ public class RuleStockLogicTreeNode implements ILogicTreeNode {
             log.info("规则过滤-库存扣减-成功 userId:{} strategyId:{} awardId:{}", userId, strategyId, awardId);
 
             // 写入Redisson延迟队列，延迟消费更新数据库记录。【在trigger的job；UpdateAwardStockJob 下消费队列，更新数据库记录】
-            // 我们这里优化为RabbitMq来存放库存更新的任务消息，消息更加可靠
             strategyRepository.awardStockConsumeSendQueue(StrategyAwardStockKeyVO.builder()
                     .strategyId(strategyId)
                     .awardId(awardId)

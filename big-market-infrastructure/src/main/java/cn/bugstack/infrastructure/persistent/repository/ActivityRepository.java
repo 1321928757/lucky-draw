@@ -319,7 +319,7 @@ public class ActivityRepository implements IActivityRepository {
 
                     }
                     // 2.更新月次数额度账户
-                    if (createPartakeOrderAggregate.isExistAccountDay()) {
+                    if (createPartakeOrderAggregate.isExistAccountMonth()) {
                         // 2.1 存在月次数额度账户，扣减额度
                         RaffleActivityAccountMonth raffleActivityAccountMonth = new RaffleActivityAccountMonth();
                         raffleActivityAccountMonth.setUserId(userId);
@@ -484,5 +484,15 @@ public class ActivityRepository implements IActivityRepository {
                 .stockCountSurplus(raffleActivitySku.getStockCountSurplus())
                 .build()
         ).collect(Collectors.toList());
+    }
+
+    @Override
+    public Integer queryRaffleActivityAccountDayPartakeCount(Long activityId, String userId) {
+        RaffleActivityAccountDay raffleActivityAccountDay = new RaffleActivityAccountDay();
+        raffleActivityAccountDay.setActivityId(activityId);
+        raffleActivityAccountDay.setUserId(userId);
+        raffleActivityAccountDay.setDay(raffleActivityAccountDay.currentDay());
+        Integer count = raffleActivityAccountDayDao.queryRaffleActivityAccountDayPartakeCount(raffleActivityAccountDay);
+        return null == count ? 0 : count;
     }
 }

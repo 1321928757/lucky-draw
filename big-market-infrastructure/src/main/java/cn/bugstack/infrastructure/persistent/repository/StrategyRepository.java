@@ -80,6 +80,7 @@ public class StrategyRepository implements IStrategyRepository {
                     .awardCount(strategyAward.getAwardCount())
                     .awardCountSurplus(strategyAward.getAwardCountSurplus())
                     .awardRate(strategyAward.getAwardRate())
+                    .ruleModels(strategyAward.getRuleModels())
                     .sort(strategyAward.getSort())
                     .build();
             strategyAwardEntities.add(strategyAwardEntity);
@@ -238,13 +239,14 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Override
     public Boolean subtractionAwardStock(String cacheKey) {
+        // 1.decr扣减库存
         long surplus = redisService.decr(cacheKey);
         if (surplus < 0) {
             // 库存小于0，恢复为0个
             redisService.setAtomicLong(cacheKey, 0);
             return false;
         }
-        // 1. 按照cacheKey decr 后的值，如 99、98、97 和 key 组成为库存锁的key进行使用。
+
         // 2. 加锁为了兜底，如果后续有恢复库存，手动处理等，也不会超卖。因为所有的可用库存key，都被加锁了。
         String lockKey = cacheKey + Constants.UNDERLINE + surplus;
         Boolean lock = redisService.setNx(lockKey);
@@ -256,7 +258,7 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Override
     public void awardStockConsumeSendQueue(StrategyAwardStockKeyVO strategyAwardStockKeyVO) {
-        // 获取redisson的延迟队列，将消息放入延迟队列中，等待定时任务消费，相比于mq方式
+        // 获取redisson的延迟队列，将消息放入延迟队列中，等待定时任务消费，对库操作进行双重减缓
         String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY;
         RBlockingQueue<StrategyAwardStockKeyVO> blockingQueue = redisService.getBlockingQueue(cacheKey);
         RDelayedQueue<StrategyAwardStockKeyVO> delayedQueue = redisService.getDelayedQueue(blockingQueue);
@@ -364,6 +366,20 @@ public class StrategyRepository implements IStrategyRepository {
 
         // 3.总次数 - 剩余次数 = 使用次数
         return raffleActivityAccount.getMonthCount() - raffleActivityAccount.getMonthCountSurplus();
+    }
+
+    @Override
+    public Map<String, Integer> queryAwardRuleLockCountByRuleIds(String[] treeIds) {
+        if(treeIds == null || treeIds.length == 0) return new HashMap<>();
+        // 1.根据决策树id数组批量查询决策树结点信息
+        List<RuleTreeNode> ruleTreeNodes = ruleTreeNodeDao.queryRuleLocksByRuleIds(treeIds);
+
+        // 2.将结点信息组装成map
+        Map<String, Integer> resultMap = new HashMap<>();
+        for (RuleTreeNode ruleTreeNode : ruleTreeNodes) {
+            resultMap.put(ruleTreeNode.getTreeId(), Integer.valueOf(ruleTreeNode.getRuleValue()));
+        }
+        return resultMap;
     }
 
 
