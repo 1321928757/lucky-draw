@@ -22,6 +22,8 @@ public class Award {
     private String awardConfig;
     /** 奖品内容描述 */
     private String awardDesc;
+    /** 奖品展示图片 */
+    private String awardImage;
     /** 创建时间 */
     private Date createTime;
     /** 更新时间 */

@@ -20,5 +20,10 @@ public interface IRaffleActivityAccountDayDao {
     // 扣减日次数账户额度
     int updateActivityAccountDaySubtractionQuota(RaffleActivityAccountDay raffleActivityAccountMonth);
 
+    // 插入日次数账户
     void insertActivityAccountDay(RaffleActivityAccountDay build);
+
+    // 根据用户id和活动id查询用户在活动中的抽奖次数
+    @DBRouter
+    Integer queryRaffleActivityAccountDayPartakeCount(RaffleActivityAccountDay raffleActivityAccountDay);
 }

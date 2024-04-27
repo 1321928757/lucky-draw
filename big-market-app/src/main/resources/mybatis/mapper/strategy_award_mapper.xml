@@ -24,7 +24,8 @@
     </select>
 
     <select id="queryStrategyAwardListByStrategyId" parameterType="java.lang.Long" resultMap="dataMap">
-        select strategy_id, award_id, award_title, award_subtitle, award_count, award_count_surplus, award_rate, sort
+        select strategy_id, award_id, award_title, award_subtitle, award_count, award_count_surplus,
+               award_rate, rule_models, sort
         from strategy_award
         where strategy_id = #{strategyId}
         order by sort asc

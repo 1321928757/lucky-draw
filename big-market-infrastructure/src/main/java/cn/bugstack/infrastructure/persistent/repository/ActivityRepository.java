@@ -24,6 +24,7 @@ import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RDelayedQueue;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
@@ -319,7 +320,7 @@ public class ActivityRepository implements IActivityRepository {
 
                     }
                     // 2.更新月次数额度账户
-                    if (createPartakeOrderAggregate.isExistAccountDay()) {
+                    if (createPartakeOrderAggregate.isExistAccountMonth()) {
                         // 2.1 存在月次数额度账户，扣减额度
                         RaffleActivityAccountMonth raffleActivityAccountMonth = new RaffleActivityAccountMonth();
                         raffleActivityAccountMonth.setUserId(userId);
@@ -437,6 +438,7 @@ public class ActivityRepository implements IActivityRepository {
         RaffleActivityAccountMonth activityAccountMonth = new RaffleActivityAccountMonth();
         activityAccountMonth.setActivityId(activityId);
         activityAccountMonth.setUserId(userId);
+        activityAccountMonth.setMonth(month);
         activityAccountMonth = raffleActivityAccountMonthDao.queryActivityAccountMonthByUserId(activityAccountMonth);
         if (activityAccountMonth == null) return null;
 
@@ -452,10 +454,11 @@ public class ActivityRepository implements IActivityRepository {
 
     @Override
     public ActivityAccountDayEntity queryActivityAccountDayByUserId(String userId, Long activityId, String day) {
-        // 1.根据用户id和活动id查询对应月次数账户
+        // 1.根据用户id和活动id查询对应日次数账户
         RaffleActivityAccountDay activityAccountDay = new RaffleActivityAccountDay();
         activityAccountDay.setActivityId(activityId);
         activityAccountDay.setUserId(userId);
+        activityAccountDay.setDay(day);
         activityAccountDay = raffleActivityAccountDayDao.queryActivityAccountDayByUserId(activityAccountDay);
         if (activityAccountDay == null) return null;
 
@@ -482,5 +485,15 @@ public class ActivityRepository implements IActivityRepository {
                 .stockCountSurplus(raffleActivitySku.getStockCountSurplus())
                 .build()
         ).collect(Collectors.toList());
+    }
+
+    @Override
+    public Integer queryRaffleActivityAccountDayPartakeCount(Long activityId, String userId) {
+        RaffleActivityAccountDay raffleActivityAccountDay = new RaffleActivityAccountDay();
+        raffleActivityAccountDay.setActivityId(activityId);
+        raffleActivityAccountDay.setUserId(userId);
+        raffleActivityAccountDay.setDay(raffleActivityAccountDay.currentDay());
+        Integer count = raffleActivityAccountDayDao.queryRaffleActivityAccountDayPartakeCount(raffleActivityAccountDay);
+        return null == count ? 0 : count;
     }
 }
