@@ -95,6 +95,9 @@ public class RaffleActivityController implements IRaffleActivityService {
     @RequestMapping(value = "draw", method = RequestMethod.POST)
     public Response<ActivityDrawResponseDTO> draw(@RequestBody ActivityDrawRequestDTO request) {
         try {
+            // TODO 后续这个userId从session或者token中获取
+            request.setUserId("xiaofuge");
+
             // 1.参数校验
             if (StringUtils.isBlank(request.getUserId()) || request.getActivityId() == null) {
                 throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());

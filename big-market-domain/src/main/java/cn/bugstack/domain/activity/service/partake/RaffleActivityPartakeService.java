@@ -44,7 +44,7 @@ public class RaffleActivityPartakeService extends AbstractRaffleActivityPartake{
 
     @Override
     protected CreatePartakeOrderAggregate doFilterAccount(String userId, Long activityId, Date currentDate) {
-        // 1.账户总额度判断
+        // 1.账户总额度判断,消耗总额度
         ActivityAccountEntity activityAccountEntity = activityRepository.queryActivityAccountByUserId(userId, activityId);
         if(activityAccountEntity == null || activityAccountEntity.getTotalCount() <= 0){
             throw new AppException(ResponseCode.ACCOUNT_TOTAL_QUOTA_ERROR.getCode(), ResponseCode.ACCOUNT_TOTAL_QUOTA_ERROR.getInfo());
@@ -65,7 +65,7 @@ public class RaffleActivityPartakeService extends AbstractRaffleActivityPartake{
             activityAccountMonthEntity.setActivityId(activityId);
             activityAccountMonthEntity.setMonth(month);
             activityAccountMonthEntity.setMonthCount(activityAccountEntity.getMonthCount());
-            activityAccountMonthEntity.setMonthCountSurplus(activityAccountEntity.getMonthCountSurplus());
+            activityAccountMonthEntity.setMonthCountSurplus(activityAccountEntity.getMonthCount());
         }
 
         // 4.账户日额度判断，如果不存在就创建
@@ -80,7 +80,7 @@ public class RaffleActivityPartakeService extends AbstractRaffleActivityPartake{
             activityAccountDayEntity.setActivityId(activityId);
             activityAccountDayEntity.setDay(day);
             activityAccountDayEntity.setDayCount(activityAccountEntity.getDayCount());
-            activityAccountDayEntity.setDayCountSurplus(activityAccountEntity.getDayCountSurplus());
+            activityAccountDayEntity.setDayCountSurplus(activityAccountEntity.getDayCount());
         }
 
         // 5.封装聚合对象

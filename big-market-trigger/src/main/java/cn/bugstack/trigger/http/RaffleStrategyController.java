@@ -97,6 +97,9 @@ public class RaffleStrategyController implements IRaffleStrategyService {
     @Override
     public Response<List<RaffleAwardListResponseDTO>> queryRaffleAwardList(@RequestBody RaffleAwardListRequestDTO requestDTO) {
         try {
+            // TODO 后续这个userId从session或者token中获取
+            requestDTO.setUserId("xiaofuge");
+
             // 1.参数校验
             if(StringUtils.isEmpty(requestDTO.getUserId()) || requestDTO.getActivityId() == null){
                 return Response.<List<RaffleAwardListResponseDTO>>builder()

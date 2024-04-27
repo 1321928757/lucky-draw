@@ -36,8 +36,6 @@
     <update id="updateActivityAccountSubtractionQuota" parameterType="cn.bugstack.domain.activity.model.entity.ActivityAccountEntity">
         update raffle_activity_account
         set total_count_surplus = total_count_surplus - 1,
-            day_count_surplus = day_count_surplus - 1,
-            month_count_surplus = month_count_surplus - 1,
             update_time = now()
         where user_id = #{userId} and activity_id = #{activityId} and total_count_surplus > 0 and day_count_surplus > 0 and month_count_surplus > 0
     </update>
