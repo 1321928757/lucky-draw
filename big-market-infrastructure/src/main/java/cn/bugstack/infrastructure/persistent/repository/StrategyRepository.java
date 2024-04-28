@@ -77,6 +77,7 @@ public class StrategyRepository implements IStrategyRepository {
                     .awardId(strategyAward.getAwardId())
                     .awardTitle(strategyAward.getAwardTitle())
                     .awardSubtitle(strategyAward.getAwardSubtitle())
+                    .awardImage(strategyAward.getAwardImage())
                     .awardCount(strategyAward.getAwardCount())
                     .awardCountSurplus(strategyAward.getAwardCountSurplus())
                     .awardRate(strategyAward.getAwardRate())

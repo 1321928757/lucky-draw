@@ -58,6 +58,11 @@
         from raffle_activity_account
         where user_id = #{userId} and activity_id = #{activityId}
     </select>
+    <select id="queryRaffleActivityAccountTotalPartakeCount" resultType="java.lang.Integer">
+        select total_count - total_count_surplus
+        from raffle_activity_account
+        where user_id = #{userId} and activity_id
+    </select>
 
 
 </mapper>

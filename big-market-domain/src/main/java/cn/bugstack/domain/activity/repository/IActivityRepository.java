@@ -64,6 +64,9 @@ public interface IActivityRepository {
     // 根据活动id查询活动所有sku信息
     List<ActivitySkuEntity> queryActivitySkuListByActivityId(Long activityId);
 
-    // 根据活动id和用户id查询用户在本活动总共的抽取次数
+    // 根据活动id和用户id查询用户在本活动当日的抽取次数
     Integer queryRaffleActivityAccountDayPartakeCount(Long activityId, String userId);
+
+    // 根据活动id和用户id查询用户在本活动总共的抽取次数
+    Integer queryRaffleActivityAccountTotalPartakeCount(Long activityId, String userId);
 }
