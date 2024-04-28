@@ -18,12 +18,21 @@ public interface IRaffleActivityAccountQuotaService {
     String createSkuRechargeOrder(SkuRechargeEntity activityShopCartEntity);
 
     /**
-    * @description 根据活动id和用户id查询用户在活动中的活动次数账户的抽取次数
+    * @description 根据活动id和用户id查询用户在活动中当日的抽取次数
     * @param activityId 活动id
     * @param userId 用户id
     * @return 用户抽取的次数
     * @date 2024/04/24 18:24:36
     */
     Integer queryRaffleActivityAccountDayPartakeCount(Long activityId, String userId);
+
+    /**
+     * @description 根据活动id和用户id查询用户在活动中总的抽取次数
+     * @param activityId 活动id
+     * @param userId 用户id
+     * @return 用户抽取的次数
+     * @date 2024/04/24 18:24:36
+     */
+    Integer queryRaffleActivityAccountTotalPartakeCount(Long activityId, String userId);
 
 }

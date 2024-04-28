@@ -8,12 +8,13 @@
         <result column="award_key" property="awardKey"/>
         <result column="award_config" property="awardConfig"/>
         <result column="award_desc" property="awardDesc"/>
+        <result column="award_image" property="awardImage"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
     <select id="queryAwardList" resultMap="dataMap">
-        select award_id, award_key, award_config, award_desc
+        select award_id, award_key, award_config, award_desc, award_image
         from award
         limit 10
     </select>

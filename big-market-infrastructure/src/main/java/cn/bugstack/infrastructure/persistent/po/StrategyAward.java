@@ -23,6 +23,8 @@ public class StrategyAward {
     private String awardTitle;
     /** 抽奖奖品副标题 */
     private String awardSubtitle;
+    /** 奖品展示图片 */
+    private String awardImage;
     /** 奖品库存总量 */
     private Integer awardCount;
     /** 奖品库存剩余 */

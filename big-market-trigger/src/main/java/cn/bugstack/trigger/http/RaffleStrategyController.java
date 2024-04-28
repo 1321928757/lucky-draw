@@ -119,7 +119,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
             Map<String, Integer> stringIntegerMap = raffleRule.queryAwardRuleLockCountByRuleIds(treeIds);
 
             // 5.查询用户剩余解锁次数
-            Integer dayPartakeCount = accountQuotaService.queryRaffleActivityAccountDayPartakeCount(requestDTO.getActivityId(), requestDTO.getUserId());
+            Integer dayPartakeCount = accountQuotaService.queryRaffleActivityAccountTotalPartakeCount(requestDTO.getActivityId(), requestDTO.getUserId());
 
             // 6.装配剩余解锁次数
             List<RaffleAwardListResponseDTO> awardListResponseDTOS = strategyAwardEntities.stream().map(strategyAward -> {
@@ -129,6 +129,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
                         .awardId(strategyAward.getAwardId())
                         .awardTitle(strategyAward.getAwardTitle())
                         .awardSubtitle(strategyAward.getAwardSubtitle())
+                        .awardImage(strategyAward.getAwardImage())
                         .sort(strategyAward.getSort())
                         .awardRuleLockCount(awardRuleLockCount)
                         .isAwardUnlock(null == awardRuleLockCount || dayPartakeCount >= awardRuleLockCount)

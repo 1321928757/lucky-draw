@@ -27,7 +27,13 @@ public interface IRaffleActivityAccountDao {
     // 扣减总账户额度
     int updateActivityAccountSubtractionQuota(RaffleActivityAccount raffleActivityAccount);
 
+    // 扣减月次数
     void updateActivityAccountMonthSurplusImageQuota(RaffleActivityAccount raffleActivityAccount);
 
+    // 扣减日次数
     void updateActivityAccountDaySurplusImageQuota(RaffleActivityAccount raffleActivityAccount);
+
+    // 查询用户在对应活动中的总共抽取次数
+    @DBRouter
+    Integer queryRaffleActivityAccountTotalPartakeCount(RaffleActivityAccount raffleActivityAccountDay);
 }
