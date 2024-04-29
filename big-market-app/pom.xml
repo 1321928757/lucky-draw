@@ -92,6 +92,10 @@
             <groupId>cn.bugstack</groupId>
             <artifactId>big-market-infrastructure</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.bugstack</groupId>
+            <artifactId>big-market-types</artifactId>
+        </dependency>
 
         <!--rabbitmq-->
         <dependency>

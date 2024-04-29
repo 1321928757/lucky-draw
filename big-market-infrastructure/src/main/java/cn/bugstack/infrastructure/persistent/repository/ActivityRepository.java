@@ -105,6 +105,7 @@ public class ActivityRepository implements IActivityRepository {
 
         // 2.缓存不存在，查库
         RaffleActivity raffleActivity = raffleActivityDao.queryRaffleActivityByActivityId(activityId);
+        if(raffleActivity == null) return null;
         activityEntity = ActivityEntity.builder()
                 .activityId(raffleActivity.getActivityId())
                 .activityName(raffleActivity.getActivityName())

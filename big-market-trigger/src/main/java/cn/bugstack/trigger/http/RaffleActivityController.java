@@ -69,6 +69,7 @@ public class RaffleActivityController implements IRaffleActivityService {
             return response;
         } catch (AppException e) {
             log.info("活动装配，数据预热，失败 activityId:{},error:{}", activityId, e.getMessage());
+            e.printStackTrace();
             return Response.<Boolean>builder()
                     .code(e.getCode())
                     .info(e.getInfo())
@@ -76,6 +77,7 @@ public class RaffleActivityController implements IRaffleActivityService {
                     .build();
         } catch (Exception e) {
             log.info("活动装配，数据预热，失败 activityId:{},error:{}", activityId, e.getMessage());
+            e.printStackTrace();
             return Response.<Boolean>builder()
                     .code(ResponseCode.UN_ERROR.getCode())
                     .info(ResponseCode.UN_ERROR.getInfo())
