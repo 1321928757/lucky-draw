@@ -3,6 +3,7 @@ package cn.bugstack.trigger.http;
 import cn.bugstack.domain.activity.model.entity.UserRaffleOrderEntity;
 import cn.bugstack.domain.activity.service.IRaffleActivityPartakeService;
 import cn.bugstack.domain.activity.service.armory.IActivityArmory;
+import cn.bugstack.domain.auth.service.IAuthService;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
 import cn.bugstack.domain.award.model.valobj.AwardStateVO;
 import cn.bugstack.domain.award.service.IAwardService;
@@ -14,6 +15,7 @@ import cn.bugstack.trigger.api.IRaffleActivityService;
 import cn.bugstack.trigger.api.IRaffleStrategyService;
 import cn.bugstack.trigger.api.dto.ActivityDrawRequestDTO;
 import cn.bugstack.trigger.api.dto.ActivityDrawResponseDTO;
+import cn.bugstack.trigger.api.dto.RaffleAwardListResponseDTO;
 import cn.bugstack.types.enums.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import cn.bugstack.types.model.Response;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @RestController()
@@ -45,6 +48,9 @@ public class RaffleActivityController implements IRaffleActivityService {
     @Resource
     private IAwardService awardService;
 
+    @Resource
+    private IAuthService authService;
+
     /**
      * @param activityId 活动id
      * @return Boolean 是否预热成功
@@ -52,12 +58,26 @@ public class RaffleActivityController implements IRaffleActivityService {
      * @date 2024/04/15 20:55:16
      */
     @RequestMapping(value = "armory", method = RequestMethod.GET)
-    public Response<Boolean> armory(@RequestParam Long activityId) {
+    public Response<Boolean> armory(@RequestParam Long activityId,@RequestHeader("Authorization")  String token) {
         try {
             log.info("活动装配，数据预热，开始 activityId:{}", activityId);
-            // 1.活动装配
+            // 1.身份校验 TODO 这里后面可能要校验权限
+            String userId = authService.parseToken(token);
+            if(userId == null){
+                return Response.<Boolean>builder()
+                        .code(ResponseCode.AUTH_ERROR.getCode())
+                        .info(ResponseCode.AUTH_ERROR.getInfo())
+                        .build();
+            }
+
+            // 2.参数校验
+            if (activityId == null) {
+                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
+            }
+
+            // 3.活动装配
             activityArmory.assembleActivitySkuByActivityId(activityId);
-            // 2.策略装配
+            // 4.策略装配
             strategyArmory.assembleLotteryStrategyByActivityId(activityId);
 
             Response<Boolean> response = Response.<Boolean>builder()
@@ -95,29 +115,35 @@ public class RaffleActivityController implements IRaffleActivityService {
      */
     @Override
     @RequestMapping(value = "draw", method = RequestMethod.POST)
-    public Response<ActivityDrawResponseDTO> draw(@RequestBody ActivityDrawRequestDTO request) {
+    public Response<ActivityDrawResponseDTO> draw(@RequestBody ActivityDrawRequestDTO request,  @RequestHeader("Authorization") String token) {
         try {
-            // TODO 后续这个userId从session或者token中获取
-            request.setUserId("xiaofuge");
+            // 1.身份校验
+            String userId = authService.parseToken(token);
+            if(userId == null){
+                return Response.<ActivityDrawResponseDTO>builder()
+                        .code(ResponseCode.AUTH_ERROR.getCode())
+                        .info(ResponseCode.AUTH_ERROR.getInfo())
+                        .build();
+            }
 
-            // 1.参数校验
-            if (StringUtils.isBlank(request.getUserId()) || request.getActivityId() == null) {
+            // 2.参数校验
+            if (request.getActivityId() == null) {
                 throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
             }
 
-            // 2.参与活动 - 创建活动订单
-            UserRaffleOrderEntity orderEntity = raffleActivityPartakeService.createOrder(request.getUserId(), request.getActivityId());
-            log.info("活动抽奖，创建订单 userId:{} activityId:{} orderId:{}", request.getUserId(), request.getActivityId(), orderEntity.getOrderId());
+            // 3.参与活动 - 创建活动订单
+            UserRaffleOrderEntity orderEntity = raffleActivityPartakeService.createOrder(userId, request.getActivityId());
+            log.info("活动抽奖，创建订单 userId:{} activityId:{} orderId:{}", userId, request.getActivityId(), orderEntity.getOrderId());
 
-            // 3.抽奖策略 - 执行抽奖
+            // 4.抽奖策略 - 执行抽奖
             RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(RaffleFactorEntity.builder()
                     .userId(orderEntity.getUserId())
                     .strategyId(orderEntity.getStrategyId())
                     .build());
-            log.info("活动抽奖，执行抽奖 userId:{} activityId:{} awardId:{}", request.getUserId(), request.getActivityId(), raffleAwardEntity.getAwardId());
+            log.info("活动抽奖，执行抽奖 userId:{} activityId:{} awardId:{}", userId, request.getActivityId(), raffleAwardEntity.getAwardId());
 
 
-            // 4 保存记录 - 中奖记录入库
+            // 5. 保存记录 - 中奖记录入库
             UserAwardRecordEntity userAwardRecord = UserAwardRecordEntity.builder()
                     .userId(orderEntity.getUserId())
                     .activityId(orderEntity.getActivityId())
@@ -130,7 +156,7 @@ public class RaffleActivityController implements IRaffleActivityService {
                     .build();
             awardService.saveUserAwardRecord(userAwardRecord);
 
-            // 5.返回中奖结果
+            // 6.返回中奖结果
             return Response.<ActivityDrawResponseDTO>builder()
                     .code(ResponseCode.SUCCESS.getCode())
                     .info(ResponseCode.SUCCESS.getInfo())
@@ -141,17 +167,18 @@ public class RaffleActivityController implements IRaffleActivityService {
                             .build())
                     .build();
         } catch (AppException e) {
-            log.info("活动抽奖，失败 activityId:{},userId:{},error:{}", request.getActivityId(), request.getUserId(), e.getMessage());
+            log.info("活动抽奖，失败 activityId:{},error:{}", request.getActivityId(), e.getMessage());
             return Response.<ActivityDrawResponseDTO>builder()
                     .code(e.getCode())
                     .info(e.getInfo())
                     .build();
         } catch (Exception e){
-            log.info("活动抽奖，失败 activityId:{},userId:{},error:{}", request.getActivityId(), request.getUserId(), e.getMessage());
+            log.info("活动抽奖，失败 activityId:{},error:{}", request.getActivityId(), e.getMessage());
             return Response.<ActivityDrawResponseDTO>builder()
                     .code(ResponseCode.UN_ERROR.getCode())
                     .info(ResponseCode.UN_ERROR.getInfo())
                     .build();
         }
     }
+
 }

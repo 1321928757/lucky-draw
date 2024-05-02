@@ -15,6 +15,8 @@ public enum ResponseCode {
     INDEX_DUP("0003", "唯一索引冲突"),
     TOKEN_ERROR("0004", "权限拦截"),
     VIEW_LIMIT("0005", "访问频率限制"),
+    CODE_ERROR("0006", "访问码不存在或已过期"),
+    AUTH_ERROR("0007", "身份信息验证失败"),
     STRATEGY_RULE_WEIGHT_IS_NULL("ERR_BIZ_001", "业务异常，策略规则中 rule_weight 权重规则已适用但未配置"),
     UN_ASSEMBLED_STRATEGY_ARMORY("ERR_BIZ_002", "抽奖策略配置未装配，请通过IStrategyArmory完成装配"),
     STRATEGY_ID_ERROR("ERR_BIZ_003", "对应的抽奖策略未配置"),

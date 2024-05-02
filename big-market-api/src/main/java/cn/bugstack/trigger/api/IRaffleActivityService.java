@@ -16,13 +16,13 @@ public interface IRaffleActivityService {
      * @param activityId 活动ID
      * @return 装配结果
      */
-    Response<Boolean> armory(Long activityId);
+    Response<Boolean> armory(Long activityId, String token);
 
     /**
      * 活动抽奖接口
      * @param request 请求对象
      * @return 返回结果
      */
-    Response<ActivityDrawResponseDTO> draw(ActivityDrawRequestDTO request);
+    Response<ActivityDrawResponseDTO> draw(ActivityDrawRequestDTO request, String token);
 
 }

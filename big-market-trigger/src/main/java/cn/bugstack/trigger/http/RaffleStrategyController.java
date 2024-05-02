@@ -1,6 +1,7 @@
 package cn.bugstack.trigger.http;
 
 import cn.bugstack.domain.activity.service.IRaffleActivityAccountQuotaService;
+import cn.bugstack.domain.auth.service.IAuthService;
 import cn.bugstack.domain.strategy.model.entity.RaffleAwardEntity;
 import cn.bugstack.domain.strategy.model.entity.RaffleFactorEntity;
 import cn.bugstack.domain.strategy.model.entity.StrategyAwardEntity;
@@ -48,42 +49,8 @@ public class RaffleStrategyController implements IRaffleStrategyService {
     private IRaffleRule raffleRule;
     @Resource
     private IRaffleActivityAccountQuotaService accountQuotaService;
-    
-
-    /**
-     * 策略装配，将策略信息装配到缓存中
-     * <a href="http://localhost:8091/api/v1/raffle/strategy_armory">/api/v1/raffle/strategy_armory</a>
-     *
-     * @param strategyId 策略ID
-     * @return 装配结果
-     */
-    @RequestMapping(value = "strategy_armory", method = RequestMethod.GET)
-    @Override
-    public Response<Boolean> strategyArmory(@RequestParam Long strategyId) {
-        try {
-            log.info("抽奖策略装配开始 strategyId：{}", strategyId);
-            boolean armoryStatus = strategyArmory.assembleLotteryStrategy(strategyId);
-            Response<Boolean> response = Response.<Boolean>builder()
-                    .code(ResponseCode.SUCCESS.getCode())
-                    .info(ResponseCode.SUCCESS.getInfo())
-                    .data(armoryStatus)
-                    .build();
-            log.info("抽奖策略装配完成 strategyId：{} response: {}", strategyId, JSON.toJSONString(response));
-            return response;
-        } catch (AppException e) {
-            log.error("抽奖策略装配失败 strategyId：{}", strategyId, e);
-            return Response.<Boolean>builder()
-                    .code(e.getCode())
-                    .info(e.getInfo())
-                    .build();
-        } catch (Exception e){
-            log.error("抽奖策略装配失败 strategyId：{}", strategyId, e);
-            return Response.<Boolean>builder()
-                    .code(ResponseCode.UN_ERROR.getCode())
-                    .info(ResponseCode.UN_ERROR.getInfo())
-                    .build();
-        }
-    }
+    @Resource
+    private IAuthService authService;
 
     /**
      * 查询奖品列表
@@ -95,33 +62,40 @@ public class RaffleStrategyController implements IRaffleStrategyService {
      */
     @RequestMapping(value = "query_raffle_award_list", method = RequestMethod.POST)
     @Override
-    public Response<List<RaffleAwardListResponseDTO>> queryRaffleAwardList(@RequestBody RaffleAwardListRequestDTO requestDTO) {
+    public Response<List<RaffleAwardListResponseDTO>> queryRaffleAwardList(
+            @RequestBody RaffleAwardListRequestDTO requestDTO, @RequestHeader("Authorization")String token) {
         try {
-            // TODO 后续这个userId从session或者token中获取
-            requestDTO.setUserId("xiaofuge");
+            // 1.身份校验
+            String userId = authService.parseToken(token);
+            if(userId == null){
+                return Response.<List<RaffleAwardListResponseDTO>>builder()
+                        .code(ResponseCode.AUTH_ERROR.getCode())
+                        .info(ResponseCode.AUTH_ERROR.getInfo())
+                        .build();
+            }
 
-            // 1.参数校验
-            if(StringUtils.isEmpty(requestDTO.getUserId()) || requestDTO.getActivityId() == null){
+            // 2.参数校验
+            if(requestDTO.getActivityId() == null){
                 return Response.<List<RaffleAwardListResponseDTO>>builder()
                         .code(ResponseCode.ILLEGAL_PARAMETER.getCode())
                         .info(ResponseCode.ILLEGAL_PARAMETER.getInfo())
                         .build();
             }
-            // 2.查询奖品配置
+            // 3.查询奖品配置
             List<StrategyAwardEntity> strategyAwardEntities = raffleAward.queryRaffleStrategyAwardListByActivityId(requestDTO.getActivityId());
 
-            // 3.从奖品中筛选出奖品规则树
+            // 4.从奖品中筛选出奖品规则树
             String[] treeIds = strategyAwardEntities.stream().map(StrategyAwardEntity::getRuleModels)
                     .filter(ruleModel -> ruleModel != null && !ruleModel.isEmpty())
                     .toArray(String[]::new);
 
-            // 4.根据规则树ID数组查询规则书配置
+            // 5.根据规则树ID数组查询规则书配置
             Map<String, Integer> stringIntegerMap = raffleRule.queryAwardRuleLockCountByRuleIds(treeIds);
 
-            // 5.查询用户剩余解锁次数
-            Integer dayPartakeCount = accountQuotaService.queryRaffleActivityAccountTotalPartakeCount(requestDTO.getActivityId(), requestDTO.getUserId());
+            // 6.查询用户剩余解锁次数
+            Integer dayPartakeCount = accountQuotaService.queryRaffleActivityAccountTotalPartakeCount(requestDTO.getActivityId(),userId);
 
-            // 6.装配剩余解锁次数
+            // 7.装配剩余解锁次数
             List<RaffleAwardListResponseDTO> awardListResponseDTOS = strategyAwardEntities.stream().map(strategyAward -> {
                 // 从map中取出对应的锁次数
                 Integer awardRuleLockCount =  stringIntegerMap.get(strategyAward.getRuleModels());
@@ -138,7 +112,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
 
             }).collect(Collectors.toList());
 
-            // 7.返回结果
+            // 8.返回结果
             return Response.<List<RaffleAwardListResponseDTO>>builder()
                     .code(ResponseCode.SUCCESS.getCode())
                     .info(ResponseCode.SUCCESS.getInfo())
@@ -152,50 +126,5 @@ public class RaffleStrategyController implements IRaffleStrategyService {
                     .build();
         }
     }
-
-    /**
-     * 随机抽奖接口
-     * <a href="http://localhost:8091/api/v1/raffle/random_raffle">/api/v1/raffle/random_raffle</a>
-     *
-     * @param requestDTO 请求参数 {"strategyId":1000001}
-     * @return 抽奖结果
-     */
-    @RequestMapping(value = "random_raffle", method = RequestMethod.POST)
-    @Override
-    public Response<RaffleStrategyResponseDTO> randomRaffle(@RequestBody RaffleStrategyRequestDTO requestDTO) {
-        try {
-            log.info("随机抽奖开始 strategyId: {}", requestDTO.getStrategyId());
-            // 调用抽奖接口
-            RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(RaffleFactorEntity.builder()
-                    .userId("system")
-                    .strategyId(requestDTO.getStrategyId())
-                    .build());
-            // 封装返回结果
-            Response<RaffleStrategyResponseDTO> response = Response.<RaffleStrategyResponseDTO>builder()
-                    .code(ResponseCode.SUCCESS.getCode())
-                    .info(ResponseCode.SUCCESS.getInfo())
-                    .data(RaffleStrategyResponseDTO.builder()
-                            .awardId(raffleAwardEntity.getAwardId())
-                            .awardIndex(raffleAwardEntity.getSort())
-                            .build())
-                    .build();
-            log.info("随机抽奖完成 strategyId: {} response: {}", requestDTO.getStrategyId(), JSON.toJSONString(response));
-            return response;
-        } catch (AppException e) {
-            log.error("随机抽奖失败 strategyId：{} {}", requestDTO.getStrategyId(), e.getInfo());
-            return Response.<RaffleStrategyResponseDTO>builder()
-                    .code(e.getCode())
-                    .info(e.getInfo())
-                    .build();
-        } catch (Exception e) {
-            log.error("随机抽奖失败 strategyId：{}", requestDTO.getStrategyId(), e);
-            return Response.<RaffleStrategyResponseDTO>builder()
-                    .code(ResponseCode.UN_ERROR.getCode())
-                    .info(ResponseCode.UN_ERROR.getInfo())
-                    .build();
-        }
-    }
-
-
 
 }

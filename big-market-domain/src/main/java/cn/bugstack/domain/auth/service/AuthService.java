@@ -3,6 +3,8 @@ package cn.bugstack.domain.auth.service;
 import cn.bugstack.domain.auth.model.entity.AuthStateEntity;
 import cn.bugstack.domain.auth.model.valobj.AuthTypeVo;
 import cn.bugstack.domain.auth.repository.IAuthRepository;
+import cn.bugstack.types.exception.AppException;
+import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -41,5 +43,14 @@ public class AuthService extends AbstractAuthService{
                 .info(AuthTypeVo.CODE_SUCCESS.getInfo())
                 .openId(openId)
                 .build();
+    }
+
+    @Override
+    public String parseToken(String token) {
+        if(StringUtils.isEmpty(token)) return null;
+        if(!isVerify(token)) return null;
+        Claims decode = decode(token);
+        String userId = decode.get("userId").toString();
+        return userId;
     }
 }

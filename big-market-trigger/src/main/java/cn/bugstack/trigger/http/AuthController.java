@@ -6,6 +6,7 @@ import cn.bugstack.domain.auth.model.valobj.AuthTypeVo;
 import cn.bugstack.domain.auth.service.IAuthService;
 import cn.bugstack.types.annotation.AccessInterceptor;
 import cn.bugstack.types.enums.ResponseCode;
+import cn.bugstack.types.exception.AppException;
 import cn.bugstack.types.model.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -40,8 +41,8 @@ public class AuthController {
             // 校验不通过
             if(!authStateEntity.getCode().equals(AuthTypeVo.CODE_SUCCESS.getCode())){
                 return Response.<String>builder()
-                        .code(ResponseCode.TOKEN_ERROR.getCode())
-                        .info(ResponseCode.TOKEN_ERROR.getInfo())
+                        .code(ResponseCode.CODE_ERROR.getCode())
+                        .info(ResponseCode.CODE_ERROR.getInfo())
                         .build();
             }
 
@@ -51,8 +52,15 @@ public class AuthController {
                     .info(ResponseCode.SUCCESS.getInfo())
                     .data(authStateEntity.getToken())
                     .build();
-        } catch (Exception e) {
+        } catch (AppException e) {
             log.error("鉴权登录校验失败，验证码: {}，错误消息：{}", code, e.getMessage());
+            return Response.<String>builder()
+                    .code(e.getCode())
+                    .info(e.getInfo())
+                    .build();
+        } catch (Exception e){
+            log.error("鉴权登录校验失败，验证码: {}，错误消息：{}", code, e.getMessage());
+            e.printStackTrace();
             return Response.<String>builder()
                     .code(ResponseCode.UN_ERROR.getCode())
                     .info(ResponseCode.UN_ERROR.getInfo())

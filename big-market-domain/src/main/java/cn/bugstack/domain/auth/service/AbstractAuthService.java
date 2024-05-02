@@ -46,7 +46,7 @@ public abstract class AbstractAuthService implements IAuthService{
 
         // 3.校验通过，生成JWT令牌
         Map<String, Object> chaim = new HashMap<>();
-        chaim.put("openId", authStateEntity.getOpenId());
+        chaim.put("userId", authStateEntity.getOpenId());
         String token = encode(authStateEntity.getOpenId(), 7 * 24 * 60 * 60 * 1000, chaim);
         authStateEntity.setToken(token);
 
@@ -106,5 +106,6 @@ public abstract class AbstractAuthService implements IAuthService{
             return false;
         }
     }
+
 
 }
