@@ -19,4 +19,7 @@ public interface IRaffleActivityAccountMonthDao {
 
     // 保存月次数账户额度记录
     void insertActivityAccountMonth(RaffleActivityAccountMonth raffleActivityAccountMonth);
+
+    // 添加账户额度
+    void addAccountQuota(RaffleActivityAccountMonth raffleActivityAccountMonth);
 }

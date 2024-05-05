@@ -16,6 +16,12 @@
                                                   create_time, update_time)
         values(#{userId},#{activityId},#{month},#{monthCount},#{monthCountSurplus},now(),now())
     </insert>
+    <update id="addAccountQuota">
+        update raffle_activity_account_month
+        set month_count_surplus = month_count_surplus + #{monthCountSurplus},
+            month_count = month_count + #{monthCount}
+        where activity_id = #{activityId} and user_id = #{userId} and month = #{month}
+    </update>
     <update id="updateActivityAccountMonthSubtractionQuota" parameterType="cn.bugstack.infrastructure.persistent.po.RaffleActivityAccountMonth">
         update raffle_activity_account_month
         set month_count_surplus = month_count_surplus - 1, update_time = now()

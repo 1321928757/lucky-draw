@@ -56,7 +56,7 @@ public class RebateService implements IRebateService {
             // 2.2 Mq 消息对象
             SendRebateMessageEvent.RebateMessage rebateMessage = SendRebateMessageEvent.RebateMessage.builder()
                     .userId(behaviorEntity.getUserId())
-                    .rebateType(behaviorRebateVO.getBehaviorType())
+                    .rebateType(behaviorRebateVO.getRebateType())
                     .rebateConfig(behaviorRebateVO.getRebateConfig())
                     .bizId(bizId)
                     .build();

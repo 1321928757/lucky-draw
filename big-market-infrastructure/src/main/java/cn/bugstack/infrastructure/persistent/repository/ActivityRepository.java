@@ -166,7 +166,8 @@ public class ActivityRepository implements IActivityRepository {
             raffleActivityOrder.setMonthCount(createOrderAggregate.getMonthCount());
             raffleActivityOrder.setState(activityOrderEntity.getState().getCode());
             raffleActivityOrder.setOutBusinessNo(activityOrderEntity.getOutBusinessNo());
-            // 1.2账户对象
+
+            // 1.2账户对象-总
             RaffleActivityAccount raffleActivityAccount = new RaffleActivityAccount();
             raffleActivityAccount.setUserId(createOrderAggregate.getUserId());
             raffleActivityAccount.setActivityId(createOrderAggregate.getActivityId());
@@ -177,20 +178,39 @@ public class ActivityRepository implements IActivityRepository {
             raffleActivityAccount.setMonthCount(createOrderAggregate.getMonthCount());
             raffleActivityAccount.setMonthCountSurplus(createOrderAggregate.getMonthCount());
 
+            // 1.3账户对象-月
+            RaffleActivityAccountMonth raffleActivityAccountMonth = new RaffleActivityAccountMonth();
+            raffleActivityAccountMonth.setUserId(createOrderAggregate.getUserId());
+            raffleActivityAccountMonth.setActivityId(createOrderAggregate.getActivityId());
+            raffleActivityAccountMonth.setMonthCount(createOrderAggregate.getMonthCount());
+            raffleActivityAccountMonth.setMonthCountSurplus(createOrderAggregate.getMonthCount());
+            raffleActivityAccountMonth.setMonth(raffleActivityAccountMonth.currentMonth());
+
+            // 1.4账户对象-日
+            RaffleActivityAccountDay raffleActivityAccountDay = new RaffleActivityAccountDay();
+            raffleActivityAccountDay.setUserId(createOrderAggregate.getUserId());
+            raffleActivityAccountDay.setActivityId(createOrderAggregate.getActivityId());
+            raffleActivityAccountDay.setDayCount(createOrderAggregate.getDayCount());
+            raffleActivityAccountDay.setDayCountSurplus(createOrderAggregate.getDayCount());
+            raffleActivityAccountDay.setDay(raffleActivityAccountDay.currentDay());
+
             // 2.设定路由(保证两表操作在同一库下，这样才能保证事务,如果还是跟之前一样各自通过注解路由，
-            // 那么如果两边的userID不一致，导致路由到不同的数据库，事务就无法管理了)
             dbRouter.doRouter(createOrderAggregate.getUserId());
             // 3.编程式事务
             transactionTemplate.execute(status -> {
                 try {
                     // 1. 写入订单
                     raffleActivityOrderDao.insert(raffleActivityOrder);
-                    // 2. 更新账户
+                    // 2. 更新总次数账户
                     int count = raffleActivityAccountDao.updateAccountQuota(raffleActivityAccount);
                     // 3. 创建账户 - 更新为0，则账户不存在，创新新账户。
                     if (0 == count) {
                         raffleActivityAccountDao.insert(raffleActivityAccount);
                     }
+                    // 4.更新月次数账户
+                    raffleActivityAccountMonthDao.addAccountQuota(raffleActivityAccountMonth);
+                    // 5.更新日次数账户
+                    raffleActivityAccountDayDao.addAccountQuota(raffleActivityAccountDay);
                     return 1;
                 } catch (DuplicateKeyException e) {
                     status.setRollbackOnly(); //事务回滚

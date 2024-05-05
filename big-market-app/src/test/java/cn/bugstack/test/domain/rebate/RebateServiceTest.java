@@ -34,7 +34,7 @@ public class RebateServiceTest {
     public void test_create_rebate_order() {
         BehaviorEntity behaviorEntity = new BehaviorEntity();
         behaviorEntity.setUserId("ogdb46DaYxN6nliqjeveqnZMfqmI");
-        behaviorEntity.setOutBusinessNo("20250502");
+        behaviorEntity.setOutBusinessNo("20250511");
         behaviorEntity.setBehaviorTypeVO(BehaviorTypeVO.SIGN);
         rebateService.createOrder(behaviorEntity);
     }
