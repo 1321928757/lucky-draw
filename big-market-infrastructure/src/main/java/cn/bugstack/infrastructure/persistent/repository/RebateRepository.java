@@ -82,6 +82,7 @@ public class RebateRepository implements IRebateRepository {
                         userBehaviorRebateOrder.setRebateDesc(behaviorRebateOrderEntity.getRebateDesc());
                         userBehaviorRebateOrder.setRebateType(behaviorRebateOrderEntity.getRebateType());
                         userBehaviorRebateOrder.setRebateConfig(behaviorRebateOrderEntity.getRebateConfig());
+                        userBehaviorRebateOrder.setOutBusinessNo(behaviorRebateOrderEntity.getOutBusinessNo());
                         userBehaviorRebateOrder.setBizId(behaviorRebateOrderEntity.getBizId());
                         userBehaviorRebateOrderDao.insert(userBehaviorRebateOrder);
 
@@ -141,5 +142,28 @@ public class RebateRepository implements IRebateRepository {
                 taskDao.updateTaskSendMessageFailed(task);
             }
         }
+    }
+
+    @Override
+    public List<BehaviorRebateOrderEntity> queryOrderByOutBusinessNo(String userId, String outBusinessNo) {
+        // 1.构建查询对象
+        UserBehaviorRebateOrder rebateOrderReq = new UserBehaviorRebateOrder();
+        rebateOrderReq.setUserId(userId);
+        rebateOrderReq.setOutBusinessNo(outBusinessNo);
+
+        // 2.查询订单
+        List<UserBehaviorRebateOrder> userBehaviorRebateOrders = userBehaviorRebateOrderDao.queryOrderByOutBusinessNo(rebateOrderReq);
+        if(userBehaviorRebateOrders == null) return new ArrayList<>();
+
+        // 3.转为实体对象返回
+        return userBehaviorRebateOrders.stream().map((rebateOrder) -> BehaviorRebateOrderEntity.builder()
+                .userId(rebateOrder.getUserId())
+                .orderId(rebateOrder.getOrderId())
+                .bizId(rebateOrder.getBizId())
+                .rebateType(rebateOrder.getRebateType())
+                .rebateDesc(rebateOrder.getRebateDesc())
+                .rebateConfig(rebateOrder.getRebateConfig())
+                .behaviorType(rebateOrder.getBehaviorType())
+                .build()).collect(Collectors.toList());
     }
 }

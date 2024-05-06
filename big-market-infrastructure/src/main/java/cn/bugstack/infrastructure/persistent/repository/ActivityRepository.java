@@ -105,7 +105,7 @@ public class ActivityRepository implements IActivityRepository {
 
         // 2.缓存不存在，查库
         RaffleActivity raffleActivity = raffleActivityDao.queryRaffleActivityByActivityId(activityId);
-        if(raffleActivity == null) return null;
+        if (raffleActivity == null) return null;
         activityEntity = ActivityEntity.builder()
                 .activityId(raffleActivity.getActivityId())
                 .activityName(raffleActivity.getActivityName())
@@ -525,5 +525,60 @@ public class ActivityRepository implements IActivityRepository {
         raffleActivityAccountDay.setUserId(userId);
         Integer count = raffleActivityAccountDao.queryRaffleActivityAccountTotalPartakeCount(raffleActivityAccountDay);
         return null == count ? 0 : count;
+    }
+
+    @Override
+    public ActivityAccountEntity queryActivityAccountEntity(Long activityId, String userId) {
+        // 1.查询总账户信息
+        RaffleActivityAccount raffleActivityAccount = raffleActivityAccountDao.queryActivityAccountByUserId(RaffleActivityAccount.builder()
+                .userId(userId)
+                .activityId(activityId)
+                .build());
+        // 1.1 不存在次数账户，返回0即可
+        if (null == raffleActivityAccount) {
+            return ActivityAccountEntity.builder()
+                    .userId(userId)
+                    .activityId(activityId)
+                    .totalCount(0)
+                    .totalCountSurplus(0)
+                    .monthCount(0)
+                    .monthCountSurplus(0)
+                    .dayCount(0)
+                    .dayCountSurplus(0)
+                    .build();
+        }
+        // 2.查询月账户信息
+        RaffleActivityAccountMonth raffleActivityAccountMonth = raffleActivityAccountMonthDao.queryActivityAccountMonthByUserId(RaffleActivityAccountMonth.builder()
+                .userId(userId)
+                .activityId(activityId)
+                .build());
+        // 3.查询日账户信息
+        RaffleActivityAccountDay raffleActivityAccountDay = raffleActivityAccountDayDao.queryActivityAccountDayByUserId(RaffleActivityAccountDay.builder()
+                .userId(userId)
+                .activityId(activityId)
+                .build());
+        // 4.拼接各次数信息
+        ActivityAccountEntity activityAccountEntity = new ActivityAccountEntity();
+        activityAccountEntity.setUserId(userId);
+        activityAccountEntity.setActivityId(activityId);
+        activityAccountEntity.setTotalCount(raffleActivityAccount.getTotalCount());
+        activityAccountEntity.setTotalCountSurplus(raffleActivityAccount.getTotalCountSurplus());
+        // 如果日月不存在，则从总次数账户中填充
+        if(raffleActivityAccountMonth == null){
+            activityAccountEntity.setMonthCount(raffleActivityAccount.getMonthCount());
+            activityAccountEntity.setMonthCountSurplus(raffleActivityAccount.getMonthCount());
+        }else{
+            activityAccountEntity.setMonthCount(raffleActivityAccountMonth.getMonthCount());
+            activityAccountEntity.setMonthCountSurplus(raffleActivityAccountMonth.getMonthCount());
+        }
+        if(raffleActivityAccountDay == null){
+            activityAccountEntity.setDayCount(raffleActivityAccount.getDayCount());
+            activityAccountEntity.setDayCountSurplus(raffleActivityAccount.getDayCount());
+        }else{
+            activityAccountEntity.setDayCount(raffleActivityAccountDay.getDayCount());
+            activityAccountEntity.setDayCountSurplus(raffleActivityAccountDay.getDayCount());
+        }
+
+        return activityAccountEntity;
     }
 }

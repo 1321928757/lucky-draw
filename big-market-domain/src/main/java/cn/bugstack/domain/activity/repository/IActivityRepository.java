@@ -69,4 +69,7 @@ public interface IActivityRepository {
 
     // 根据活动id和用户id查询用户在本活动总共的抽取次数
     Integer queryRaffleActivityAccountTotalPartakeCount(Long activityId, String userId);
+
+    // 根据活动id和用户id查询用户的总，月，日账户次数信息
+    ActivityAccountEntity queryActivityAccountEntity(Long activityId, String userId);
 }

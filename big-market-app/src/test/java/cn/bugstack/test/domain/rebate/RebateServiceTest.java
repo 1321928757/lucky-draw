@@ -30,6 +30,7 @@ public class RebateServiceTest {
     @Resource
     private IRebateService rebateService;
 
+    // 测试创建用户返利订单
     @Test
     public void test_create_rebate_order() {
         BehaviorEntity behaviorEntity = new BehaviorEntity();

@@ -48,6 +48,7 @@ public class RebateService implements IRebateService {
                     .rebateType(behaviorRebateVO.getRebateType())
                     .rebateConfig(behaviorRebateVO.getRebateConfig())
                     .orderId(RandomStringUtils.randomNumeric(12)) //TODO 后面需要改为雪花算法获取唯一ID
+                    .outBusinessNo(behaviorEntity.getOutBusinessNo())
                     .bizId(bizId)
                     .userId(behaviorEntity.getUserId())
                     .build();
@@ -84,5 +85,10 @@ public class RebateService implements IRebateService {
         repository.saveUserRebateRecord(behaviorEntity.getUserId(), behaviorRebateAggregates);
 
         return orderIds;
+    }
+
+    @Override
+    public List<BehaviorRebateOrderEntity> queryOrderByOutBusinessNo(String userId, String outBusinessNo) {
+        return repository.queryOrderByOutBusinessNo(userId, outBusinessNo);
     }
 }

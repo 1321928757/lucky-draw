@@ -26,9 +26,8 @@ public enum ResponseCode {
     ACTIVITY_SKU_NO_ASSEMBLE("ERR_BIZ_007", "活动对应sku配置未装配，请通过IActivityArmory完成装配"),
     ACCOUNT_TOTAL_QUOTA_ERROR("ERR_BIZ_008", "账户总额度不足"),
     ACCOUNT_DAY_QUOTA_ERROR("ERR_BIZ_009", "账户日额度不足"),
-    ACCOUNT_MONTH_QUOTA_ERROR("ERR_BIZ_010", "账户月额度不足");
-
-
+    ACCOUNT_MONTH_QUOTA_ERROR("ERR_BIZ_010", "账户月额度不足"),
+    ACCOUNT_SIGN_ERROR("ERR_BIZ_009", "用户当日已经签到过啦~");
 
     private String code;
     private String info;

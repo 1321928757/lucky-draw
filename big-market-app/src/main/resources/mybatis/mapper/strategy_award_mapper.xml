@@ -48,5 +48,15 @@
         from strategy_award
         where strategy_id = #{strategyId} and award_id = #{awardId}
     </select>
+    <select id="queryStrategyAwardListByIds"
+            resultMap="dataMap">
+        select strategy_id, award_id, award_title, award_subtitle, award_image, award_count, award_count_surplus, award_rate, rule_models, sort
+        from strategy_award
+        where strategy_id = #{strategyId} and award_id in
+        <foreach collection="array" item="awardId" index="index" open="(" separator="," close=")">
+            #{awardId}
+        </foreach>
+
+    </select>
 
 </mapper>

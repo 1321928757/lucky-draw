@@ -1,10 +1,12 @@
 package cn.bugstack.infrastructure.persistent.repository;
 
+import cn.bugstack.domain.activity.service.quota.rule.factory.DefaultActivityChainFactory;
 import cn.bugstack.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.bugstack.domain.strategy.model.entity.StrategyEntity;
 import cn.bugstack.domain.strategy.model.entity.StrategyRuleEntity;
 import cn.bugstack.domain.strategy.model.valobj.*;
 import cn.bugstack.domain.strategy.repository.IStrategyRepository;
+import cn.bugstack.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
 import cn.bugstack.infrastructure.persistent.dao.*;
 import cn.bugstack.infrastructure.persistent.po.*;
 import cn.bugstack.infrastructure.persistent.redis.IRedisService;
@@ -18,11 +20,9 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static cn.bugstack.types.enums.ResponseCode.UN_ASSEMBLED_STRATEGY_ARMORY;
 
@@ -371,7 +371,7 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Override
     public Map<String, Integer> queryAwardRuleLockCountByRuleIds(String[] treeIds) {
-        if(treeIds == null || treeIds.length == 0) return new HashMap<>();
+        if (treeIds == null || treeIds.length == 0) return new HashMap<>();
         // 1.根据决策树id数组批量查询决策树结点信息
         List<RuleTreeNode> ruleTreeNodes = ruleTreeNodeDao.queryRuleLocksByRuleIds(treeIds);
 
@@ -381,6 +381,52 @@ public class StrategyRepository implements IStrategyRepository {
             resultMap.put(ruleTreeNode.getTreeId(), Integer.valueOf(ruleTreeNode.getRuleValue()));
         }
         return resultMap;
+    }
+
+    @Override
+    public List<RuleWeightVO> queryAwardRuleWeight(Long strategyId) {
+        // 1.首先从缓存读取
+        String cacheKey = Constants.RedisKey.STRATEGY_RULE_WEIGHT_KEY + strategyId;
+        List<RuleWeightVO> ruleWeightVOS = redisService.getValue(cacheKey);
+        if (null != ruleWeightVOS) return ruleWeightVOS;
+
+        // 2.缓存无，开始查库
+        ruleWeightVOS = new ArrayList<RuleWeightVO>();
+        StrategyRule strategyRuleReq = new StrategyRule();
+        strategyRuleReq.setStrategyId(strategyId);
+        strategyRuleReq.setRuleModel(DefaultChainFactory.LogicModel.RULE_WEIGHT.getCode());
+        String ruleValue = strategyRuleDao.queryStrategyRuleValue(strategyRuleReq);
+
+        // 3.解析权重规则值【原值格式为：4000:102,103,104,105 5000:102,103,104,105,106,107，空格分割每个权重组，冒号分割权重值和权重奖品】
+        StrategyRuleEntity strategyRule = new StrategyRuleEntity();
+        strategyRule.setRuleModel(DefaultChainFactory.LogicModel.RULE_WEIGHT.getCode());
+        strategyRule.setRuleValue(ruleValue);
+        Map<String, List<Integer>> ruleWeightValues = strategyRule.getRuleWeightValues();
+        List<RuleWeightVO.Award> awardList;
+        // 4.遍历权重规则组装配置信息
+        for (String ruleWeightKey : ruleWeightValues.keySet()) {
+            List<Integer> awardIds = ruleWeightValues.get(ruleWeightKey);
+            // 4.1 根据奖品ID查询出奖品的详细信息
+            List<StrategyAward> awards = strategyAwardDao.queryStrategyAwardListByIds(awardIds, strategyId);
+            awardList = awards.stream().map(award -> RuleWeightVO.Award.builder()
+                    .awardId(award.getAwardId())
+                    .awardTitle(award.getAwardTitle())
+                    .build()).collect(Collectors.toList());
+            ruleWeightVOS.add(RuleWeightVO.builder()
+                    .awardList(awardList)
+                    .weight(Integer.valueOf(ruleWeightKey.split(Constants.COLON)[0]))
+                    .awardIds(awardIds)
+                    .ruleValue(ruleValue)
+                    .build());
+        }
+
+        // 5.根据权重值排序，方便前端展示
+        ruleWeightVOS.sort(Comparator.comparingInt(RuleWeightVO::getWeight));
+
+        // 设置缓存 - TODO 后续可以添加活动的结束时间为缓存过期时间
+        redisService.setValue(cacheKey, ruleWeightVOS);
+
+        return ruleWeightVOS;
     }
 
 

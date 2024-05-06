@@ -1,21 +1,25 @@
 package cn.bugstack.trigger.http;
 
+import cn.bugstack.domain.activity.model.entity.ActivityAccountEntity;
 import cn.bugstack.domain.activity.model.entity.UserRaffleOrderEntity;
+import cn.bugstack.domain.activity.service.IRaffleActivityAccountQuotaService;
 import cn.bugstack.domain.activity.service.IRaffleActivityPartakeService;
 import cn.bugstack.domain.activity.service.armory.IActivityArmory;
 import cn.bugstack.domain.auth.service.IAuthService;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
 import cn.bugstack.domain.award.model.valobj.AwardStateVO;
 import cn.bugstack.domain.award.service.IAwardService;
+import cn.bugstack.domain.rebate.model.entity.BehaviorEntity;
+import cn.bugstack.domain.rebate.model.entity.BehaviorRebateOrderEntity;
+import cn.bugstack.domain.rebate.model.valobj.BehaviorTypeVO;
+import cn.bugstack.domain.rebate.service.IRebateService;
 import cn.bugstack.domain.strategy.model.entity.RaffleAwardEntity;
 import cn.bugstack.domain.strategy.model.entity.RaffleFactorEntity;
 import cn.bugstack.domain.strategy.service.IRaffleStrategy;
 import cn.bugstack.domain.strategy.service.armory.IStrategyArmory;
 import cn.bugstack.trigger.api.IRaffleActivityService;
 import cn.bugstack.trigger.api.IRaffleStrategyService;
-import cn.bugstack.trigger.api.dto.ActivityDrawRequestDTO;
-import cn.bugstack.trigger.api.dto.ActivityDrawResponseDTO;
-import cn.bugstack.trigger.api.dto.RaffleAwardListResponseDTO;
+import cn.bugstack.trigger.api.dto.*;
 import cn.bugstack.types.enums.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import cn.bugstack.types.model.Response;
@@ -24,6 +28,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +37,7 @@ import java.util.List;
 @CrossOrigin("${app.config.cross-origin}")
 @RequestMapping("/api/${app.config.api-version}/raffle/activity/")
 public class RaffleActivityController implements IRaffleActivityService {
+    private final SimpleDateFormat dateFormatDay = new SimpleDateFormat("yyyyMMdd");
 
     @Resource
     private IActivityArmory activityArmory;
@@ -50,6 +56,12 @@ public class RaffleActivityController implements IRaffleActivityService {
 
     @Resource
     private IAuthService authService;
+
+    @Resource
+    private IRebateService rebateService;
+
+    @Resource
+    private IRaffleActivityAccountQuotaService raffleActivityAccountQuotaService;
 
     /**
      * @param activityId 活动id
@@ -179,6 +191,156 @@ public class RaffleActivityController implements IRaffleActivityService {
                     .info(ResponseCode.UN_ERROR.getInfo())
                     .build();
         }
+    }
+
+
+    /**
+    * @description 日历签到返利
+    * @param
+    * @return 是否签到成功
+    * @date 2024/05/05 16:23:50
+    */
+    @RequestMapping(value = "calendar_sign_rebate", method = RequestMethod.POST)
+    @Override
+    public Response<Boolean> calendarSignRebate(@RequestHeader("Authorization") String token) {
+        try {
+            // 1.身份校验 & 获取用户ID
+            String userId = authService.parseToken(token);
+            if(userId == null){
+                return Response.<Boolean>builder()
+                        .code(ResponseCode.AUTH_ERROR.getCode())
+                        .info(ResponseCode.AUTH_ERROR.getInfo())
+                        .build();
+            }
+
+            // 2.签到返利
+            BehaviorEntity behaviorEntity = new BehaviorEntity();
+            behaviorEntity.setUserId(userId);
+            behaviorEntity.setBehaviorTypeVO(BehaviorTypeVO.SIGN);
+            // 使用当前日期作为业务id，每个用户当天只能签到一次
+            behaviorEntity.setOutBusinessNo(dateFormatDay.format(new Date()));
+            rebateService.createOrder(behaviorEntity);
+            return Response.<Boolean>builder()
+                    .code(ResponseCode.SUCCESS.getCode())
+                    .info(ResponseCode.SUCCESS.getInfo())
+                    .data(true)
+                    .build();
+        } catch (AppException e) {
+            log.error("日历签到返利异常", e);
+            return Response.<Boolean>builder()
+                    .code(ResponseCode.ACCOUNT_SIGN_ERROR.getCode())
+                    .info(ResponseCode.ACCOUNT_SIGN_ERROR.getInfo())
+                    .data(false)
+                    .build();
+        } catch (Exception e){
+            log.error("日历签到返利异常", e);
+            return Response.<Boolean>builder()
+                    .code(ResponseCode.UN_ERROR.getCode())
+                    .info(ResponseCode.UN_ERROR.getInfo())
+                    .data(false)
+                    .build();
+        }
+
+    }
+
+
+    /**
+    * @description 判断是否签到接口
+    * @param token 用户token
+    * @return 今天是否签到过
+    * @date 2024/05/05 19:19:31
+    */
+    @RequestMapping(value = "is_calendar_sign_rebate", method = RequestMethod.GET)
+    @Override
+    public Response<Boolean> isCalendarSignRebate(@RequestHeader("Authorization") String token) {
+        try {
+            // 1.身份校验 & 获取用户ID
+            String userId = authService.parseToken(token);
+            if(userId == null){
+                return Response.<Boolean>builder()
+                        .code(ResponseCode.AUTH_ERROR.getCode())
+                        .info(ResponseCode.AUTH_ERROR.getInfo())
+                        .build();
+            }
+
+            // 2.查询用户当日的签到返利记录
+            String outBusinessNo = dateFormatDay.format(new Date());
+            List<BehaviorRebateOrderEntity> orders = rebateService.queryOrderByOutBusinessNo(userId, outBusinessNo);
+
+            // 3.返回结果
+            return Response.<Boolean>builder()
+                    .code(ResponseCode.SUCCESS.getCode())
+                    .info(ResponseCode.SUCCESS.getInfo())
+                    .data(!orders.isEmpty())
+                    .build();
+        } catch (Exception e) {
+            log.error("查询日历签到异常", e);
+            return Response.<Boolean>builder()
+                    .code(ResponseCode.UN_ERROR.getCode())
+                    .info(ResponseCode.UN_ERROR.getInfo())
+                    .data(false)
+                    .build();
+        }
+
+
+    }
+
+    /**
+    * @description 查询当前账户额度
+    * @param activityId 活动id
+    * @return UserActivityAccountResponseDTO 次数账户对象
+    * @date 2024/05/05 20:03:25
+    */
+    @RequestMapping(value = "query_user_activity_account", method = RequestMethod.GET)
+    @Override
+    public Response<UserActivityAccountResponseDTO> queryUserActivityAccount(@RequestParam Long activityId, @RequestHeader("Authorization") String token) {
+        try {
+            // 1.身份校验 & 获取用户ID
+            String userId = authService.parseToken(token);
+            if(userId == null){
+                return Response.<UserActivityAccountResponseDTO>builder()
+                        .code(ResponseCode.AUTH_ERROR.getCode())
+                        .info(ResponseCode.AUTH_ERROR.getInfo())
+                        .build();
+            }
+            // 2.参数校验
+            if(activityId == null){
+                return Response.<UserActivityAccountResponseDTO>builder()
+                        .code(ResponseCode.ILLEGAL_PARAMETER.getCode())
+                        .info(ResponseCode.ILLEGAL_PARAMETER.getInfo())
+                        .build();
+            }
+            // 3.查询次数账户
+            ActivityAccountEntity activityAccountEntity = raffleActivityAccountQuotaService.queryActivityAccountEntity(activityId, userId);
+
+            // 4.拼接返回结果
+            UserActivityAccountResponseDTO activityAccountResponseDTO = UserActivityAccountResponseDTO.builder()
+                    .totalCount(activityAccountEntity.getTotalCount())
+                    .totalCountSurplus(activityAccountEntity.getTotalCountSurplus())
+                    .dayCount(activityAccountEntity.getDayCount())
+                    .dayCountSurplus(activityAccountEntity.getDayCountSurplus())
+                    .monthCount(activityAccountEntity.getMonthCount())
+                    .monthCountSurplus(activityAccountEntity.getMonthCountSurplus())
+                    .build();
+            return Response.<UserActivityAccountResponseDTO>builder()
+                    .code(ResponseCode.SUCCESS.getCode())
+                    .info(ResponseCode.SUCCESS.getInfo())
+                    .data(activityAccountResponseDTO)
+                    .build();
+        } catch (AppException e) {
+            log.error("查询用户的次数账户信息异常", e);
+            return Response.<UserActivityAccountResponseDTO>builder()
+                    .code(e.getCode())
+                    .info(e.getInfo())
+                    .build();
+        } catch (Exception e){
+            log.error("查询用户的次数账户信息异常", e);
+            return Response.<UserActivityAccountResponseDTO>builder()
+                    .code(ResponseCode.UN_ERROR.getCode())
+                    .info(ResponseCode.UN_ERROR.getInfo())
+                    .build();
+        }
+
     }
 
 }

@@ -1,10 +1,8 @@
 package cn.bugstack.trigger.api;
 
-import cn.bugstack.trigger.api.dto.RaffleAwardListRequestDTO;
-import cn.bugstack.trigger.api.dto.RaffleAwardListResponseDTO;
-import cn.bugstack.trigger.api.dto.RaffleStrategyRequestDTO;
-import cn.bugstack.trigger.api.dto.RaffleStrategyResponseDTO;
+import cn.bugstack.trigger.api.dto.*;
 import cn.bugstack.types.model.Response;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -23,5 +21,12 @@ public interface IRaffleStrategyService {
      */
     Response<List<RaffleAwardListResponseDTO>> queryRaffleAwardList(RaffleAwardListRequestDTO requestDTO, String token);
 
+    /**
+     * 查询用户在当前活动策略的抽取权重情况
+     *
+     * @param activityId 活动id
+     * @return 权重情况
+     */
+    Response<List<RaffleStrategyRuleWeightResponseDTO>> queryRaffleStrategyRuleWeight(Long activityId, String token);
 
 }

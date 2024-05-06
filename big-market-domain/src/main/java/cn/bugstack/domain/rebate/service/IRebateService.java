@@ -1,6 +1,7 @@
 package cn.bugstack.domain.rebate.service;
 
 import cn.bugstack.domain.rebate.model.entity.BehaviorEntity;
+import cn.bugstack.domain.rebate.model.entity.BehaviorRebateOrderEntity;
 
 import java.util.List;
 
@@ -17,4 +18,13 @@ public interface IRebateService {
      * @return 订单ID
      */
     List<String> createOrder(BehaviorEntity behaviorEntity);
+
+    /**
+     * 根据业务ID查询返利订单
+     *
+     * @param userId 用户id
+     * @param outBusinessNo 订单业务id
+     * @return 订单ID
+     */
+    List<BehaviorRebateOrderEntity> queryOrderByOutBusinessNo(String userId, String outBusinessNo);
 }

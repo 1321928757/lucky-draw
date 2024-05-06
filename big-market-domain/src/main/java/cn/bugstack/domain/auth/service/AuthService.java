@@ -3,6 +3,7 @@ package cn.bugstack.domain.auth.service;
 import cn.bugstack.domain.auth.model.entity.AuthStateEntity;
 import cn.bugstack.domain.auth.model.valobj.AuthTypeVo;
 import cn.bugstack.domain.auth.repository.IAuthRepository;
+import cn.bugstack.types.enums.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
@@ -47,10 +48,16 @@ public class AuthService extends AbstractAuthService{
 
     @Override
     public String parseToken(String token) {
-        if(StringUtils.isEmpty(token)) return null;
-        if(!isVerify(token)) return null;
-        Claims decode = decode(token);
-        String userId = decode.get("userId").toString();
-        return userId;
+        String userId = null;
+        try {
+            if(StringUtils.isEmpty(token)) return null;
+            if(!isVerify(token)) return null;
+            Claims decode = decode(token);
+            userId = decode.get("userId").toString();
+            return userId;
+        } catch (Exception e) {
+            log.error("用户JWT解析令牌出现错误:{}", e.getMessage());
+            throw new AppException(ResponseCode.AUTH_ERROR.getCode(), ResponseCode.AUTH_ERROR.getInfo());
+        }
     }
 }
