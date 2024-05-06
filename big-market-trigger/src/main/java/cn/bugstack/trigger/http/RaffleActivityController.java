@@ -361,6 +361,9 @@ public class RaffleActivityController implements IRaffleActivityService {
             // 1.查询活动信息
             ActivityEntity activityEntity =  raffleActivityBaseService.queryActivityById(activityId);
 
+            if(activityEntity == null){
+                throw new AppException(ResponseCode.ACTIVITY_NO_EXIST.getCode(), ResponseCode.ACTIVITY_NO_EXIST.getInfo());
+            }
             // 2.转为DTO对象
             ActivityBaseResponseDTO activityBaseResponseDTO = ActivityBaseResponseDTO.builder()
                     .activityId(activityEntity.getActivityId())

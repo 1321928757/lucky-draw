@@ -548,15 +548,17 @@ public class ActivityRepository implements IActivityRepository {
                     .build();
         }
         // 2.查询月账户信息
-        RaffleActivityAccountMonth raffleActivityAccountMonth = raffleActivityAccountMonthDao.queryActivityAccountMonthByUserId(RaffleActivityAccountMonth.builder()
-                .userId(userId)
-                .activityId(activityId)
-                .build());
+        RaffleActivityAccountMonth raffleActivityAccountMonth = new RaffleActivityAccountMonth();
+        raffleActivityAccountMonth.setUserId(userId);
+        raffleActivityAccountMonth.setActivityId(activityId);
+        raffleActivityAccountMonth.setMonth(raffleActivityAccountMonth.currentMonth());
+        raffleActivityAccountMonth = raffleActivityAccountMonthDao.queryActivityAccountMonthByUserId(raffleActivityAccountMonth);
         // 3.查询日账户信息
-        RaffleActivityAccountDay raffleActivityAccountDay = raffleActivityAccountDayDao.queryActivityAccountDayByUserId(RaffleActivityAccountDay.builder()
-                .userId(userId)
-                .activityId(activityId)
-                .build());
+        RaffleActivityAccountDay raffleActivityAccountDay = new RaffleActivityAccountDay();
+        raffleActivityAccountDay.setUserId(userId);
+        raffleActivityAccountDay.setActivityId(activityId);
+        raffleActivityAccountDay.setDay(raffleActivityAccountDay.currentDay());
+        raffleActivityAccountDay = raffleActivityAccountDayDao.queryActivityAccountDayByUserId(raffleActivityAccountDay);
         // 4.拼接各次数信息
         ActivityAccountEntity activityAccountEntity = new ActivityAccountEntity();
         activityAccountEntity.setUserId(userId);
@@ -569,14 +571,14 @@ public class ActivityRepository implements IActivityRepository {
             activityAccountEntity.setMonthCountSurplus(raffleActivityAccount.getMonthCount());
         } else {
             activityAccountEntity.setMonthCount(raffleActivityAccountMonth.getMonthCount());
-            activityAccountEntity.setMonthCountSurplus(raffleActivityAccountMonth.getMonthCount());
+            activityAccountEntity.setMonthCountSurplus(raffleActivityAccountMonth.getMonthCountSurplus());
         }
         if (raffleActivityAccountDay == null) {
             activityAccountEntity.setDayCount(raffleActivityAccount.getDayCount());
             activityAccountEntity.setDayCountSurplus(raffleActivityAccount.getDayCount());
         } else {
             activityAccountEntity.setDayCount(raffleActivityAccountDay.getDayCount());
-            activityAccountEntity.setDayCountSurplus(raffleActivityAccountDay.getDayCount());
+            activityAccountEntity.setDayCountSurplus(raffleActivityAccountDay.getDayCountSurplus());
         }
 
         return activityAccountEntity;
