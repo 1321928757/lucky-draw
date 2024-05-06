@@ -8,6 +8,7 @@ public class Constants {
     public final static String UNDERLINE = "_";
 
     public static class RedisKey {
+
         public static String ACTIVITY_KEY = "big_market_activity_key_";
         public static String ACTIVITY_SKU_KEY = "big_market_activity_sku_key_";
         public static String ACTIVITY_COUNT_KEY = "big_market_activity_count_key_";
@@ -22,6 +23,8 @@ public class Constants {
         public static String STRATEGY_AWARD_COUNT_KEY = "strategy_award_count_key_";
         /** 策略奖品库存延迟队列 key*/
         public static String STRATEGY_AWARD_COUNT_QUERY_KEY = "strategy_award_count_query_key";
+        /** 策略权重信息 key*/
+        public static String STRATEGY_RULE_WEIGHT_KEY = "strategy_rule_weight_key";
         /** 活动SKU库存 key*/
         public static String ACTIVITY_SKU_STOCK_COUNT_KEY = "strategy_sku_stock_count_key_";
         /** 活动SKU次数库存延迟队列 key*/

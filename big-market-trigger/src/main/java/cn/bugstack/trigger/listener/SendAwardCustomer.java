@@ -27,18 +27,20 @@ public class SendAwardCustomer {
     private String topic;
 
     // ackMode指定为手动提交模式
-    @RabbitListener(queuesToDeclare = @Queue("bigmarket.award_send"), ackMode="MANUAL")
+    @RabbitListener(queuesToDeclare = @Queue("${spring.rabbitmq.topic.award_send}"), ackMode="MANUAL")
     public void sendAwardHandler(String json , Message message, Channel channel) {
         //  如果手动ACK,消息会被监听消费,但是消息在队列中依旧存在,如果 未配置 acknowledge-mode 默认是会在消费完毕后自动ACK掉
         final long deliveryTag = message.getMessageProperties().getDeliveryTag();
         try {
             log.info("监听中奖发货消息，topic: {} message: {}", topic, json);
-            // 消费消息
+            // 1.转换消息
             BaseEvent.EventMessage<SendAwardMessageEvent.SendAwardMessage> eventMessage = JSON.parseObject(json, new TypeReference<BaseEvent.EventMessage<SendAwardMessageEvent.SendAwardMessage>>() {
             }.getType());
             SendAwardMessageEvent.SendAwardMessage sendAwardMessage = eventMessage.getData();
 
-            // 通知 MQ 消息已被成功消费,可以ACK了
+            // 2.消费消息 TODO
+
+            // 3.手动ACK
             channel.basicAck(deliveryTag, false);
             log.info("中奖发货消息消费完成，奖品ID：{},用户ID：{}",sendAwardMessage.getAwardId(),sendAwardMessage.getUserId());
         } catch (IOException e) {

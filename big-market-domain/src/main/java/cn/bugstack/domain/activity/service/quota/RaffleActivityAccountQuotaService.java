@@ -9,6 +9,7 @@ import cn.bugstack.domain.activity.service.IRaffleActivitySkuStockService;
 import cn.bugstack.domain.activity.service.quota.rule.IActionChain;
 import cn.bugstack.domain.activity.service.quota.rule.factory.DefaultActivityChainFactory;
 import cn.hutool.core.lang.generator.SnowflakeGenerator;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -49,8 +50,7 @@ public class RaffleActivityAccountQuotaService extends AbstractRaffleActivityAcc
         activityOrderEntity.setState(OrderStateVO.no_used);
         activityOrderEntity.setOrderTime(new Date());
         activityOrderEntity.setOutBusinessNo(skuRechargeEntity.getOutBusinessNo());
-        // 我们这里订单ID采用雪花算法生成(使用hutool工具)
-        activityOrderEntity.setOrderId(String.valueOf(snowflakeGenerator.next()));
+        activityOrderEntity.setOrderId(RandomStringUtils.randomNumeric(12));
 
         return CreateQuotaOrderAggregate.builder()
                 .userId(skuRechargeEntity.getUserId())
@@ -96,5 +96,10 @@ public class RaffleActivityAccountQuotaService extends AbstractRaffleActivityAcc
     @Override
     public Integer queryRaffleActivityAccountTotalPartakeCount(Long activityId, String userId) {
         return activityRepository.queryRaffleActivityAccountTotalPartakeCount(activityId, userId);
+    }
+
+    @Override
+    public ActivityAccountEntity queryActivityAccountEntity(Long activityId, String userId) {
+        return activityRepository.queryActivityAccountEntity(activityId, userId);
     }
 }

@@ -17,7 +17,7 @@
         from rule_tree_node
         where tree_id = #{treeId}
     </select>
-    <select id="queryRuleLocksByRuleIds" resultType="cn.bugstack.infrastructure.persistent.po.RuleTreeNode" resultMap="dataMap">
+    <select id="queryRuleLocksByRuleIds" resultMap="dataMap">
         select tree_id, rule_value
         from rule_tree_node
         where rule_key = 'rule_lock' and tree_id in

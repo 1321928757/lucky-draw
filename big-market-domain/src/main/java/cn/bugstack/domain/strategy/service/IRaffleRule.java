@@ -1,5 +1,8 @@
 package cn.bugstack.domain.strategy.service;
 
+import cn.bugstack.domain.strategy.model.valobj.RuleWeightVO;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,4 +19,21 @@ public interface IRaffleRule {
     * @date 2024/04/24 17:20:34
     */
     Map<String, Integer> queryAwardRuleLockCountByRuleIds(String[] treeIds);
+
+
+    /**
+    * @description 根据策略id查询奖品权重配置
+    * @param strategyId 策略id
+    * @return 权重值对象数组
+    * @date 2024/05/05 21:00:34
+    */
+    List<RuleWeightVO> queryAwardRuleWeight(Long strategyId);
+
+    /**
+    * @description 根据活动id查询策略下的权重信息
+    * @param activityId 活动id
+    * @return 权重值对象数组
+    * @date 2024/05/05 20:58:32
+    */
+    List<RuleWeightVO> queryAwardRuleWeightByActivityId(Long activityId);
 }

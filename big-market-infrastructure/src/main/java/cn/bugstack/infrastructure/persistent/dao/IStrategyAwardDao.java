@@ -2,6 +2,7 @@ package cn.bugstack.infrastructure.persistent.dao;
 
 import cn.bugstack.infrastructure.persistent.po.StrategyAward;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,4 +24,5 @@ public interface IStrategyAwardDao {
 
     StrategyAward queryStrategyAward(StrategyAward strategyAwardReq);
 
+    List<StrategyAward> queryStrategyAwardListByIds(@Param("array") List<Integer> awardIds, @Param("strategyId") Long strategyId);
 }

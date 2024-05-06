@@ -26,4 +26,7 @@ public interface IRaffleActivityAccountDayDao {
     // 根据用户id和活动id查询用户在活动中的抽奖次数
     @DBRouter
     Integer queryRaffleActivityAccountDayPartakeCount(RaffleActivityAccountDay raffleActivityAccountDay);
+
+    // 添加账户额度
+    void addAccountQuota(RaffleActivityAccountDay raffleActivityAccountDay);
 }

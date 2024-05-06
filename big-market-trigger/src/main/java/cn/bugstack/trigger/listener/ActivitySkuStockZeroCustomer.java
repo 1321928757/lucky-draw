@@ -30,7 +30,7 @@ public class ActivitySkuStockZeroCustomer {
     private IRaffleActivitySkuStockService skuStock;
 
     // ackMode指定为手动提交模式
-    @RabbitListener(queuesToDeclare = @Queue("bigmarket.activity_sku_stock_zero"), ackMode="MANUAL")
+    @RabbitListener(queuesToDeclare = @Queue("${spring.rabbitmq.topic.activity_sku_stock_zero}"), ackMode="MANUAL")
     public void stockUpdateHandler(String json , Message message, Channel channel) {
         //  如果手动ACK,消息会被监听消费,但是消息在队列中依旧存在,如果 未配置 acknowledge-mode 默认是会在消费完毕后自动ACK掉
         final long deliveryTag = message.getMessageProperties().getDeliveryTag();

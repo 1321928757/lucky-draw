@@ -4,6 +4,7 @@ import cn.bugstack.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.bugstack.domain.strategy.model.entity.StrategyEntity;
 import cn.bugstack.domain.strategy.model.entity.StrategyRuleEntity;
 import cn.bugstack.domain.strategy.model.valobj.RuleTreeVO;
+import cn.bugstack.domain.strategy.model.valobj.RuleWeightVO;
 import cn.bugstack.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import cn.bugstack.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 
@@ -200,4 +201,12 @@ public interface IStrategyRepository {
     * @date 2024/04/24 17:39:49
     */
     Map<String, Integer> queryAwardRuleLockCountByRuleIds(String[] treeIds);
+
+    /**
+    * @description 根据策略id查询权重信息
+    * @param strategyId 策略id
+    * @return 权重对象
+    * @date 2024/05/05 21:03:02
+    */
+    List<RuleWeightVO> queryAwardRuleWeight(Long strategyId);
 }
