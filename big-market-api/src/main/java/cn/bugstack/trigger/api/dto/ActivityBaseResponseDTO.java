@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -41,5 +43,11 @@ public class ActivityBaseResponseDTO {
      * 结束时间
      */
     private Date endDateTime;
+
+    /**
+     * 活动状态
+     */
+    private String state;
+
 
 }

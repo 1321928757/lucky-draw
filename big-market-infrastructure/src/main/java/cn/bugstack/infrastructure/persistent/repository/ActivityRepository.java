@@ -564,17 +564,17 @@ public class ActivityRepository implements IActivityRepository {
         activityAccountEntity.setTotalCount(raffleActivityAccount.getTotalCount());
         activityAccountEntity.setTotalCountSurplus(raffleActivityAccount.getTotalCountSurplus());
         // 如果日月不存在，则从总次数账户中填充
-        if(raffleActivityAccountMonth == null){
+        if (raffleActivityAccountMonth == null) {
             activityAccountEntity.setMonthCount(raffleActivityAccount.getMonthCount());
             activityAccountEntity.setMonthCountSurplus(raffleActivityAccount.getMonthCount());
-        }else{
+        } else {
             activityAccountEntity.setMonthCount(raffleActivityAccountMonth.getMonthCount());
             activityAccountEntity.setMonthCountSurplus(raffleActivityAccountMonth.getMonthCount());
         }
-        if(raffleActivityAccountDay == null){
+        if (raffleActivityAccountDay == null) {
             activityAccountEntity.setDayCount(raffleActivityAccount.getDayCount());
             activityAccountEntity.setDayCountSurplus(raffleActivityAccount.getDayCount());
-        }else{
+        } else {
             activityAccountEntity.setDayCount(raffleActivityAccountDay.getDayCount());
             activityAccountEntity.setDayCountSurplus(raffleActivityAccountDay.getDayCount());
         }

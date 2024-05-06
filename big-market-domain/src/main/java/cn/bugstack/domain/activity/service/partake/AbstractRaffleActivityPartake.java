@@ -47,6 +47,8 @@ public abstract class AbstractRaffleActivityPartake implements IRaffleActivityPa
             throw new AppException(ResponseCode.ACTIVITY_NO_OPEN.getCode(), ResponseCode.ACTIVITY_NO_OPEN.getInfo());
         }
         // 2.2 活动日期校验
+        System.out.println(currentDate.after(activityEntity.getEndDateTime()));
+        System.out.println(currentDate.before(activityEntity.getBeginDateTime()));
         if(currentDate.before(activityEntity.getBeginDateTime()) || currentDate.after(activityEntity.getEndDateTime())){
             throw new AppException(ResponseCode.ACTIVITY_NOT_TIME.getCode(), ResponseCode.ACTIVITY_NOT_TIME.getInfo());
         }

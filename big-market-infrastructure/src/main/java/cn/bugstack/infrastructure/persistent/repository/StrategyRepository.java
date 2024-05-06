@@ -366,7 +366,7 @@ public class StrategyRepository implements IStrategyRepository {
         RaffleActivityAccount raffleActivityAccount = raffleActivityAccountDao.queryActivityAccountByUserId(raffleActivityAccountReq);
 
         // 3.总次数 - 剩余次数 = 使用次数
-        return raffleActivityAccount.getMonthCount() - raffleActivityAccount.getMonthCountSurplus();
+        return raffleActivityAccount.getTotalCount() - raffleActivityAccount.getTotalCountSurplus();
     }
 
     @Override

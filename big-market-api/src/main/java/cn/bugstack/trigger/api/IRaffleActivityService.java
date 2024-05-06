@@ -54,5 +54,5 @@ public interface IRaffleActivityService {
      * @param activityId 活动id
      * @return 活动信息对象
      */
-    Response<ActivityBaseResponseDTO> queryActivityById(Long activityId, String token);
+    Response<ActivityBaseResponseDTO> queryActivityById(Long activityId);
 }

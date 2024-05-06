@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.text.SimpleDateFormat;
+import java.util.logging.SimpleFormatter;
+
 /**
  * @author Luckysj @刘仕杰
  * @description 用户活动账户应答对象
@@ -15,6 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserActivityAccountResponseDTO {
+
 
     /**
      * 总次数

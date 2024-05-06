@@ -1,8 +1,10 @@
 package cn.bugstack.trigger.http;
 
 import cn.bugstack.domain.activity.model.entity.ActivityAccountEntity;
+import cn.bugstack.domain.activity.model.entity.ActivityEntity;
 import cn.bugstack.domain.activity.model.entity.UserRaffleOrderEntity;
 import cn.bugstack.domain.activity.service.IRaffleActivityAccountQuotaService;
+import cn.bugstack.domain.activity.service.IRaffleActivityBaseService;
 import cn.bugstack.domain.activity.service.IRaffleActivityPartakeService;
 import cn.bugstack.domain.activity.service.armory.IActivityArmory;
 import cn.bugstack.domain.auth.service.IAuthService;
@@ -62,6 +64,9 @@ public class RaffleActivityController implements IRaffleActivityService {
 
     @Resource
     private IRaffleActivityAccountQuotaService raffleActivityAccountQuotaService;
+
+    @Resource
+    private IRaffleActivityBaseService raffleActivityBaseService;
 
     /**
      * @param activityId 活动id
@@ -179,7 +184,7 @@ public class RaffleActivityController implements IRaffleActivityService {
                             .build())
                     .build();
         } catch (AppException e) {
-            log.info("活动抽奖，失败 activityId:{},error:{}", request.getActivityId(), e.getMessage());
+            log.info("活动抽奖，失败 activityId:{},error:{}", request.getActivityId(), e.getInfo());
             return Response.<ActivityDrawResponseDTO>builder()
                     .code(e.getCode())
                     .info(e.getInfo())
@@ -341,6 +346,49 @@ public class RaffleActivityController implements IRaffleActivityService {
                     .build();
         }
 
+    }
+
+    /**
+    * @description 查询活动详细信息
+    * @param activityId 活动id
+    * @return 活动详细信息
+    * @date 2024/05/06 19:13:08
+    */
+    @RequestMapping(value = "query_activity", method = RequestMethod.GET)
+    @Override
+    public Response<ActivityBaseResponseDTO> queryActivityById(Long activityId) {
+        try {
+            // 1.查询活动信息
+            ActivityEntity activityEntity =  raffleActivityBaseService.queryActivityById(activityId);
+
+            // 2.转为DTO对象
+            ActivityBaseResponseDTO activityBaseResponseDTO = ActivityBaseResponseDTO.builder()
+                    .activityId(activityEntity.getActivityId())
+                    .activityName(activityEntity.getActivityName())
+                    .activityDesc(activityEntity.getActivityDesc())
+                    .beginDateTime(activityEntity.getBeginDateTime())
+                    .endDateTime(activityEntity.getEndDateTime())
+                    .state(activityEntity.getState().getCode())
+                    .build();
+
+            return Response.<ActivityBaseResponseDTO>builder()
+                    .code(ResponseCode.SUCCESS.getCode())
+                    .info(ResponseCode.SUCCESS.getInfo())
+                    .data(activityBaseResponseDTO)
+                    .build();
+        } catch (AppException e) {
+            log.error("查询活动信息异常", e);
+            return Response.<ActivityBaseResponseDTO>builder()
+                    .code(e.getCode())
+                    .info(e.getInfo())
+                    .build();
+        } catch (Exception e) {
+            log.error("查询活动信息异常", e);
+            return Response.<ActivityBaseResponseDTO>builder()
+                    .code(ResponseCode.UN_ERROR.getCode())
+                    .info(ResponseCode.UN_ERROR.getInfo())
+                    .build();
+        }
     }
 
 }

@@ -72,4 +72,5 @@ public interface IActivityRepository {
 
     // 根据活动id和用户id查询用户的总，月，日账户次数信息
     ActivityAccountEntity queryActivityAccountEntity(Long activityId, String userId);
+
 }
