@@ -1,11 +1,8 @@
 <script setup>
-import Home from './components/raffle/index.vue'
-import { succesMsg } from './utils/remind';
-succesMsg("test")
 </script>
 
 <template>
-    <Home/>
+    <router-view></router-view>
 </template>
 
 <style scoped>

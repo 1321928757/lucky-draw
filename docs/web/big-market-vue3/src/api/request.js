@@ -1,5 +1,5 @@
 import axios from 'axios'
-import router from '../router'
+import { topathReplace } from '@/utils/router.js'
 import { errorMsg } from '@/utils/remind.js'
 
 // 创建axios实例
@@ -12,9 +12,9 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
  (config) => {
    // 在发送请求之前做些什么
-   const token = JSON.parse(localStorage.getItem('LUCKYSJ_TOKEN'))
+   const token = localStorage.getItem('luckysj-draw-token')
    if (token) {
-     config.headers.Token = token
+     config.headers.Authorization = token
    }
    return config
  },
@@ -28,7 +28,12 @@ axiosClient.interceptors.request.use(
 // 响应拦截器
 axiosClient.interceptors.response.use(
  (response) => {
-   // 对响应数据做些什么
+   // 1.未登录状态码拦截，如果未登录，则跳转登录界面
+   if(response.data.code == "0007"){
+    errorMsg("用户未登录，前往登录界面~")
+    topathReplace("/auth/login")
+   }
+
    return response.data
  },
  (error) => {
@@ -42,7 +47,7 @@ axiosClient.interceptors.response.use(
    } else if (message.includes('Request failed with status code')) {
      errorMessage = `系统接口${message.substr(message.length - 3)}异常`
    }
-     errorMessage(errorMessage)
+   errorMsg(errorMessage)
    return Promise.reject(error)
  }
 )

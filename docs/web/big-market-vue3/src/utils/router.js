@@ -1,4 +1,5 @@
 import router from "@/router/index.js";
+import { useRoute } from 'vue-router'
 
 
 // push跳转可以返回到之前的界面
@@ -29,5 +30,13 @@ export const topathReplaceWithParam = ( url , params) => {
         path: url,
         query: params
     })
+}
+
+export const getUrlQuery = () => {
+    const route = useRoute()
+
+
+
+    return query
 }
 

@@ -57,9 +57,11 @@ yarn run dev
 
 **效果图预览**
 
-![](https://img-blog.csdnimg.cn/direct/61587b6ff7d5428ca1681c1f59129147.png)  
+登录界面
+![](https://img-blog.csdnimg.cn/direct/7f313b52a7b043ccb0f87ac639aaee44.png)  
 
-![](https://img-blog.csdnimg.cn/direct/89558ce21d294497918a4b24a472086c.gif)  
+活动主界面【获取抽奖次数，展示最近的获奖名单，查看个人的获奖信息等内容待开发】  
+![](https://img-blog.csdnimg.cn/direct/c11874f2f6b348a9bd3ca42fecf5dc72.png)  
 
 ## 🫧项目架构
 
