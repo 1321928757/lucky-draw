@@ -40,9 +40,9 @@ mini-db-router:
       list: db01,db02
       db00:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://154.201.80.213:3306/big_market?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
+        url: jdbc:mysql://154.2:3306/big_market?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
         username: root
-        password: lsj20030222
+        password: xxx
         type-class-name: com.zaxxer.hikari.HikariDataSource
         pool:
           pool-name: Retail_HikariCP
@@ -57,7 +57,7 @@ mini-db-router:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://154.201.80.213:3306/big_market_01?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
         username: root
-        password: lsj20030222
+        password: xxx
         type-class-name: com.zaxxer.hikari.HikariDataSource
         pool:
           pool-name: Retail_HikariCP
@@ -72,7 +72,7 @@ mini-db-router:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://localhost:3306/big_market_02?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
         username: root
-        password: lsj20030222
+        password: xxx
         type-class-name: com.zaxxer.hikari.HikariDataSource
         pool:
           pool-name: Retail_HikariCP
@@ -87,10 +87,10 @@ mini-db-router:
 spring:
   # RabbitMQ 配置
   rabbitmq:
-    addresses: 154.201.80.213
+    addresses: 154.2
     port: 5672
     username: admin
-    password: lsj114514
+    password: xxx
     listener:
       simple:
         prefetch: 1 # 每次投递n个消息，消费完在投递n个，控制消费速度
@@ -110,7 +110,7 @@ redis:
   sdk:
     config:
 #      host: localhost
-      host: 154.12.27.76
+      host: xxxx
       port: 6379
       pool-size: 10
       min-idle-size: 5
@@ -120,7 +120,7 @@ redis:
       retry-interval: 1000
       ping-interval: 60000
       keep-alive: true
-      password: lsj114514
+      password: xxxxx
 
 # 日志
 logging:
