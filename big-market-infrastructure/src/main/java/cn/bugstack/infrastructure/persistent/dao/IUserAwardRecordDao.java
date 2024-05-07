@@ -1,8 +1,13 @@
 package cn.bugstack.infrastructure.persistent.dao;
 
 import cn.bugstack.infrastructure.persistent.po.UserAwardRecord;
+import cn.bugstack.middleware.db.router.annotation.DBRouter;
 import cn.bugstack.middleware.db.router.annotation.DBRouterStrategy;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
 /**
  * @author Luckysj @刘仕杰
  * @description 用户获奖记录表Dao
@@ -13,4 +18,11 @@ import org.apache.ibatis.annotations.Mapper;
 public interface IUserAwardRecordDao {
 
     void insert(UserAwardRecord userAwardRecord);
+
+    // 分页查询用户的获奖记录
+    @DBRouter
+    List<UserAwardRecord> pageUserAwardRecord(@Param("page") int page,@Param("pageSize") int pageSize,@Param("userId") String userId);
+    // 查询用户的所有获奖记录数
+    @DBRouter
+    int queryTotalNumberUserAwardRecord(String userId);
 }

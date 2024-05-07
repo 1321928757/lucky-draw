@@ -30,3 +30,18 @@ export const queryRuleWeightById = (activityId) => {
 export const queryActivityById = (activityId) => {
     return axiosClient.get(`/api/v1/raffle/activity/query_activity?activityId=${activityId}`)
    }
+
+// 判断用户是否签到过
+export const judgeIsSignUp = () => {
+    return axiosClient.get(`/api/v1/raffle/activity/is_calendar_sign_rebate`)
+}
+
+// 用户签到
+export const userSignUp = () => {
+    return axiosClient.post(`/api/v1/raffle/activity/calendar_sign_rebate`)
+}
+
+// 分页查询用户的获奖记录
+export const queryPageAwardRecord = (pageRequest) => {
+    return axiosClient.post(`/api/v1/raffle/award/query_page_award_record`, pageRequest)
+}

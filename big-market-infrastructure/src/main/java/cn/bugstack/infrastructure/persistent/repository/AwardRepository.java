@@ -3,6 +3,7 @@ package cn.bugstack.infrastructure.persistent.repository;
 import cn.bugstack.domain.award.model.aggregate.UserAwardRecordAggregate;
 import cn.bugstack.domain.award.model.entity.TaskEntity;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
+import cn.bugstack.domain.award.model.valobj.AwardStateVO;
 import cn.bugstack.domain.award.model.valobj.TaskStateVO;
 import cn.bugstack.domain.award.repository.IAwardRepository;
 import cn.bugstack.infrastructure.event.EventPublisher;
@@ -11,9 +12,12 @@ import cn.bugstack.infrastructure.persistent.dao.IUserAwardRecordDao;
 import cn.bugstack.infrastructure.persistent.dao.IUserRaffleOrderDao;
 import cn.bugstack.infrastructure.persistent.po.Task;
 import cn.bugstack.infrastructure.persistent.po.UserAwardRecord;
+import cn.bugstack.infrastructure.persistent.redis.IRedisService;
 import cn.bugstack.middleware.db.router.strategy.IDBRouterStrategy;
+import cn.bugstack.types.common.Constants;
 import cn.bugstack.types.enums.ResponseCode;
 import cn.bugstack.types.exception.AppException;
+import cn.bugstack.types.model.PageData;
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
@@ -21,7 +25,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Repository
@@ -47,6 +54,9 @@ public class AwardRepository implements IAwardRepository {
 
     @Resource
     private IDBRouterStrategy dbRouter;
+
+    @Resource
+    private IRedisService redisService;
 
 
     @Override
@@ -118,5 +128,43 @@ public class AwardRepository implements IAwardRepository {
                 }
             }
         });
+    }
+
+    @Override
+    public List<UserAwardRecordEntity> queryLastestAwardingRecord(Long activityId, int count) {
+        return null;
+    }
+
+    @Override
+    public PageData<UserAwardRecordEntity> queryUserAwardingRecord(int page, int pageSize, String userId) {
+        // 1.计算分页参数
+        int current = (page - 1) * pageSize;
+        // 2.查询分页数据
+        List<UserAwardRecord> userAwardRecords = userAwardRecordDao.pageUserAwardRecord(current, pageSize, userId);
+        // 3.查询数据总量
+        int total = userAwardRecordDao.queryTotalNumberUserAwardRecord(userId);
+        if(userAwardRecords.isEmpty()) {
+            return PageData.<UserAwardRecordEntity>builder()
+                    .total(total)
+                    .current(page)
+                    .pageSize(pageSize)
+                    .data(new ArrayList<>())
+                    .build();
+        }
+        // 4.转为实体对象
+        List<UserAwardRecordEntity> userAwardRecordEntities = userAwardRecords.stream().map(record -> UserAwardRecordEntity.builder()
+                .awardId(record.getAwardId())
+                .awardTitle(record.getAwardTitle())
+                .awardState(AwardStateVO.valueOf(record.getAwardState()))
+                .awardTime(record.getAwardTime())
+                .orderId(record.getOrderId()).build()).collect(Collectors.toList());
+
+        // 5.组装对象
+        return PageData.<UserAwardRecordEntity>builder()
+                .total(total)
+                .current(page)
+                .pageSize(pageSize)
+                .data(userAwardRecordEntities)
+                .build();
     }
 }

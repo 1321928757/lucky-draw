@@ -1,6 +1,10 @@
 package cn.bugstack.domain.award.repository;
 
 import cn.bugstack.domain.award.model.aggregate.UserAwardRecordAggregate;
+import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
+import cn.bugstack.types.model.PageData;
+
+import java.util.List;
 
 /**
  * @author Luckysj @刘仕杰
@@ -15,4 +19,23 @@ public interface IAwardRepository {
     * @date 2024/04/13 21:12:12
     */
     void saveUserAwardRecord(UserAwardRecordAggregate userAwardRecordAggregate);
+
+    /**
+    * @description 批量查询最新获奖记录
+    * @param activityId 活动id
+    * @param count 查询数量
+    * @return 获奖数据数组 UserAwardRecordEntity
+    * @date 2024/05/07 13:42:43
+    */
+    List<UserAwardRecordEntity> queryLastestAwardingRecord(Long activityId ,int count);
+
+    /**
+    * @description 分页查询自己的获奖记录
+    * @param page 当前页
+    * @param pageSize 页码大小
+    * @param userId 用户ID
+    * @return
+    * @date 2024/05/07 15:19:12
+    */
+    PageData<UserAwardRecordEntity> queryUserAwardingRecord(int page, int pageSize, String userId);
 }

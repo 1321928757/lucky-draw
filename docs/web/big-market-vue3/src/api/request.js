@@ -30,7 +30,7 @@ axiosClient.interceptors.response.use(
  (response) => {
    // 1.未登录状态码拦截，如果未登录，则跳转登录界面
    if(response.data.code == "0007"){
-    errorMsg("用户未登录，前往登录界面~")
+    errorMsg("要先登录才能参与活动哦~")
     topathReplace("/auth/login")
    }
 

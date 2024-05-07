@@ -8,14 +8,15 @@ import {
   queryActivityById,
 } from "@/api/raffle.js";
 import { succesMsg, errorMsg, warnMsg } from "@/utils/remind.js";
-import PublicityBoard from "@/components/raffle/publicityBoard/PublicityBoard.vue";
-import { getUrlQuery } from "@/utils/router.js";
+import { topathReplace } from '@/utils/router.js'
 import { useRoute } from "vue-router";
 
 import RaffleCanvas from "./raffleCanvas/RaffleCanvas.vue";
 import RuleWeight from "./ruleWeight/RuleWeight.vue";
 import ActivityInfo from "./activityInfo/ActivityInfo.vue";
 import UserAccountInfo from "./userAccountInfo/UserAccountInfo.vue";
+import SignUpBoard from "./signUpBoard/SignUpBoard.vue";
+import MyAwards from "./myEarningAward/MyAwards.vue";
 import emitter from "@/utils/mitt";
 
 const route = useRoute();
@@ -53,7 +54,7 @@ const prepareAward = async () => {
       load_btn_prepare.value = false;
     }, 1000);
   } else {
-    errorMsg(res.info);
+    // errorMsg(res.info);
   }
 };
 
@@ -102,15 +103,19 @@ const queryActivityAwards = async () => {
               src: award.awardImage, //Image的值示例：https://luckysj-1314434715.cos.ap-shanghai.myqcloud.com/8c825935-816b-4c6b-b99d-4677c336607c.jpg
               width: "65px",
               height: "65px",
-              activeSrc: "../src/assets/img/rotate.png",
+              // activeSrc: "../src/assets/img/rotate.png",
+              activeSrc: "../rotate.png",
             },
           ],
         };
 
         // 根据解锁情况选择显示不同的图片
         if (award.isAwardUnlock == false) {
-          awardItem.imgs[0].src = "../src/assets/img/waitLock.png";
-          awardItem.imgs[0].activeSrc = "../src/assets/img/waitLock.png";
+          // awardItem.imgs[0].src = "../src/assets/img/waitLock.png";
+          // awardItem.imgs[0].activeSrc = "../src/assets/img/waitLock.png";
+
+          awardItem.imgs[0].src = "../waitLock.png";
+          awardItem.imgs[0].activeSrc = "../waitLock.png";
         }
 
         awardListDate.push(awardItem);
@@ -124,7 +129,7 @@ const queryActivityAwards = async () => {
       load_btn_query.value = false;
     }, 1000);
   } else {
-    warnMsg(res.info);
+    // warnMsg(res.info);
   }
 };
 
@@ -134,7 +139,7 @@ const queryUserAccountInfo = async () => {
   if (res.code == "0000") {
     userAccountInfo.value = res.data;
   } else {
-    errorMsg(res.info);
+    // errorMsg(res.info);
   }
 };
 
@@ -144,7 +149,7 @@ const queryRuleWeightInfo = async () => {
   if (res.code == "0000") {
     ruleWeightInfo.value = res.data;
   } else {
-    errorMsg(res.info);
+    // errorMsg(res.info);
   }
 };
 
@@ -154,12 +159,19 @@ const queryActivityInfo = async () => {
   if (res.code == "0000") {
     activityInfo.value = res.data;
   } else {
-    errorMsg(res.info);
+    // errorMsg(res.info);
   }
 };
 
 // 初始化函数
 const init = () => {
+  // 1.首先检查是否存在用户信息
+  if(!localStorage.getItem("luckysj-draw-token")){
+    errorMsg("要先登录才能参与活动哦~")
+    topathReplace("/auth/login")
+    return
+  }
+
   queryActivityInfo();
   queryRuleWeightInfo();
   queryUserAccountInfo();
@@ -174,6 +186,12 @@ const init = () => {
     // 重新查询账户次数信息
     queryUserAccountInfo();
   });
+
+  // 注册次数账户更新监听
+  emitter.on("updateAccountData", (param) => {
+    // 重新查询账户次数信息
+    queryUserAccountInfo();
+  })
 };
 
 watchEffect(() => {
@@ -194,8 +212,11 @@ init();
       <el-row :gutter="20">
         <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8" style="margin-bottom: 10px;">
           <!-- 活动信息 -->
-          <div class="activity-info">
+          <div class="activity-info" style="margin-bottom: 10px;">
             <ActivityInfo :activity-info="activityInfo"></ActivityInfo>
+          </div>
+          <div class="my-award">
+            <MyAwards></MyAwards>
           </div>
         </el-col>
         <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8" style="margin-bottom: 10px;">
@@ -215,21 +236,26 @@ init();
         </el-col>
         <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8" style="margin-bottom: 10px;">
           <!-- 用户次数账户信息 -->
-          <div class="acccount-info">
+          <div class="acccount-info" style="margin-bottom: 10px;">
             <userAccountInfo
               :userAccountInfo="userAccountInfo"
             ></userAccountInfo>
           </div>
+          <div class="sign-up">
+            <SignUpBoard>
+
+            </SignUpBoard>
+          </div>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-          <!-- 用户获取抽奖次数的任务版【第一次参与活动，签到等等获取方式】 -->
+        <!-- 我的奖品 -->
+        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+         
          </el-col>
          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
           <!-- 最近获奖名单展示，滚动展示 -->
          </el-col>
       </el-row>
 
-      <!-- 我的获奖记录查询弹窗(减少首页的查询次数，需要用户主动点击再查询显示) -->
     </div>
   </div>
 </template>

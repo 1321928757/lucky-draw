@@ -9,6 +9,7 @@ public class Constants {
 
     public static class RedisKey {
 
+
         public static String ACTIVITY_KEY = "big_market_activity_key_";
         public static String ACTIVITY_SKU_KEY = "big_market_activity_sku_key_";
         public static String ACTIVITY_COUNT_KEY = "big_market_activity_count_key_";
@@ -29,6 +30,8 @@ public class Constants {
         public static String ACTIVITY_SKU_STOCK_COUNT_KEY = "strategy_sku_stock_count_key_";
         /** 活动SKU次数库存延迟队列 key*/
         public static String ACTIVITY_SKU_COUNT_QUERY_KEY = "strategy_sku_count_query_key";
+        /** 最新获奖记录 Key*/
+        public static  String AWARD_LASTEST_LIST = "award_lastest_list";
 
     }
 

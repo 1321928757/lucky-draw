@@ -19,7 +19,7 @@ public class AuthRepository implements IAuthRepository {
 
     @Override
     public void removeCodeByOpenId(String code, String openId) {
-        // redisService.remove(Key + code);
-        // redisService.remove(Key + openId);
+        redisService.remove(Key + code);
+        redisService.remove(Key + openId);
     }
 }

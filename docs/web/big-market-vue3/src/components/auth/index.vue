@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { userLogin } from "@/api/auth.js";
 import { succesMsg, errorMsg, warnMsg, successNotify } from "@/utils/remind.js";
-import { topathPush } from '@/utils/router.js'
+import { topathPush, goBack } from '@/utils/router.js'
 
 const exp = /^\d{6,8}$/;
 const loading = ref(false); //防抖&加载动画
@@ -30,9 +30,8 @@ const userLoginBtn = async () => {
     localStorage.setItem("luckysj-draw-token", res.data)
 
     setTimeout(() => {
-      successNotify("访问码通过，即将自动跳转");
+      successNotify("访问码通过，返回活动界面即可参与活动【不是偷懒不想写跳转的说】");
       loading.value = false;
-      topathPush("/raffle/100301")
     }, 1000);
   } else {
     setTimeout(() => {
