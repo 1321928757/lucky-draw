@@ -7,9 +7,11 @@ import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
 import cn.bugstack.domain.award.model.valobj.TaskStateVO;
 import cn.bugstack.domain.award.repository.IAwardRepository;
 import cn.bugstack.types.event.BaseEvent;
+import cn.bugstack.types.model.PageData;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author Luckysj @刘仕杰
@@ -48,4 +50,16 @@ public class AwardService implements IAwardService{
         // 4.中奖记录聚合对象处理(在一个事务下)
         awardRepository.saveUserAwardRecord(userAwardRecordAggregate);
     }
+
+    @Override
+    public List<UserAwardRecordEntity> queryLastestAwardingRecord(Long activityId, int count) {
+        return awardRepository.queryLastestAwardingRecord(activityId, count);
+    }
+
+    @Override
+    public PageData<UserAwardRecordEntity> queryUserAwardingRecord(int page, int pageSize, String userId) {
+        return awardRepository.queryUserAwardingRecord(page,pageSize, userId);
+    }
+
+
 }

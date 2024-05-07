@@ -34,9 +34,14 @@ export const topathReplaceWithParam = ( url , params) => {
 
 export const getUrlQuery = () => {
     const route = useRoute()
-
-
-
     return query
 }
+
+export const goBack = () => {
+    // 返回上一页
+    console.log(1111)
+    router.go(-1)
+  }
+
+
 

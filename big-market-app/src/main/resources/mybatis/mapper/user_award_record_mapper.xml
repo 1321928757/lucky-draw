@@ -21,4 +21,19 @@
         values (#{userId}, #{activityId}, #{strategyId}, #{orderId}, #{awardId}, #{awardTitle},
                 #{awardTime}, #{awardState}, now(), now())
     </insert>
+
+    <select id="pageUserAwardRecord" resultMap="dateMap">
+        select user_id, activity_id, strategy_id, order_id, award_id, award_title, award_time,
+               award_state, create_time, update_time
+        from user_award_record
+        where user_id = #{userId}
+        order by award_time desc
+        limit #{page}, #{pageSize}
+
+    </select>
+    <select id="queryTotalNumberUserAwardRecord" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*)
+        from user_award_record
+        where user_id = #{userId}
+    </select>
 </mapper>
