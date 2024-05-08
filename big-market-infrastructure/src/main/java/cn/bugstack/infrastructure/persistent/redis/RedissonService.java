@@ -58,6 +58,7 @@ public class RedissonService implements IRedisService {
         return redissonClient.getAtomicLong(key).get();
     }
 
+
     @Override
     public long incr(String key) {
         return redissonClient.getAtomicLong(key).incrementAndGet();

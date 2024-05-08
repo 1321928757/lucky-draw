@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 /**
  * @author Luckysj @刘仕杰
  * @description 抽奖奖品列表，应答对象
@@ -32,5 +34,6 @@ public class RaffleAwardListResponseDTO {
     private Boolean isAwardUnlock;
     // 剩余解锁次数
     private Integer waitUnLockCount;
-
+    // 奖品的中奖概率
+    private BigDecimal awardRate;
 }

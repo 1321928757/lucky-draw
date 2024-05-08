@@ -100,6 +100,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
                         .awardTitle(strategyAward.getAwardTitle())
                         .awardSubtitle(strategyAward.getAwardSubtitle())
                         .awardImage(strategyAward.getAwardImage())
+                        .awardRate(strategyAward.getAwardRate())
                         .sort(strategyAward.getSort())
                         .awardRuleLockCount(awardRuleLockCount)
                         .isAwardUnlock(null == awardRuleLockCount || dayPartakeCount >= awardRuleLockCount)
@@ -142,13 +143,10 @@ public class RaffleStrategyController implements IRaffleStrategyService {
                         .build();
             }
 
-            // 2.查询用户总抽取次数
-            Integer userTotalUseCount = accountQuotaService.queryRaffleActivityAccountTotalPartakeCount(activityId, userId);
+            // 2.查询权重策略
+            List<RuleWeightVO> ruleWeightVOList = raffleRule.queryAwardRuleWeightByActivityId(activityId, userId);
 
-            // 3.查询权重策略
-            List<RuleWeightVO> ruleWeightVOList = raffleRule.queryAwardRuleWeightByActivityId(activityId);
-
-            // 4.封装结果
+            // 3.封装结果
             List<RaffleStrategyRuleWeightResponseDTO> raffleStrategyRuleWeightList = new ArrayList<>();
             for (RuleWeightVO ruleWeightVO : ruleWeightVOList) {
                 List<RuleWeightVO.Award> awardList = ruleWeightVO.getAwardList();
@@ -161,7 +159,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
                 RaffleStrategyRuleWeightResponseDTO raffleStrategyRuleWeightResponseDTO = new RaffleStrategyRuleWeightResponseDTO();
                 raffleStrategyRuleWeightResponseDTO.setStrategyAwards(strategyAwards);
                 raffleStrategyRuleWeightResponseDTO.setRuleWeightCount(ruleWeightVO.getWeight());
-                raffleStrategyRuleWeightResponseDTO.setUserActivityAccountTotalUseCount(userTotalUseCount);
+                raffleStrategyRuleWeightResponseDTO.setUserWeightUseCount(ruleWeightVO.getUserWeightUseCount());
                 raffleStrategyRuleWeightList.add(raffleStrategyRuleWeightResponseDTO);
             }
 

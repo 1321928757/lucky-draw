@@ -30,6 +30,8 @@ public class UserAwardRecordEntity {
     private Integer awardId;
     /** 奖品标题（名称） */
     private String awardTitle;
+    /** 奖品展示图片 */
+    private String awardImage;
     /** 中奖时间 */
     private Date awardTime;
     /** 奖品状态；create-创建、completed-发奖完成 */

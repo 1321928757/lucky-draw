@@ -25,7 +25,7 @@ public class AuthService extends AbstractAuthService{
 
     @Override
     protected AuthStateEntity checkCode(String code) {
-// 从缓存中读取验证码
+    // 从缓存中读取验证码
         String openId = authRepository.getCodeUserOpenId(code);
         if(StringUtils.isBlank(openId)){
             log.info("鉴权失败，用户输入的验证码不存在 {}", code);

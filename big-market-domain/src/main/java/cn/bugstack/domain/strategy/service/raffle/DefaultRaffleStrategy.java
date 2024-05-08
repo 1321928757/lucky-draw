@@ -87,15 +87,15 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRa
     }
 
     @Override
-    public List<RuleWeightVO> queryAwardRuleWeight(Long strategyId) {
-        return repository.queryAwardRuleWeight(strategyId);
+    public List<RuleWeightVO> queryAwardRuleWeight(Long strategyId, String userId) {
+        return repository.queryAwardRuleWeight(strategyId, userId);
     }
 
     @Override
-    public List<RuleWeightVO> queryAwardRuleWeightByActivityId(Long activityId) {
+    public List<RuleWeightVO> queryAwardRuleWeightByActivityId(Long activityId, String userId) {
         // 1.根据活动id查询策略id 
         Long strtategy = repository.queryStrategyIdByActivityId(activityId);
         // 2.根据策略id查询权重信息
-        return queryAwardRuleWeight(strtategy);
+        return queryAwardRuleWeight(strtategy, userId);
     }
 }

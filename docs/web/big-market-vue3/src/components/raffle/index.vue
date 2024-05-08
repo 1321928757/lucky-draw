@@ -8,7 +8,7 @@ import {
   queryActivityById,
 } from "@/api/raffle.js";
 import { succesMsg, errorMsg, warnMsg } from "@/utils/remind.js";
-import { topathReplace } from '@/utils/router.js'
+import { topathReplace } from "@/utils/router.js";
 import { useRoute } from "vue-router";
 
 import RaffleCanvas from "./raffleCanvas/RaffleCanvas.vue";
@@ -17,6 +17,7 @@ import ActivityInfo from "./activityInfo/ActivityInfo.vue";
 import UserAccountInfo from "./userAccountInfo/UserAccountInfo.vue";
 import SignUpBoard from "./signUpBoard/SignUpBoard.vue";
 import MyAwards from "./myEarningAward/MyAwards.vue";
+import ActivityDetail from "./activityDetail/ActivityDetail.vue";
 import emitter from "@/utils/mitt";
 
 const route = useRoute();
@@ -31,8 +32,10 @@ const activityInfo = ref({
 // 用户次数账户信息(比如剩余抽奖次数，总抽取次数)
 const userAccountInfo = ref({});
 
-// 活动奖品列表信息
+// 活动奖品列表信息(格式化后的)
 const prizes = ref([]);
+// 活动奖品列表信息(未格式化)
+const originPrizes = ref([]);
 
 // 用户抽奖权重信息
 const ruleWeightInfo = ref({});
@@ -65,6 +68,9 @@ const queryActivityAwards = async () => {
   // 2.请求数据
   const res = await queryAwardListByActivityID(activityInfo.value);
   if (res.code == "0000") {
+    // 保存基本数据
+    originPrizes.value = res.data;
+
     // 3.请求成功，转换奖品数组为抽奖插件格式数据
     const awardListData = res.data;
     const awardCount = awardListData.length;
@@ -81,6 +87,7 @@ const queryActivityAwards = async () => {
         // 当前奖品
         let award = awardListData[index++];
         let awardItem = {
+          awardName: award.awardTitle,
           x: x,
           y: y,
           background: "rgba(226, 205, 176, 0.47)",
@@ -99,8 +106,7 @@ const queryActivityAwards = async () => {
           ],
           imgs: [
             {
-              // 这个src换成本地静态文件就没问题，换成网络地址会自动加上当前服务的IP，http://localhost:5173/https//luckysj-1314434715.cos.ap-shanghai.myqcloud.com/8c825935-816b-4c6b-b99d-4677c336607c.jpg
-              src: award.awardImage, //Image的值示例：https://luckysj-1314434715.cos.ap-shanghai.myqcloud.com/8c825935-816b-4c6b-b99d-4677c336607c.jpg
+              src: award.awardImage,
               width: "65px",
               height: "65px",
               // activeSrc: "../src/assets/img/rotate.png",
@@ -110,13 +116,13 @@ const queryActivityAwards = async () => {
         };
 
         // 根据解锁情况选择显示不同的图片
-        if (award.isAwardUnlock == false) {
-          // awardItem.imgs[0].src = "../src/assets/img/waitLock.png";
-          // awardItem.imgs[0].activeSrc = "../src/assets/img/waitLock.png";
+        // if (award.isAwardUnlock == false) {
+        //   // awardItem.imgs[0].src = "../src/assets/img/waitLock.png";
+        //   // awardItem.imgs[0].activeSrc = "../src/assets/img/waitLock.png";
 
-          awardItem.imgs[0].src = "../waitLock.png";
-          awardItem.imgs[0].activeSrc = "../waitLock.png";
-        }
+        //   awardItem.imgs[1].src = "../waitLock.png";
+        //   awardItem.imgs[1].activeSrc = "../waitLock.png";
+        // }
 
         awardListDate.push(awardItem);
       }
@@ -166,10 +172,10 @@ const queryActivityInfo = async () => {
 // 初始化函数
 const init = () => {
   // 1.首先检查是否存在用户信息
-  if(!localStorage.getItem("luckysj-draw-token")){
-    errorMsg("要先登录才能参与活动哦~")
-    topathReplace("/auth/login")
-    return
+  if (!localStorage.getItem("luckysj-draw-token")) {
+    errorMsg("要先登录才能参与活动哦~");
+    topathReplace("/auth/login");
+    return;
   }
 
   queryActivityInfo();
@@ -191,7 +197,7 @@ const init = () => {
   emitter.on("updateAccountData", (param) => {
     // 重新查询账户次数信息
     queryUserAccountInfo();
-  })
+  });
 };
 
 watchEffect(() => {
@@ -210,18 +216,32 @@ init();
     <div class="backgroud"></div>
     <div class="activity-box">
       <el-row :gutter="20">
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8" style="margin-bottom: 10px;">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="12"
+          :lg="8"
+          :xl="8"
+          style="margin-bottom: 10px"
+        >
           <!-- 活动信息 -->
-          <div class="activity-info" style="margin-bottom: 10px;">
+          <div class="activity-info" style="margin-bottom: 10px">
             <ActivityInfo :activity-info="activityInfo"></ActivityInfo>
           </div>
-          <div class="my-award">
-            <MyAwards></MyAwards>
+          <div>
+            <ActivityDetail :prizes="originPrizes"> </ActivityDetail>
           </div>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8" style="margin-bottom: 10px;">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="12"
+          :lg="8"
+          :xl="8"
+          style="margin-bottom: 10px"
+        >
           <!-- 抽奖主要部分【转盘，权重值】 -->
-          <div class="draw-main">
+          <div class="draw-main" style="margin-bottom: 10px">
             <div class="lucky-canvas">
               <RaffleCanvas
                 :activityInfo="activityInfo"
@@ -233,29 +253,32 @@ init();
               <RuleWeight :weightRuleValues="ruleWeightInfo"></RuleWeight>
             </div>
           </div>
+          <MyAwards></MyAwards>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8" style="margin-bottom: 10px;">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="12"
+          :lg="8"
+          :xl="8"
+          style="margin-bottom: 10px"
+        >
           <!-- 用户次数账户信息 -->
-          <div class="acccount-info" style="margin-bottom: 10px;">
+          <div class="acccount-info" style="margin-bottom: 10px">
             <userAccountInfo
               :userAccountInfo="userAccountInfo"
             ></userAccountInfo>
           </div>
           <div class="sign-up">
-            <SignUpBoard>
-
-            </SignUpBoard>
+            <SignUpBoard> </SignUpBoard>
           </div>
         </el-col>
         <!-- 我的奖品 -->
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-         
-         </el-col>
-         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8"> </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
           <!-- 最近获奖名单展示，滚动展示 -->
-         </el-col>
+        </el-col>
       </el-row>
-
     </div>
   </div>
 </template>

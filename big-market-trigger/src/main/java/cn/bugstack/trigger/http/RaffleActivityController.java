@@ -94,6 +94,7 @@ public class RaffleActivityController implements IRaffleActivityService {
 
             // 3.活动装配
             activityArmory.assembleActivitySkuByActivityId(activityId);
+
             // 4.策略装配
             strategyArmory.assembleLotteryStrategyByActivityId(activityId);
 
@@ -168,6 +169,7 @@ public class RaffleActivityController implements IRaffleActivityService {
                     .orderId(orderEntity.getOrderId())
                     .awardId(raffleAwardEntity.getAwardId())
                     .awardTitle(raffleAwardEntity.getAwardTitle())
+                    .awardImage(raffleAwardEntity.getAwardImage())
                     .awardTime(new Date())
                     .awardState(AwardStateVO.create)
                     .build();

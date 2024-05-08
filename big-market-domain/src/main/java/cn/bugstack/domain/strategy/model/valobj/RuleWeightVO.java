@@ -22,10 +22,13 @@ public class RuleWeightVO {
     private String ruleValue;
     // 权重值
     private Integer weight;
+    // 用户在本权重策略的次数累计
+    private Long userWeightUseCount;
     // 奖品配置
     private List<Integer> awardIds;
     // 奖品列表
     private List<Award> awardList;
+
 
     @Getter
     @Builder

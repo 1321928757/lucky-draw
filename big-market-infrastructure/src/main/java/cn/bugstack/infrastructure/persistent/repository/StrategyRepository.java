@@ -305,6 +305,7 @@ public class StrategyRepository implements IStrategyRepository {
                 .strategyId(strategyAwardRes.getStrategyId())
                 .awardId(strategyAwardRes.getAwardId())
                 .awardTitle(strategyAwardRes.getAwardTitle())
+                .awardImage(strategyAwardRes.getAwardImage())
                 .awardSubtitle(strategyAwardRes.getAwardSubtitle())
                 .awardCount(strategyAwardRes.getAwardCount())
                 .awardCountSurplus(strategyAwardRes.getAwardCountSurplus())
@@ -384,38 +385,53 @@ public class StrategyRepository implements IStrategyRepository {
     }
 
     @Override
-    public List<RuleWeightVO> queryAwardRuleWeight(Long strategyId) {
-        // 1.首先从缓存读取
-        String cacheKey = Constants.RedisKey.STRATEGY_RULE_WEIGHT_KEY + strategyId;
-        List<RuleWeightVO> ruleWeightVOS = redisService.getValue(cacheKey);
-        if (null != ruleWeightVOS) return ruleWeightVOS;
+    public List<RuleWeightVO> queryAwardRuleWeight(Long strategyId, String userId) {
 
-        // 2.缓存无，开始查库
-        ruleWeightVOS = new ArrayList<RuleWeightVO>();
+        // 1.查询对应的策略值
+        List<RuleWeightVO> ruleWeightVOS = new ArrayList<RuleWeightVO>();
         StrategyRule strategyRuleReq = new StrategyRule();
         strategyRuleReq.setStrategyId(strategyId);
         strategyRuleReq.setRuleModel(DefaultChainFactory.LogicModel.RULE_WEIGHT.getCode());
         String ruleValue = strategyRuleDao.queryStrategyRuleValue(strategyRuleReq);
 
-        // 3.解析权重规则值【原值格式为：4000:102,103,104,105 5000:102,103,104,105,106,107，空格分割每个权重组，冒号分割权重值和权重奖品】
+        // 2.解析权重规则值【原值格式为：4000:102,103,104,105 5000:102,103,104,105,106,107，空格分割每个权重组，冒号分割权重值和权重奖品】
         StrategyRuleEntity strategyRule = new StrategyRuleEntity();
         strategyRule.setRuleModel(DefaultChainFactory.LogicModel.RULE_WEIGHT.getCode());
         strategyRule.setRuleValue(ruleValue);
         Map<String, List<Integer>> ruleWeightValues = strategyRule.getRuleWeightValues();
-        List<RuleWeightVO.Award> awardList;
-        // 4.遍历权重规则组装配置信息
+        List<RuleWeightVO.Award> awardList = new ArrayList<>();
+
+        // 3.遍历权重规则组装配置信息
         for (String ruleWeightKey : ruleWeightValues.keySet()) {
+            Long weightValue = Long.valueOf(ruleWeightKey.split(Constants.COLON)[0]);
+
+            // 4.1 根据权重值找出用户在对应权重策略的抽奖次数
+            String counterCacheKey = Constants.RedisKey.STRATEGY_RULE_WEIGHT_COUNTER_KEY + Constants.UNDERLINE + weightValue
+                    + Constants.UNDERLINE + userId + Constants.UNDERLINE + strategyId;
+            Long useCount = redisService.getAtomicLong(counterCacheKey);
+
+            // 4.2 根据奖品ID查询出奖品的详细信息【先查缓存 TODO 后续可以添加活动的结束时间为缓存过期时间】
+            String awardsCacheKey = Constants.RedisKey.STRATEGY_RULE_WEIGHT_AWARDS_KEY + Constants.UNDERLINE + weightValue
+                    + Constants.UNDERLINE + userId + Constants.UNDERLINE + strategyId;
+            List<RuleWeightVO.Award> awards = redisService.getValue(awardsCacheKey);
             List<Integer> awardIds = ruleWeightValues.get(ruleWeightKey);
-            // 4.1 根据奖品ID查询出奖品的详细信息
-            List<StrategyAward> awards = strategyAwardDao.queryStrategyAwardListByIds(awardIds, strategyId);
-            awardList = awards.stream().map(award -> RuleWeightVO.Award.builder()
-                    .awardId(award.getAwardId())
-                    .awardTitle(award.getAwardTitle())
-                    .build()).collect(Collectors.toList());
+
+            // 4.3缓存不存在就查库
+            if(awards == null || awards.isEmpty()){
+                List<StrategyAward> strategyAwards = strategyAwardDao.queryStrategyAwardListByIds(awardIds, strategyId);
+                awards = strategyAwards.stream().map(award -> RuleWeightVO.Award.builder()
+                        .awardId(award.getAwardId())
+                        .awardTitle(award.getAwardTitle())
+                        .build()).collect(Collectors.toList());
+                redisService.setValue(awardsCacheKey, awards);
+            }
+
+            // 4.4组装信息
             ruleWeightVOS.add(RuleWeightVO.builder()
-                    .awardList(awardList)
+                    .awardList(awards)
                     .weight(Integer.valueOf(ruleWeightKey.split(Constants.COLON)[0]))
                     .awardIds(awardIds)
+                    .userWeightUseCount(useCount)
                     .ruleValue(ruleValue)
                     .build());
         }
@@ -423,10 +439,39 @@ public class StrategyRepository implements IStrategyRepository {
         // 5.根据权重值排序，方便前端展示
         ruleWeightVOS.sort(Comparator.comparingInt(RuleWeightVO::getWeight));
 
-        // 设置缓存 - TODO 后续可以添加活动的结束时间为缓存过期时间
-        redisService.setValue(cacheKey, ruleWeightVOS);
-
         return ruleWeightVOS;
+    }
+
+    @Override
+    public Long computeRuleWeightCounter(Map<Long, String> analyticalValueGroup, String userid, Long strategyId) {
+
+        // 1.找出最优权重
+        long priorWeight = -1L;
+        long priorCount = 0;
+        for (Long weight : analyticalValueGroup.keySet()) {
+            // 1.1.计数器key
+            String counterCacheKey = Constants.RedisKey.STRATEGY_RULE_WEIGHT_COUNTER_KEY + Constants.UNDERLINE + weight
+                    + Constants.UNDERLINE + userid + Constants.UNDERLINE + strategyId;
+
+            // 1.2.原子递增
+            long atomicLong = redisService.incr(counterCacheKey);
+
+            // 1.3.如果满足权重值，记录最优权重(我们这里优先级就是权重值，权重值越大，一般奖励越珍贵，就像原神的大保底比小保底更优先)
+            if (atomicLong >= weight && weight > priorWeight) {
+                priorWeight = weight;
+                priorCount = atomicLong;
+            }
+        }
+
+        // 2.清空最优权重的计数
+        if (priorWeight != -1) {
+            String counterCacheKey = Constants.RedisKey.STRATEGY_RULE_WEIGHT_COUNTER_KEY + Constants.UNDERLINE + priorWeight
+                    + Constants.UNDERLINE + userid + Constants.UNDERLINE + strategyId;
+            redisService.setAtomicLong(counterCacheKey, priorCount - priorWeight);
+            return priorWeight;
+        }
+
+        return null;
     }
 
 

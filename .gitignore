@@ -42,3 +42,4 @@ build/
 /big-market-app/data/log/
 /big-market-app/data/log/
 /big-market-app/src/main/resources/application-local2.yml
+/big-market-app/src/main/resources/application-cloud.yml
