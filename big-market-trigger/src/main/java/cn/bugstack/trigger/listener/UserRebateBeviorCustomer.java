@@ -14,6 +14,7 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -33,8 +34,8 @@ public class UserRebateBeviorCustomer {
     private IRaffleActivityAccountQuotaService raffleActivityAccountQuotaService;
 
     // ackMode指定为手动提交模式
-    @RabbitListener(queuesToDeclare = @Queue("${spring.rabbitmq.topic.rebate_send}"), ackMode="MANUAL")
-    public void sendRebateHandler(String json , Message message, Channel channel) {
+    @RabbitListener(queuesToDeclare = @Queue("${spring.rabbitmq.topic.rebate_send}"), ackMode = "MANUAL")
+    public void sendRebateHandler(String json, Message message, Channel channel) {
         //  如果手动ACK,消息会被监听消费,但是消息在队列中依旧存在,如果 未配置 acknowledge-mode 默认是会在消费完毕后自动ACK掉
         final long deliveryTag = message.getMessageProperties().getDeliveryTag();
         try {
@@ -58,7 +59,15 @@ public class UserRebateBeviorCustomer {
 
             // 3.手动ACK
             channel.basicAck(deliveryTag, false);
-            log.info("用户返利行为消息消费完成，返利业务id：{}，返利类型：{},用户ID：{}",rebateMessage.getBizId() ,rebateMessage.getRebateType(),rebateMessage.getUserId());
+            log.info("用户返利行为消息消费完成，返利业务id：{}，返利类型：{},用户ID：{}", rebateMessage.getBizId(), rebateMessage.getRebateType(), rebateMessage.getUserId());
+        } catch (DuplicateKeyException e) {
+            try {
+                //唯一索引异常，代表重复消费，直接ACK即可
+                channel.basicAck(deliveryTag, false);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
         } catch (IOException e) {
             try {
                 // 处理失败,重新压入MQ
