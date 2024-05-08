@@ -9,6 +9,7 @@
         <result column="order_id" property="orderId"/>
         <result column="award_id" property="awardId"/>
         <result column="award_title" property="awardTitle"/>
+        <result column="award_image" property="awardImage"/>
         <result column="award_time" property="awardTime"/>
         <result column="award_state" property="awardState"/>
         <result column="create_time" property="createTime"/>
@@ -16,14 +17,14 @@
     </resultMap>
 
     <insert id="insert" parameterType="cn.bugstack.infrastructure.persistent.po.UserAwardRecord">
-        insert into user_award_record(user_id, activity_id, strategy_id, order_id, award_id, award_title, award_time,
-                                      award_state, create_time, update_time)
-        values (#{userId}, #{activityId}, #{strategyId}, #{orderId}, #{awardId}, #{awardTitle},
+        insert into user_award_record(user_id, activity_id, strategy_id, order_id, award_id, award_title, award_image,
+                                      award_time, award_state, create_time, update_time)
+        values (#{userId}, #{activityId}, #{strategyId}, #{orderId}, #{awardId}, #{awardTitle}, #{awardImage},
                 #{awardTime}, #{awardState}, now(), now())
     </insert>
 
     <select id="pageUserAwardRecord" resultMap="dateMap">
-        select user_id, activity_id, strategy_id, order_id, award_id, award_title, award_time,
+        select user_id, activity_id, strategy_id, order_id, award_id, award_title, award_image, award_time,
                award_state, create_time, update_time
         from user_award_record
         where user_id = #{userId}

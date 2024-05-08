@@ -77,7 +77,7 @@ const endCallback = (prize) => {
   emitter.emit("updateActivityData", true);
 
   // 延迟一会再展示获奖信息
-  succesMsg("恭喜您抽中奖品：" + prize.fonts[0].text);
+  succesMsg("恭喜您抽中奖品：" + prize.awardName);
 };
 </script>
 

@@ -43,7 +43,7 @@ init()
 
 <template>
     <div class="sign-up-board">
-        <h3>获取次数</h3>
+        <h3>活动签到</h3>
         <el-calendar v-model="time" style="margin-bottom: 10px;"/>
         <el-button type="success" plain icon="CircleCheck" style="height: 40px;width: 100px;" :disabled="true" v-if="isSignUp">当日已签到</el-button>
         <el-button type="primary" @click="signUp" plain icon="Edit" style="height: 40px;width: 100px;" v-else>今日签到</el-button>

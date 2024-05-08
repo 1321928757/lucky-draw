@@ -6,7 +6,7 @@ import emitter from "@/utils/mitt";
 // 分页请求信息
 const requestInfo = ref({
   page: 1,
-  pageSize: 5,
+  pageSize: 6,
 });
 const total = ref(0);
 
@@ -47,6 +47,11 @@ init()
     <h3>我的奖品</h3>
     <el-table :data="awardRecords" style="width: 100%">
       <el-table-column prop="awardTitle" label="奖品名称" />
+      <el-table-column prop="awardImage" label="奖品预览">
+      <template #default="scope">
+        <el-image v-if="scope.row.awardImage != null" style="width: 50px; height: 50px" :src="scope.row.awardImage" :fit="fill" />
+        </template>
+      </el-table-column>
       <el-table-column prop="awardState" label="奖品状态">
         <template #default="scope">
           <el-tag type="primary" v-show="scope.row.awardState == 'create'"
