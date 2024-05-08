@@ -208,5 +208,15 @@ public interface IStrategyRepository {
     * @return 权重对象
     * @date 2024/05/05 21:03:02
     */
-    List<RuleWeightVO> queryAwardRuleWeight(Long strategyId);
+    List<RuleWeightVO> queryAwardRuleWeight(Long strategyId, String userId);
+
+    /**
+    * @description 保底策略计数，如果某个策略满足了，返回对于的保底权重值
+    * @param analyticalValueGroup 各保底权重值，格式为：4000 -> 4000:102,103,104,105
+    * @param userId 用户id
+    * @param steategyId 策略id
+    * @return 权重保底值
+    * @date 2024/05/08 11:51:54
+    */
+    Long computeRuleWeightCounter(Map<Long, String> analyticalValueGroup, String userId, Long steategyId);
 }

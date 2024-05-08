@@ -62,6 +62,7 @@ public class UserAwardRecordController implements IUserAwardRecordService {
                     .map(recordEntity -> UserAwardRecordResponseDto.builder()
                             .awardId(recordEntity.getAwardId())
                             .awardTitle(recordEntity.getAwardTitle())
+                            .awardImage(recordEntity.getAwardImage())
                             .awardState(recordEntity.getAwardState().getCode())
                             .orderId(recordEntity.getOrderId())
                             .awardTime(recordEntity.getAwardTime()).build()).collect(Collectors.toList());

@@ -27,7 +27,7 @@ public interface IRaffleRule {
     * @return 权重值对象数组
     * @date 2024/05/05 21:00:34
     */
-    List<RuleWeightVO> queryAwardRuleWeight(Long strategyId);
+    List<RuleWeightVO> queryAwardRuleWeight(Long strategyId, String userId);
 
     /**
     * @description 根据活动id查询策略下的权重信息
@@ -35,5 +35,5 @@ public interface IRaffleRule {
     * @return 权重值对象数组
     * @date 2024/05/05 20:58:32
     */
-    List<RuleWeightVO> queryAwardRuleWeightByActivityId(Long activityId);
+    List<RuleWeightVO> queryAwardRuleWeightByActivityId(Long activityId, String userId);
 }

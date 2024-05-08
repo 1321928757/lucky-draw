@@ -76,6 +76,7 @@ public class AwardRepository implements IAwardRepository {
         userAwardRecord.setOrderId(userAwardRecordEntity.getOrderId());
         userAwardRecord.setAwardId(userAwardRecordEntity.getAwardId());
         userAwardRecord.setAwardTitle(userAwardRecordEntity.getAwardTitle());
+        userAwardRecord.setAwardImage(userAwardRecordEntity.getAwardImage());
         userAwardRecord.setAwardTime(userAwardRecordEntity.getAwardTime());
         userAwardRecord.setAwardState(userAwardRecordEntity.getAwardState().getCode());
 
@@ -155,6 +156,7 @@ public class AwardRepository implements IAwardRepository {
         List<UserAwardRecordEntity> userAwardRecordEntities = userAwardRecords.stream().map(record -> UserAwardRecordEntity.builder()
                 .awardId(record.getAwardId())
                 .awardTitle(record.getAwardTitle())
+                .awardImage(record.getAwardImage())
                 .awardState(AwardStateVO.valueOf(record.getAwardState()))
                 .awardTime(record.getAwardTime())
                 .orderId(record.getOrderId()).build()).collect(Collectors.toList());

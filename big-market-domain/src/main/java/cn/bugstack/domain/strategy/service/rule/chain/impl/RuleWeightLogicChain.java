@@ -37,26 +37,15 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
 
         String ruleValue = repository.queryStrategyRuleValue(strategyId, ruleModel());
 
-        // 1. 获取用户当前的总抽取次数
-        int userScore = repository.queryAllUserRaffleCount(userId, strategyId);
-
-        // 2. 解析权重规则值 4000:102,103,104,105 拆解为；4000 -> 4000:102,103,104,105 便于比对判断
+        // 1. 解析权重规则值 4000:102,103,104,105 拆解为；4000 -> 4000:102,103,104,105 便于比对判断
         Map<Long, String> analyticalValueGroup = getAnalyticalValue(ruleValue);
         if (null == analyticalValueGroup || analyticalValueGroup.isEmpty()) {
             log.warn("抽奖责任链-权重告警【策略配置权重，但ruleValue未配置相应值】 userId: {} strategyId: {} ruleModel: {}", userId, strategyId, ruleModel());
             return next().logic(userId, strategyId);
         }
 
-        // 3. 转换Keys值，并默认排序
-        List<Long> analyticalSortedKeys = new ArrayList<>(analyticalValueGroup.keySet());
-        Collections.sort(analyticalSortedKeys);
-
-        // 4. 找出最小符合的值，也就是【4500 积分，能找到 4000:102,103,104,105】、【5000 积分，能找到 5000:102,103,104,105,106,107】
-        Long nextValue = analyticalSortedKeys.stream()
-                .sorted(Comparator.reverseOrder())
-                .filter(analyticalSortedKeyValue -> userScore >= analyticalSortedKeyValue)
-                .findFirst()
-                .orElse(null);
+        // 2. 保底策略计数器计数，如果存在满足的保底策略，则会返回保底权重值
+        Long nextValue = repository.computeRuleWeightCounter(analyticalValueGroup, userId, strategyId);
 
         // 5. 权重抽奖
         if (null != nextValue) {
