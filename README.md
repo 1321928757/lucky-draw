@@ -11,7 +11,7 @@
 
 ---
 
->在线演示地址 [**www.luckylottery.site**](www.luckylottery.site)
+>在线演示地址 [**www.luckylottery.site**](www.luckylottery.site/raffle/100301)
 
 ## 💫运行配置
 
@@ -37,6 +37,7 @@
 - 完善保底策略【为每个用户维护保底计数器，保底后清空计数器】
 - Web添加奖品详细信息，概率等信息的展示
 - 实现活动最近获奖记录展示榜【分库分表的聚合操作，整合ES】
+- 
 
 ## 🪐前端说明
 
