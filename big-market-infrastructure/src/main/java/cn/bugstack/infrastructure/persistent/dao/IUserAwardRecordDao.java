@@ -20,9 +20,7 @@ public interface IUserAwardRecordDao {
     void insert(UserAwardRecord userAwardRecord);
 
     // 分页查询用户的获奖记录
-    @DBRouter
     List<UserAwardRecord> pageUserAwardRecord(@Param("page") int page,@Param("pageSize") int pageSize,@Param("userId") String userId);
     // 查询用户的所有获奖记录数
-    @DBRouter
     int queryTotalNumberUserAwardRecord(String userId);
 }

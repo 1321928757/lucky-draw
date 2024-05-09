@@ -141,9 +141,12 @@ public class AwardRepository implements IAwardRepository {
         // 1.计算分页参数
         int current = (page - 1) * pageSize;
         // 2.查询分页数据
+        // 开启路由
+        dbRouter.doRouter(userId);
         List<UserAwardRecord> userAwardRecords = userAwardRecordDao.pageUserAwardRecord(current, pageSize, userId);
         // 3.查询数据总量
         int total = userAwardRecordDao.queryTotalNumberUserAwardRecord(userId);
+        dbRouter.clear();
         if(userAwardRecords.isEmpty()) {
             return PageData.<UserAwardRecordEntity>builder()
                     .total(total)
