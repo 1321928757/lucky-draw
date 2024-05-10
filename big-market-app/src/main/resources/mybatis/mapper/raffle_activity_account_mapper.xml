@@ -22,7 +22,7 @@
         values (#{userId}, #{activityId}, #{totalCount}, #{totalCountSurplus}, #{dayCount},
                 #{dayCountSurplus}, #{monthCount}, #{monthCountSurplus}, now(), now())
     </insert>
-    <update id="updateAccountQuota">
+    <update id="updateAccountQuota" parameterType="cn.bugstack.domain.activity.model.entity.ActivityAccountEntity">
         update raffle_activity_account
         set total_count = total_count + #{totalCount},
             total_count_surplus = total_count_surplus + #{totalCountSurplus},
@@ -33,6 +33,36 @@
             update_time = now()
         where user_id = #{userId} and activity_id = #{activityId}
     </update>
+    <update id="updateActivityAccountSubtractionQuota" parameterType="cn.bugstack.domain.activity.model.entity.ActivityAccountEntity">
+        update raffle_activity_account
+        set total_count_surplus = total_count_surplus - 1,
+            update_time = now()
+        where user_id = #{userId} and activity_id = #{activityId} and total_count_surplus > 0 and day_count_surplus > 0 and month_count_surplus > 0
+    </update>
+    <update id="updateActivityAccountMonthSurplusImageQuota" parameterType="cn.bugstack.infrastructure.persistent.po.RaffleActivityAccount">
+        update raffle_activity_account
+        set month_count_surplus = #{monthCountSurplus} - 1, update_time = now()
+        where user_id = #{userId} and activity_id = #{activityId}
+    </update>
+    <update id="updateActivityAccountDaySurplusImageQuota" parameterType="cn.bugstack.infrastructure.persistent.po.RaffleActivityAccount">
+        update raffle_activity_account
+        set day_count_surplus = #{dayCountSurplus} - 1, update_time = now()
+        where user_id = #{userId} and activity_id = #{activityId}
+    </update>
+    <select id="queryActivityAccountByUserId"
+            parameterType="cn.bugstack.infrastructure.persistent.po.RaffleActivityAccount"
+            resultMap="dataMap"
+    >
+        select id,user_id, activity_id, total_count, total_count_surplus, day_count,
+               day_count_surplus, month_count, month_count_surplus, create_time, update_time
+        from raffle_activity_account
+        where user_id = #{userId} and activity_id = #{activityId}
+    </select>
+    <select id="queryRaffleActivityAccountTotalPartakeCount" resultType="java.lang.Integer">
+        select total_count - total_count_surplus
+        from raffle_activity_account
+        where user_id = #{userId} and activity_id
+    </select>
 
 
 </mapper>

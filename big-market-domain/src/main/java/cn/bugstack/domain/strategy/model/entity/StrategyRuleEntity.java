@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +42,8 @@ public class StrategyRuleEntity {
      */
     public Map<String, List<Integer>> getRuleWeightValues() {
         if (!"rule_weight".equals(ruleModel)) return null;
+        if (StringUtils.isEmpty(ruleValue)) return new HashMap<>();
+
         String[] ruleValueGroups = ruleValue.split(Constants.SPACE);
         Map<String, List<Integer>> resultMap = new HashMap<>();
         for (String ruleValueGroup : ruleValueGroups) {

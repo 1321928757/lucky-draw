@@ -92,8 +92,14 @@ spring:
     listener:
       simple:
         prefetch: 1 # 每次投递n个消息，消费完在投递n个
+        retry:
+          enabled: true #开启重试机制
+          max-attempts: 3 #配置最大重试次数
+          initial-interval: 3000 #重试时间间隔
     topic:
       activity_sku_stock_zero: bigmarket.activity_sku_stock_zero  # 库存消耗为0的通知主题
+      award_send: bigmarket.award_send # 用户中奖消息入库的通知主题
+      rebate_send: bigmarket.send_rebate # 用户返利行为的通知主题
 
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml

@@ -11,7 +11,7 @@
 
 ---
 
->在线演示地址 [**www.luckylottery.site**](www.luckylottery.site)
+>在线演示地址 [**www.luckylottery.site**](www.luckylottery.site/raffle/100301)
 
 ## 💫运行配置
 
@@ -20,7 +20,7 @@
 - mysql：8.2
 - redis：5.0
 
-## ⭐后端开发进度
+## ⭐总体开发进度
 
 - ✅抽奖策略和奖品库表设计
 - ✅抽取概率区间算法实现
@@ -30,38 +30,46 @@
 - ✅实现活动与用户的库表设计，设计分库分表的库表设计
 - ✅实现分库分表的路由(利用小傅哥开源的的分库分组组件)
 - ✅实现抽奖次数获取入库
-- 实现活动抽奖主要流程
+- ✅实现用户参与活动抽奖，获奖记录入库
+- ✅实现登录模块的设计
+- ✅活动API的完善，前端展示活动详细信息
+- ✅获奖API的完善，用户可查看获奖记录
+- ✅完善保底策略【为每个用户维护保底计数器，保底后清空计数器】
+- ✅Web添加奖品详细信息，概率等信息的展示
+- 实现活动最近获奖记录展示榜【分库分表的聚合操作，整合ES】
+- 
 
-## 🪐前端开发进度
+## 🪐前端说明
 
 前端提供了vue2 vue3两个版本，/docs/web/vue和/docs/web/vue3
 
-vue2版本
+vue2版本(暂时没有维护啦)
 
 ```
 npm install
 npm run dev
 ```
 
-vue3版本
+vue3版本(推荐)
 
 ```
 yarn install
 yarn run dev
 ```
 
-- ✅对接后端抽奖接口实现转盘抽奖功能
-- 🔥实现扫码登录界面
-- 实现主界面，通过主界面公示当前所有的活动
-- 用户可通过点击活动，参与活动，进入活动界面
-- 在活动界面展示活动信息(抽奖，活动说明，概率声明等)
-- 实现后台-活动发布
-- 实现后台-数据统计
-
 **效果图预览**
 
-![](https://img-blog.csdnimg.cn/direct/9816127cb88f4e5aafd996c8ee32efbf.png)
+登录界面
+![](https://img-blog.csdnimg.cn/direct/7f313b52a7b043ccb0f87ac639aaee44.png)  
 
+活动主界面  
+电脑端网页效果  
+![](https://img-blog.csdnimg.cn/direct/7de9e313b6714ff295a3b84f5f587e09.png)  
+
+移动端网页效果  
+![](https://img-blog.csdnimg.cn/direct/385be76b39504e6a8411452edbd96baf.png)
+![](https://img-blog.csdnimg.cn/direct/4cff95ebde68493699ad38a0a8aedf96.png)
+![](https://img-blog.csdnimg.cn/direct/f0ae21b949b348b789c4ce72013bb89c.png)  
 
 
 ## 🫧项目架构

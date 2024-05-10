@@ -11,16 +11,15 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
-    <select id="queryStrategyList" resultMap="dataMap">
-        select strategy_id
-        from strategy
-        limit 10
-    </select>
-
     <select id="queryStrategyByStrategyId" parameterType="java.lang.Long" resultMap="dataMap">
         select strategy_id, strategy_desc, rule_models
         from strategy
         where strategy_id = #{strategyId}
+    </select>
+    <select id="queryStrategyIdByActivityId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select strategy_id
+        from strategy
+        where
     </select>
 
 </mapper>

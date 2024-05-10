@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bugstack.infrastructure.persistent.dao.IUserRaffleOrderDao">
+    <resultMap id="dataMap" type="cn.bugstack.infrastructure.persistent.po.UserRaffleOrder">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="activity_id" property="activityId"/>
+        <result column="activity_name" property="activityName"/>
+        <result column="strategy_id" property="strategyId"/>
+        <result column="order_id" property="orderId"/>
+        <result column="order_time" property="orderTime"/>
+        <result column="order_state" property="orderState"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <insert id="insert">
+        insert into user_raffle_order(user_id, activity_id, activity_name, strategy_id, order_id, order_time,
+                                      order_state, create_time, update_time)
+        values (#{userId}, #{activityId}, #{activityName}, #{strategyId}, #{orderId}, #{orderTime},
+                #{orderState}, now(), now())
+    </insert>
+    <update id="updateOrderStateUsed" parameterType="String">
+        update user_raffle_order set order_state='used' where order_id = #{orderId}
+    </update>
+    <select id="queryNoUsedRaffleOrder" resultMap="dataMap">
+        select id, user_id, activity_id, activity_name, strategy_id, order_id, order_time,
+               order_state, create_time, update_time from user_raffle_order
+        where user_id = #{userId} and activity_id = #{activityId} and order_state = 'create'
+    </select>
+</mapper>

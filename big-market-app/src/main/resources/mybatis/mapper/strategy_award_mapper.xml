@@ -8,6 +8,7 @@
         <result column="award_id" property="awardId"/>
         <result column="award_title" property="awardTitle"/>
         <result column="award_subtitle" property="awardSubtitle"/>
+        <result column="award_image" property="awardImage"/>
         <result column="award_count" property="awardCount"/>
         <result column="award_count_surplus" property="awardCountSurplus"/>
         <result column="award_rate" property="awardRate"/>
@@ -24,7 +25,8 @@
     </select>
 
     <select id="queryStrategyAwardListByStrategyId" parameterType="java.lang.Long" resultMap="dataMap">
-        select strategy_id, award_id, award_title, award_subtitle, award_count, award_count_surplus, award_rate, sort
+        select strategy_id, award_id, award_title, award_subtitle, award_image, award_count, award_count_surplus,
+               award_rate, rule_models, sort
         from strategy_award
         where strategy_id = #{strategyId}
         order by sort asc
@@ -42,9 +44,19 @@
     </update>
 
     <select id="queryStrategyAward" parameterType="cn.bugstack.infrastructure.persistent.po.StrategyAward" resultMap="dataMap">
-        select strategy_id, award_id, award_title, award_subtitle, award_count, award_count_surplus, award_rate, rule_models, sort
+        select strategy_id, award_id, award_title, award_subtitle, award_image, award_count, award_count_surplus, award_rate, rule_models, sort
         from strategy_award
         where strategy_id = #{strategyId} and award_id = #{awardId}
+    </select>
+    <select id="queryStrategyAwardListByIds"
+            resultMap="dataMap">
+        select strategy_id, award_id, award_title, award_subtitle, award_image, award_count, award_count_surplus, award_rate, rule_models, sort
+        from strategy_award
+        where strategy_id = #{strategyId} and award_id in
+        <foreach collection="array" item="awardId" index="index" open="(" separator="," close=")">
+            #{awardId}
+        </foreach>
+
     </select>
 
 </mapper>
