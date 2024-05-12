@@ -149,6 +149,13 @@
                 <version>5.5.1</version>
             </dependency>
 
+            <!--xxl-job分布式任务调度,这里使用改进版的，不会额外占用端口-->
+            <dependency>
+                <groupId>com.luckysj</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>2.3.0</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

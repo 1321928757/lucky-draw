@@ -51,6 +51,12 @@
             <groupId>cn.bugstack.middleware</groupId>
             <artifactId>db-router-spring-boot-starter</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.luckysj</groupId>
+            <artifactId>xxl-job-core</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

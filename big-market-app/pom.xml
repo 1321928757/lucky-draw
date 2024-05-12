@@ -119,6 +119,13 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>
+
+        <!--xxl-job分布式任务调度,这里使用改进版的，不会额外占用端口-->
+        <dependency>
+            <groupId>com.luckysj</groupId>
+            <artifactId>xxl-job-core</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
