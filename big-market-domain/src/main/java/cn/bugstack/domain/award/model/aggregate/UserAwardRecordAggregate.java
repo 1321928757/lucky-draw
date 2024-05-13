@@ -1,5 +1,7 @@
 package cn.bugstack.domain.award.model.aggregate;
 
+import cn.bugstack.domain.award.event.SendAwardMessageEvent;
+import cn.bugstack.domain.award.event.SyncAwardRecordEvent;
 import cn.bugstack.domain.award.model.entity.TaskEntity;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
 import lombok.AllArgsConstructor;
@@ -17,7 +19,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserAwardRecordAggregate {
-    private TaskEntity taskEntity;
+    private TaskEntity<SendAwardMessageEvent.SendAwardMessage> sendAwardTaskEntity;
+    private TaskEntity<SyncAwardRecordEvent.SyncRecordMessage> syncRecordTaskEntity;
     private UserAwardRecordEntity userAwardRecordEntity;
     private String orderId;
+
 }

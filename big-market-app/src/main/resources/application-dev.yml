@@ -100,7 +100,7 @@ spring:
       activity_sku_stock_zero: bigmarket.activity_sku_stock_zero  # 库存消耗为0的通知主题
       award_send: bigmarket.award_send # 用户中奖消息入库的通知主题
       rebate_send: bigmarket.send_rebate # 用户返利行为的通知主题
-
+      record_sync: bigmarket.sync_record
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml
   config-location:  classpath:/mybatis/config/mybatis-config.xml

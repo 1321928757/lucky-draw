@@ -13,18 +13,17 @@ import java.util.Date;
 
 /**
  * @author Luckysj @刘仕杰
- * @description 用户奖品发货事件消息
- * @create 2024/04/13 21:53:00
+ * @description 用户中奖记录同步事件消息
+ * @create 2024/05/13 16:10:54
  */
 @Component
-public class SendAwardMessageEvent extends BaseEvent<SendAwardMessageEvent.SendAwardMessage> {
-
-    @Value("${spring.rabbitmq.topic.award_send}")
+public class SyncAwardRecordEvent extends BaseEvent<SyncAwardRecordEvent.SyncRecordMessage>{
+    @Value("${spring.rabbitmq.topic.record_sync}")
     private String topic;
 
     @Override
-    public EventMessage<SendAwardMessage> buildEventMessage(SendAwardMessage data) {
-        return EventMessage.<SendAwardMessage>builder()
+    public BaseEvent.EventMessage<SyncAwardRecordEvent.SyncRecordMessage> buildEventMessage(SyncAwardRecordEvent.SyncRecordMessage data) {
+        return BaseEvent.EventMessage.<SyncAwardRecordEvent.SyncRecordMessage>builder()
                 .id(RandomStringUtils.randomNumeric(11))
                 .timestamp(new Date())
                 .data(data)
@@ -40,20 +39,19 @@ public class SendAwardMessageEvent extends BaseEvent<SendAwardMessageEvent.SendA
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class SendAwardMessage implements Message{
+    public static class SyncRecordMessage implements Message{
         /**
          * 用户ID
          */
         private String userId;
         /**
-         * 奖品ID
-         */
-        private Integer awardId;
-        /**
-         * 奖品标题（名称）
+         * 奖品名称
          */
         private String awardTitle;
+        /**
+         * 中奖时间
+         */
+        private Date awardTime;
 
     }
-
 }

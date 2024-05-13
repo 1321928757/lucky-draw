@@ -1,5 +1,6 @@
 package cn.bugstack.infrastructure.persistent.repository;
 
+import cn.bugstack.domain.award.event.SendAwardMessageEvent;
 import cn.bugstack.domain.award.model.aggregate.UserAwardRecordAggregate;
 import cn.bugstack.domain.award.model.entity.TaskEntity;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
@@ -63,12 +64,14 @@ public class AwardRepository implements IAwardRepository {
     public void saveUserAwardRecord(UserAwardRecordAggregate userAwardRecordAggregate) {
         // 1.提取数据，转换实体对象为po对象
         UserAwardRecordEntity userAwardRecordEntity = userAwardRecordAggregate.getUserAwardRecordEntity();
-        TaskEntity taskEntity = userAwardRecordAggregate.getTaskEntity();
+        TaskEntity sendAwardTaskEntity = userAwardRecordAggregate.getSendAwardTaskEntity();
+        TaskEntity syncRecordTaskEntity = userAwardRecordAggregate.getSyncRecordTaskEntity();
         String userId = userAwardRecordEntity.getUserId();
         Long activityId = userAwardRecordEntity.getActivityId();
         Integer awardId = userAwardRecordEntity.getAwardId();
         String orderId = userAwardRecordAggregate.getOrderId();
 
+        // 1.1中奖订单对象
         UserAwardRecord userAwardRecord = new UserAwardRecord();
         userAwardRecord.setUserId(userAwardRecordEntity.getUserId());
         userAwardRecord.setActivityId(userAwardRecordEntity.getActivityId());
@@ -80,12 +83,21 @@ public class AwardRepository implements IAwardRepository {
         userAwardRecord.setAwardTime(userAwardRecordEntity.getAwardTime());
         userAwardRecord.setAwardState(userAwardRecordEntity.getAwardState().getCode());
 
-        Task task = new Task();
-        task.setTopic(taskEntity.getTopic());
-        task.setMessage(JSON.toJSONString(taskEntity.getMessage()));
-        task.setState(taskEntity.getState().getCode());
-        task.setMessageId(taskEntity.getMessageId());
-        task.setUserId(taskEntity.getUserId());
+        // 1.2发货任务对象
+        Task sendAwardTask = new Task();
+        sendAwardTask.setTopic(sendAwardTaskEntity.getTopic());
+        sendAwardTask.setMessage(JSON.toJSONString(sendAwardTaskEntity.getMessage()));
+        sendAwardTask.setState(sendAwardTaskEntity.getState().getCode());
+        sendAwardTask.setMessageId(sendAwardTaskEntity.getMessageId());
+        sendAwardTask.setUserId(sendAwardTaskEntity.getUserId());
+
+        // 1.3数据同步对象
+        Task syncRecordTask = new Task();
+        syncRecordTask.setTopic(syncRecordTaskEntity.getTopic());
+        syncRecordTask.setMessage(JSON.toJSONString(syncRecordTaskEntity.getMessage()));
+        syncRecordTask.setState(syncRecordTaskEntity.getState().getCode());
+        syncRecordTask.setMessageId(syncRecordTaskEntity.getMessageId());
+        syncRecordTask.setUserId(syncRecordTaskEntity.getUserId());
 
         // 2.事务操作，保存中奖消息和发货任务(异步线程池)
         try{
@@ -102,7 +114,7 @@ public class AwardRepository implements IAwardRepository {
                         log.error("抽奖订单状态流转为Used时失败，唯一索引冲突 userId: {} activityId: {} orderID: {}", userId, activityId, orderId);
                     }
                     // 2.4 任务记录入库
-                    taskDao.insert(task);
+                    taskDao.insert(sendAwardTask);
 
                     return true;
                 } catch (DuplicateKeyException e) {
@@ -116,16 +128,26 @@ public class AwardRepository implements IAwardRepository {
             // 3.清空路由
             dbRouter.clear();
         }
-        // 4.异步线程池发送mq消息，更新任务表
+
+        // 4.异步线程池发送mq消息，进行商品发货，并同步获奖记录到ES
         threadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
+                // 商品发货消息
                 try {
-                    eventPublisher.publish(task.getTopic(), task.getMessage());
-                    taskDao.updateTaskSendMessageCompleted(task);
+                    eventPublisher.publish(sendAwardTask.getTopic(), sendAwardTask.getMessage());
+                    taskDao.updateTaskSendMessageCompleted(sendAwardTask);
                 } catch (Exception e) {
-                    log.error("写入中奖记录，发送mq消息失败 userId: {}  awardId: {}", userId, awardId, e);
-                    taskDao.updateTaskSendMessageFailed(task);
+                    log.error("写入中奖记录，发送mq消息(商品发货)失败 userId: {}  awardId: {}", userId, awardId, e);
+                    taskDao.updateTaskSendMessageFailed(sendAwardTask);
+                }
+                // 获奖记录同步到ES
+                try {
+                    eventPublisher.publish(syncRecordTask.getTopic(), syncRecordTask.getMessage());
+                    taskDao.updateTaskSendMessageCompleted(syncRecordTask);
+                } catch (Exception e) {
+                    log.error("写入中奖记录，发送mq消息(数据同步，如ES)失败 userId: {}  awardId: {}", userId, awardId, e);
+                    taskDao.updateTaskSendMessageFailed(syncRecordTask);
                 }
             }
         });

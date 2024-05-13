@@ -1,6 +1,6 @@
 package cn.bugstack.domain.award.model.entity;
 
-import cn.bugstack.domain.award.event.SendAwardMessageEvent;
+import cn.bugstack.domain.award.event.Message;
 import cn.bugstack.domain.award.model.valobj.TaskStateVO;
 import cn.bugstack.types.event.BaseEvent;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskEntity {
+public class TaskEntity<T> {
 
     /** 活动ID */
     private String userId;
@@ -26,7 +26,7 @@ public class TaskEntity {
     /** 消息编号 */
     private String messageId;
     /** 消息主体 */
-    private BaseEvent.EventMessage<SendAwardMessageEvent.SendAwardMessage> message;
+    private BaseEvent.EventMessage<T> message;
     /** 任务状态；create-创建、completed-完成、fail-失败 */
     private TaskStateVO state;
 
