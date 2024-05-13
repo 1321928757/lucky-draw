@@ -1,4 +1,4 @@
-package cn.bugstack.infrastructure.persistent.dao;
+package cn.bugstack.infrastructure.persistent.dao.mysql;
 
 import cn.bugstack.infrastructure.persistent.po.RuleTree;
 import org.apache.ibatis.annotations.Mapper;

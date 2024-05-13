@@ -3,7 +3,7 @@ package cn.bugstack.infrastructure.persistent.repository;
 import cn.bugstack.domain.task.model.entity.TaskEntity;
 import cn.bugstack.domain.task.repository.ITaskRepository;
 import cn.bugstack.infrastructure.event.EventPublisher;
-import cn.bugstack.infrastructure.persistent.dao.ITaskDao;
+import cn.bugstack.infrastructure.persistent.dao.mysql.ITaskDao;
 import cn.bugstack.infrastructure.persistent.po.Task;
 import org.springframework.stereotype.Repository;
 

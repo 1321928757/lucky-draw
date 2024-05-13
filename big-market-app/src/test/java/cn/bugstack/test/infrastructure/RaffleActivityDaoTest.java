@@ -1,6 +1,6 @@
 package cn.bugstack.test.infrastructure;
 
-import cn.bugstack.infrastructure.persistent.dao.IRaffleActivityDao;
+import cn.bugstack.infrastructure.persistent.dao.mysql.IRaffleActivityDao;
 import cn.bugstack.infrastructure.persistent.po.RaffleActivity;
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;

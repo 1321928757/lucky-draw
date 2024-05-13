@@ -1,7 +1,6 @@
 package cn.bugstack.test.infrastructure;
 
-import cn.bugstack.domain.strategy.model.valobj.RuleTreeVO;
-import cn.bugstack.infrastructure.persistent.dao.IRuleTreeNodeDao;
+import cn.bugstack.infrastructure.persistent.dao.mysql.IRuleTreeNodeDao;
 import cn.bugstack.infrastructure.persistent.po.RuleTreeNode;
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;

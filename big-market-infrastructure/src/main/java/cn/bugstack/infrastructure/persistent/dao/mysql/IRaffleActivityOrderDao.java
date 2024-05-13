@@ -1,4 +1,4 @@
-package cn.bugstack.infrastructure.persistent.dao;
+package cn.bugstack.infrastructure.persistent.dao.mysql;
 
 import cn.bugstack.infrastructure.persistent.po.RaffleActivityOrder;
 import cn.bugstack.middleware.db.router.annotation.DBRouter;

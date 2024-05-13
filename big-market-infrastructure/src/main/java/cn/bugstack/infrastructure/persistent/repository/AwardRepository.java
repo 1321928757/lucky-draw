@@ -1,21 +1,18 @@
 package cn.bugstack.infrastructure.persistent.repository;
 
-import cn.bugstack.domain.award.event.SendAwardMessageEvent;
 import cn.bugstack.domain.award.model.aggregate.UserAwardRecordAggregate;
 import cn.bugstack.domain.award.model.entity.TaskEntity;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
 import cn.bugstack.domain.award.model.valobj.AwardStateVO;
-import cn.bugstack.domain.award.model.valobj.TaskStateVO;
 import cn.bugstack.domain.award.repository.IAwardRepository;
 import cn.bugstack.infrastructure.event.EventPublisher;
-import cn.bugstack.infrastructure.persistent.dao.ITaskDao;
-import cn.bugstack.infrastructure.persistent.dao.IUserAwardRecordDao;
-import cn.bugstack.infrastructure.persistent.dao.IUserRaffleOrderDao;
+import cn.bugstack.infrastructure.persistent.dao.mysql.ITaskDao;
+import cn.bugstack.infrastructure.persistent.dao.mysql.IUserAwardRecordDao;
+import cn.bugstack.infrastructure.persistent.dao.mysql.IUserRaffleOrderDao;
 import cn.bugstack.infrastructure.persistent.po.Task;
 import cn.bugstack.infrastructure.persistent.po.UserAwardRecord;
 import cn.bugstack.infrastructure.persistent.redis.IRedisService;
 import cn.bugstack.middleware.db.router.strategy.IDBRouterStrategy;
-import cn.bugstack.types.common.Constants;
 import cn.bugstack.types.enums.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import cn.bugstack.types.model.PageData;

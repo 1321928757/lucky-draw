@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.bugstack.infrastructure.persistent.dao.IRaffleActivityAccountDayDao">
+<mapper namespace="cn.bugstack.infrastructure.persistent.dao.mysql.IRaffleActivityAccountDayDao">
 
     <resultMap id="dateMap" type="cn.bugstack.infrastructure.persistent.po.RaffleActivityAccountDay">
         <id property="id" column="id"/>

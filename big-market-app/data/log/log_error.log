@@ -2,7 +2,7 @@
 org.springframework.dao.DuplicateKeyException: 
 ### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'ogdb46DaYxN6nliqjeveqnZMfqmI_sku_20250504' for key 'user_behavior_rebate_order_000.uq_biz_id'
 ### The error may exist in file [D:\javaProject\big-market\big-market-app\target\classes\mybatis\mapper\user_behavior_rebate_order_mapper.xml]
-### The error may involve cn.bugstack.infrastructure.persistent.dao.IUserBehaviorRebateOrderDao.insert-Inline
+### The error may involve cn.bugstack.infrastructure.persistent.dao.mysql.IUserBehaviorRebateOrderDao.insert-Inline
 ### The error occurred while setting parameters
 ### SQL: insert into user_behavior_rebate_order_000(         user_id, order_id, behavior_type, rebate_desc, rebate_type, rebate_config, biz_id, create_time, update_time         ) values(         ?, ?, ?, ?, ?, ?, ?, now(), now()         )
 ### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'ogdb46DaYxN6nliqjeveqnZMfqmI_sku_20250504' for key 'user_behavior_rebate_order_000.uq_biz_id'
@@ -96,7 +96,7 @@ Caused by: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'o
 org.springframework.dao.DuplicateKeyException: 
 ### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'ogdb46DaYxN6nliqjeveqnZMfqmI_sku_20250504' for key 'user_behavior_rebate_order_000.uq_biz_id'
 ### The error may exist in file [D:\javaProject\big-market\big-market-app\target\classes\mybatis\mapper\user_behavior_rebate_order_mapper.xml]
-### The error may involve cn.bugstack.infrastructure.persistent.dao.IUserBehaviorRebateOrderDao.insert-Inline
+### The error may involve cn.bugstack.infrastructure.persistent.dao.mysql.IUserBehaviorRebateOrderDao.insert-Inline
 ### The error occurred while setting parameters
 ### SQL: insert into user_behavior_rebate_order_000(         user_id, order_id, behavior_type, rebate_desc, rebate_type, rebate_config, biz_id, create_time, update_time         ) values(         ?, ?, ?, ?, ?, ?, ?, now(), now()         )
 ### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'ogdb46DaYxN6nliqjeveqnZMfqmI_sku_20250504' for key 'user_behavior_rebate_order_000.uq_biz_id'
@@ -205,7 +205,7 @@ org.springframework.amqp.rabbit.support.ListenerExecutionFailedException: Listen
 Caused by: org.springframework.dao.DataIntegrityViolationException: 
 ### Error updating database.  Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'order_id' at row 1
 ### The error may exist in file [D:\javaProject\big-market\big-market-app\target\classes\mybatis\mapper\raffle_activity_order_mapper.xml]
-### The error may involve cn.bugstack.infrastructure.persistent.dao.IRaffleActivityOrderDao.insert-Inline
+### The error may involve cn.bugstack.infrastructure.persistent.dao.mysql.IRaffleActivityOrderDao.insert-Inline
 ### The error occurred while setting parameters
 ### SQL: insert into raffle_activity_order_000         (user_id, sku, activity_id, activity_name, strategy_id, order_id, order_time, state, out_business_no,          total_count, day_count, month_count,          create_time, update_time)         values (?, ?, ?, ?, ?, ?, ?, ?,                 ?, ?, ?, ?,                 now(), now())
 ### Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'order_id' at row 1
@@ -297,7 +297,7 @@ Caused by: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Da
 org.springframework.dao.DuplicateKeyException: 
 ### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'ogdb46DaYxN6nliqjeveqnZMfqmI_sku_20250507' for key 'user_behavior_rebate_order_000.uq_biz_id'
 ### The error may exist in file [D:\javaProject\big-market\big-market-app\target\classes\mybatis\mapper\user_behavior_rebate_order_mapper.xml]
-### The error may involve cn.bugstack.infrastructure.persistent.dao.IUserBehaviorRebateOrderDao.insert-Inline
+### The error may involve cn.bugstack.infrastructure.persistent.dao.mysql.IUserBehaviorRebateOrderDao.insert-Inline
 ### The error occurred while setting parameters
 ### SQL: insert into user_behavior_rebate_order_000(         user_id, order_id, behavior_type, rebate_desc, rebate_type, rebate_config, biz_id, create_time, update_time         ) values(         ?, ?, ?, ?, ?, ?, ?, now(), now()         )
 ### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'ogdb46DaYxN6nliqjeveqnZMfqmI_sku_20250507' for key 'user_behavior_rebate_order_000.uq_biz_id'
