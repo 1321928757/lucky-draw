@@ -2,13 +2,16 @@ package cn.bugstack.infrastructure.persistent.repository;
 
 import cn.bugstack.domain.award.model.aggregate.UserAwardRecordAggregate;
 import cn.bugstack.domain.award.model.entity.TaskEntity;
+import cn.bugstack.domain.award.model.entity.UserAwardRecordDocEntity;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
 import cn.bugstack.domain.award.model.valobj.AwardStateVO;
 import cn.bugstack.domain.award.repository.IAwardRepository;
 import cn.bugstack.infrastructure.event.EventPublisher;
+import cn.bugstack.infrastructure.persistent.dao.elasticsearch.UserAwardRecordIndex;
 import cn.bugstack.infrastructure.persistent.dao.mysql.ITaskDao;
 import cn.bugstack.infrastructure.persistent.dao.mysql.IUserAwardRecordDao;
 import cn.bugstack.infrastructure.persistent.dao.mysql.IUserRaffleOrderDao;
+import cn.bugstack.infrastructure.persistent.doc.UserAwardRecordDoc;
 import cn.bugstack.infrastructure.persistent.po.Task;
 import cn.bugstack.infrastructure.persistent.po.UserAwardRecord;
 import cn.bugstack.infrastructure.persistent.redis.IRedisService;
@@ -23,6 +26,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -42,6 +46,9 @@ public class AwardRepository implements IAwardRepository {
     private IUserRaffleOrderDao userRaffleOrderDao;
 
     @Resource
+    private UserAwardRecordIndex userAwardRecordIndex;
+
+    @Resource
     private ThreadPoolExecutor threadPoolExecutor;
 
     @Resource
@@ -52,9 +59,6 @@ public class AwardRepository implements IAwardRepository {
 
     @Resource
     private IDBRouterStrategy dbRouter;
-
-    @Resource
-    private IRedisService redisService;
 
 
     @Override
@@ -130,7 +134,7 @@ public class AwardRepository implements IAwardRepository {
         threadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                // 商品发货消息
+                // 奖品发货消息
                 try {
                     eventPublisher.publish(sendAwardTask.getTopic(), sendAwardTask.getMessage());
                     taskDao.updateTaskSendMessageCompleted(sendAwardTask);
@@ -191,4 +195,20 @@ public class AwardRepository implements IAwardRepository {
                 .data(userAwardRecordEntities)
                 .build();
     }
+
+    @Override
+    public void saveUserAwardRecordDoc(UserAwardRecordDocEntity userAwardRecordDocEntity) throws IOException {
+        // 1.转换格式
+        UserAwardRecordDoc userAwardRecordDoc = new UserAwardRecordDoc();
+        userAwardRecordDoc.setUserId(userAwardRecordDocEntity.getUserId());
+        userAwardRecordDoc.setActivityId(userAwardRecordDocEntity.getActivityId());
+        userAwardRecordDoc.setOrderId(userAwardRecordDocEntity.getOrderId());
+        userAwardRecordDoc.setAwardTitle(userAwardRecordDocEntity.getAwardTitle());
+        userAwardRecordDoc.setAwardTime(userAwardRecordDocEntity.getAwardTime());
+
+        // 2.保存数据
+        userAwardRecordIndex.addUserAwardRecordDoc(userAwardRecordDoc);
+    }
+
+
 }

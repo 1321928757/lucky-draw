@@ -4,6 +4,7 @@ import cn.bugstack.domain.award.event.SendAwardMessageEvent;
 import cn.bugstack.domain.award.event.SyncAwardRecordEvent;
 import cn.bugstack.domain.award.model.aggregate.UserAwardRecordAggregate;
 import cn.bugstack.domain.award.model.entity.TaskEntity;
+import cn.bugstack.domain.award.model.entity.UserAwardRecordDocEntity;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
 import cn.bugstack.domain.award.model.valobj.TaskStateVO;
 import cn.bugstack.domain.award.repository.IAwardRepository;
@@ -12,6 +13,7 @@ import cn.bugstack.types.model.PageData;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -41,8 +43,9 @@ public class AwardService implements IAwardService{
         syncRecordMessage.setUserId(userAwardRecordEntity.getUserId());
         syncRecordMessage.setAwardTitle(userAwardRecordEntity.getAwardTitle());
         syncRecordMessage.setAwardTime(userAwardRecordEntity.getAwardTime());
+        syncRecordMessage.setOrderId(userAwardRecordEntity.getOrderId());
+        syncRecordMessage.setOrderId(userAwardRecordEntity.getOrderId());
         BaseEvent.EventMessage<SyncAwardRecordEvent.SyncRecordMessage> syncRecordMessageEventMessage = syncAwardRecordEvent.buildEventMessage(syncRecordMessage);
-
 
         // 3.构建发货消息任务对象
         TaskEntity<SendAwardMessageEvent.SendAwardMessage> sendAwardMessageTaskEntity= new TaskEntity<SendAwardMessageEvent.SendAwardMessage>();
@@ -79,6 +82,11 @@ public class AwardService implements IAwardService{
     @Override
     public PageData<UserAwardRecordEntity> queryUserAwardingRecord(int page, int pageSize, String userId) {
         return awardRepository.queryUserAwardingRecord(page,pageSize, userId);
+    }
+
+    @Override
+    public void saveUserAwardRecordDoc(UserAwardRecordDocEntity userAwardRecordDoc) throws IOException {
+        awardRepository.saveUserAwardRecordDoc(userAwardRecordDoc);
     }
 
 

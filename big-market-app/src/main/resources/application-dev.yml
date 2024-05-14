@@ -97,10 +97,10 @@ spring:
           max-attempts: 3 #配置最大重试次数
           initial-interval: 3000 #重试时间间隔
     topic:
-      activity_sku_stock_zero: bigmarket.activity_sku_stock_zero  # 库存消耗为0的通知主题
-      award_send: bigmarket.award_send # 用户中奖消息入库的通知主题
-      rebate_send: bigmarket.send_rebate # 用户返利行为的通知主题
-      record_sync: bigmarket.sync_record
+      activity_sku_stock_zero: luckydraw.activity_sku_stock_zero  # 库存消耗为0的通知主题
+      award_send: luckydraw.award_send # 用户中奖消息入库的通知主题
+      rebate_send: luckydraw.send_rebate # 用户返利行为的通知主题
+      record_sync: luckydraw.sync_record # 用户中奖记录数据同步的通知主题
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml
   config-location:  classpath:/mybatis/config/mybatis-config.xml

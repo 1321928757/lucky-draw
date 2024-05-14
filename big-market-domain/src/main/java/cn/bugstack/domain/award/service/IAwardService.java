@@ -1,8 +1,10 @@
 package cn.bugstack.domain.award.service;
 
+import cn.bugstack.domain.award.model.entity.UserAwardRecordDocEntity;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
 import cn.bugstack.types.model.PageData;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -35,4 +37,12 @@ public interface IAwardService {
     * @date 2024/05/07 14:52:43
     */
     PageData<UserAwardRecordEntity> queryUserAwardingRecord(int page, int pageSize, String userId);
+
+    /**
+    * @description 保存用户中奖记录文档
+    * @param
+    * @return
+    * @date 2024/05/14 19:58:07
+    */
+    void saveUserAwardRecordDoc(UserAwardRecordDocEntity userAwardRecordDoc) throws IOException;
 }

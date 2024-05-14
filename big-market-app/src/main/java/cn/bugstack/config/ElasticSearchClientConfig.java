@@ -44,8 +44,7 @@ public class ElasticSearchClientConfig {
                 restClient, new JacksonJsonpMapper());
 
         // 创建API客户端
-        ElasticsearchClient client = new ElasticsearchClient(transport);
-        return client;
+        return new ElasticsearchClient(transport);
     }
 
 
