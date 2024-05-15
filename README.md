@@ -2,7 +2,7 @@
 
 项目介绍：抽奖系统是各个互联网公司用于拉新、促活、留存、转化的重要手段，此项目针对高并发场景，搭建为各平台促销提效的营销抽奖平台。可通过MQ消息轻松对接外部系统，外部系统用户行为触发抽奖次数增加。
 
-核心技术：SpringBoot、MyBatis、MySQL、Redis、Redisson、Guava、RabbitMQ、Xxj-job。
+核心技术：SpringBoot、MyBatis、MySQL、Redis、Redisson、Guava、RabbitMQ、Xxj-job、ElasticSearch。
 
 ---
 
