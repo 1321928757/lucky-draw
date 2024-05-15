@@ -45,9 +45,18 @@ public class SyncAwardRecordEvent extends BaseEvent<SyncAwardRecordEvent.SyncRec
          */
         private String userId;
         /**
+         * 活动ID
+         */
+        private Long activityId;
+        /**
+         * 订单ID
+         */
+        private String orderId;
+        /**
          * 奖品名称
          */
         private String awardTitle;
+
         /**
          * 中奖时间
          */

@@ -18,11 +18,17 @@ import java.util.List;
 @NoArgsConstructor
 public class RaffleStrategyRuleWeightResponseDTO {
 
-    // 权重规则配置的抽奖次数
+    /**
+     * 权重规则配置的抽奖次数
+     */
     private Integer ruleWeightCount;
-    // 用户在当前权重策略的累计次数
+    /**
+     * 用户在当前权重策略的累计次数
+     */
     private Long userWeightUseCount;
-    // 当前权重可抽奖范围
+    /**
+     * 当前权重可抽奖范围
+     */
     private List<StrategyAward> strategyAwards;
 
     @Data

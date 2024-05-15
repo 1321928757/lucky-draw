@@ -44,7 +44,7 @@ public abstract class AbstractRaffleActivityAccountQuota extends RaffleActivityA
         // 我们这里不需要返回结果，就直接抛出异常了，也在可以返回一个校验结果类，完成校验后再判断校验结果
         this.activityCheckChain(activitySkuEntity, activityEntity, activityCountEntity);
 
-        // 4.构建抽奖订单聚合对象
+        // 4.构建sku流水订单聚合对象
         CreateQuotaOrderAggregate createOrderAggregate = this.buildCreateOrderAggregate(skuRechargeEntity, activitySkuEntity,activityEntity,activityCountEntity);
 
         // 5.保存订单

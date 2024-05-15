@@ -49,7 +49,7 @@ public class ActivitySkuStockZeroCustomer {
             channel.basicAck(deliveryTag, false);
 
             log.info("监听活动sku库存消耗为0消息，消费完成，topic: {} message: {}", topic, json);
-        } catch (IOException e) {
+        } catch (Exception e) {
             try {
                 log.error("监听活动sku库存消耗为0消息，消费失败 topic: {} message: {}", topic, json);
                 // 处理失败,重新压入MQ

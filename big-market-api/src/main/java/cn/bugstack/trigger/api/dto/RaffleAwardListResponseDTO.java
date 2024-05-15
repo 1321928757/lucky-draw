@@ -18,22 +18,40 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class RaffleAwardListResponseDTO {
 
-    // 奖品ID
+    /**
+     * 奖品ID
+     */
     private Integer awardId;
-    // 奖品标题
+    /**
+     * 奖品标题
+     */
     private String awardTitle;
-    // 奖品副标题【抽奖1次后解锁】
+    /**
+     * 奖品副标题【抽奖1次后解锁】
+     */
     private String awardSubtitle;
-    // 奖品展示图片
+    /**
+     * 奖品展示图片
+     */
     private String awardImage;
-    // 排序编号
+    /**
+     * 排序编号
+     */
     private Integer sort;
-    // 奖品次数规则
+    /**
+     * 奖品次数规则
+     */
     private Integer awardRuleLockCount;
-    // 奖品是否解释
+    /**
+     * 奖品是否解释
+     */
     private Boolean isAwardUnlock;
-    // 剩余解锁次数
+    /**
+     * 剩余解锁次数
+     */
     private Integer waitUnLockCount;
-    // 奖品的中奖概率
+    /**
+     * 奖品的中奖概率
+     */
     private BigDecimal awardRate;
 }
