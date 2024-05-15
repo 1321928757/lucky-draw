@@ -19,6 +19,7 @@ import cn.bugstack.middleware.db.router.strategy.IDBRouterStrategy;
 import cn.bugstack.types.enums.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import cn.bugstack.types.model.PageData;
+import cn.hutool.core.util.DesensitizedUtil;
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
@@ -101,7 +102,7 @@ public class AwardRepository implements IAwardRepository {
         syncRecordTask.setUserId(syncRecordTaskEntity.getUserId());
 
         // 2.事务操作，保存中奖消息和发货任务(异步线程池)
-        try{
+        try {
             // 2.1 开启数据库路由
             dbRouter.doRouter(userId);
             // 2.2 编程式事务
@@ -110,7 +111,7 @@ public class AwardRepository implements IAwardRepository {
                     // 2.3 中奖记录入库
                     userAwardRecordDao.insert(userAwardRecord);
                     // 2.4 修改订单状态
-                    if(userRaffleOrderDao.updateOrderStateUsed(orderId) == 0){
+                    if (userRaffleOrderDao.updateOrderStateUsed(orderId) == 0) {
                         status.setRollbackOnly();
                         log.error("抽奖订单状态流转为Used时失败，唯一索引冲突 userId: {} activityId: {} orderID: {}", userId, activityId, orderId);
                     }
@@ -125,7 +126,7 @@ public class AwardRepository implements IAwardRepository {
                     throw new AppException(ResponseCode.INDEX_DUP.getCode(), ResponseCode.INDEX_DUP.getInfo());
                 }
             });
-        }finally {
+        } finally {
             // 3.清空路由
             dbRouter.clear();
         }
@@ -155,8 +156,16 @@ public class AwardRepository implements IAwardRepository {
     }
 
     @Override
-    public List<UserAwardRecordEntity> queryLastestAwardingRecord(Long activityId, int count) {
-        return null;
+    public List<UserAwardRecordEntity> queryLastestAwardingRecord(Long activityId, int count) throws IOException {
+        // 1.查询数据
+        List<UserAwardRecordDoc> userAwardRecordDocs = userAwardRecordIndex.queryLastestDocByActivityId(activityId, count);
+
+        // 2.数据转换，使用hutool工具对用户id脱敏，页可以引入缓存+定时任务来优化性能，但是及时性没有直接查询好
+        return userAwardRecordDocs.stream().map(userAwardRecordDoc -> UserAwardRecordEntity.builder()
+                .userId(userAwardRecordDoc.getUserId())
+                .awardTitle(userAwardRecordDoc.getAwardTitle())
+                .awardTime(userAwardRecordDoc.getAwardTime()).build())
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -170,7 +179,7 @@ public class AwardRepository implements IAwardRepository {
         // 3.查询数据总量
         int total = userAwardRecordDao.queryTotalNumberUserAwardRecord(userId);
         dbRouter.clear();
-        if(userAwardRecords.isEmpty()) {
+        if (userAwardRecords.isEmpty()) {
             return PageData.<UserAwardRecordEntity>builder()
                     .total(total)
                     .current(page)

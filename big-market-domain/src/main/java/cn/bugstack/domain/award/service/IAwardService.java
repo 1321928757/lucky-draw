@@ -28,7 +28,7 @@ public interface IAwardService {
     * @return 抽奖记录数组
     * @date 2024/05/07 13:41:26
     */
-    List<UserAwardRecordEntity> queryLastestAwardingRecord(Long activityId, int count);
+    List<UserAwardRecordEntity> queryLastestAwardingRecord(Long activityId, int count) throws IOException;
 
     /**
     * @description 分页查询自己

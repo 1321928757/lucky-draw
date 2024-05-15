@@ -15,6 +15,7 @@ import java.net.UnknownHostException;
  * @create 2024/04/29 19:47:53
  */
 public class IPUtils {
+
     private static Logger logger = LoggerFactory.getLogger(IPUtils.class);
     private static final String IP_UTILS_FLAG = ",";
     private static final String UNKNOWN = "unknown";

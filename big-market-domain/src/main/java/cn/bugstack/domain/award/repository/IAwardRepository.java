@@ -29,7 +29,7 @@ public interface IAwardRepository {
     * @return 获奖数据数组 UserAwardRecordEntity
     * @date 2024/05/07 13:42:43
     */
-    List<UserAwardRecordEntity> queryLastestAwardingRecord(Long activityId ,int count);
+    List<UserAwardRecordEntity> queryLastestAwardingRecord(Long activityId ,int count) throws IOException;
 
     /**
     * @description 分页查询自己的获奖记录

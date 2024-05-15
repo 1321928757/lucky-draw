@@ -75,7 +75,7 @@ public class AwardService implements IAwardService{
     }
 
     @Override
-    public List<UserAwardRecordEntity> queryLastestAwardingRecord(Long activityId, int count) {
+    public List<UserAwardRecordEntity> queryLastestAwardingRecord(Long activityId, int count) throws IOException {
         return awardRepository.queryLastestAwardingRecord(activityId, count);
     }
 

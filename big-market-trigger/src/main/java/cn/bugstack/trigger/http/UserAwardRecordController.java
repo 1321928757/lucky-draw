@@ -97,10 +97,47 @@ public class UserAwardRecordController implements IUserAwardRecordService {
 
     @RequestMapping(value = "query_activity_award_record", method = RequestMethod.POST)
     @Override
-    public Response<List<LatestAwardRecordResponseDTO>> queryActivityLatestRecord(LatestAwardRecordRequestDTO requestDTO) {
-        return null;
+    public Response<List<LatestAwardRecordResponseDTO>> queryActivityLatestRecord(@RequestBody LatestAwardRecordRequestDTO requestDTO) {
+        try {
+            // 1.参数校验
+            if (requestDTO.getActivityId() == null || requestDTO.getSize() == null || requestDTO.getSize() < 0 || requestDTO.getSize() > 40){
+                return Response.<List<LatestAwardRecordResponseDTO>>builder()
+                        .code(ResponseCode.ILLEGAL_PARAMETER.getCode())
+                        .info(ResponseCode.ILLEGAL_PARAMETER.getInfo())
+                        .build();
+            }
+
+            // 2.查询数据
+            List<UserAwardRecordEntity> userAwardRecordEntities = awardService.queryLastestAwardingRecord(requestDTO.getActivityId(), requestDTO.getSize());
+
+            // 3.转换为DTO对象
+            List<LatestAwardRecordResponseDTO> recordResponseDTOS = userAwardRecordEntities.stream().map(userAwardRecordEntity ->
+                    LatestAwardRecordResponseDTO.builder()
+                            .userId(userAwardRecordEntity.getUserId())
+                            .awardTitle(userAwardRecordEntity.getAwardTitle())
+                            .awardTime(userAwardRecordEntity.getAwardTime())
+                            .build()).collect(Collectors.toList());
+
+            return Response.<List<LatestAwardRecordResponseDTO>>builder()
+                    .code(ResponseCode.SUCCESS.getCode())
+                    .info(ResponseCode.SUCCESS.getInfo())
+                    .data(recordResponseDTOS)
+                    .build();
+        } catch (AppException e) {
+            log.error("查询活动最新获奖记录信息时异常", e);
+            return Response.<List<LatestAwardRecordResponseDTO>>builder()
+                    .code(e.getCode())
+                    .info(e.getInfo())
+                    .build();
+        } catch (Exception e) {
+            log.error("查询活动最新获奖记录信息时异常", e);
+            return Response.<List<LatestAwardRecordResponseDTO>>builder()
+                    .code(ResponseCode.UN_ERROR.getCode())
+                    .info(ResponseCode.UN_ERROR.getInfo())
+                    .build();
+        }
     }
 
 
-
+    
 }
