@@ -2,7 +2,9 @@ package cn.bugstack.trigger.listener;
 
 import cn.bugstack.domain.activity.model.entity.SkuRechargeEntity;
 import cn.bugstack.domain.activity.service.IRaffleActivityAccountQuotaService;
-import cn.bugstack.domain.award.event.SendAwardMessageEvent;
+import cn.bugstack.domain.award.event.SyncAwardRecordEvent;
+import cn.bugstack.domain.award.model.entity.UserAwardRecordDocEntity;
+import cn.bugstack.domain.award.service.IAwardService;
 import cn.bugstack.domain.rebate.event.SendRebateMessageEvent;
 import cn.bugstack.domain.rebate.model.valobj.RebateTypeVO;
 import cn.bugstack.types.event.BaseEvent;
@@ -22,46 +24,44 @@ import java.io.IOException;
 
 /**
  * @author Luckysj @刘仕杰
- * @description 用户返利行为消息监听
+ * @description 同步获奖记录数据【ES】消息监听
  * @create 2024/05/04 18:36:48
  */
 @Slf4j
 @Component
-public class UserRebateBeviorCustomer {
-    @Value("${spring.rabbitmq.topic.rebate_send}")
+public class SyncAwardRecordDocCustomer {
+    @Value("${spring.rabbitmq.topic.record_sync}")
     private String topic;
     @Resource
-    private IRaffleActivityAccountQuotaService raffleActivityAccountQuotaService;
+    private IAwardService awardService;
 
     // ackMode指定为手动提交模式
-    @RabbitListener(queuesToDeclare = @Queue("${spring.rabbitmq.topic.rebate_send}"), ackMode = "MANUAL")
+    @RabbitListener(queuesToDeclare = @Queue("${spring.rabbitmq.topic.record_sync}"), ackMode = "MANUAL")
     public void sendRebateHandler(String json, Message message, Channel channel) {
         //  如果手动ACK,消息会被监听消费,但是消息在队列中依旧存在,如果 未配置 acknowledge-mode 默认是会在消费完毕后自动ACK掉
         final long deliveryTag = message.getMessageProperties().getDeliveryTag();
         try {
-            log.info("监听用户返利行为消息，topic: {} message: {}", topic, json);
+            log.info("监听中奖记录数据同步消息，topic: {} message: {}", topic, json);
             // 1.转换消息
-            BaseEvent.EventMessage<SendRebateMessageEvent.RebateMessage> eventMessage = JSON.parseObject(json, new TypeReference<BaseEvent.EventMessage<SendRebateMessageEvent.RebateMessage>>() {
+            BaseEvent.EventMessage<SyncAwardRecordEvent.SyncRecordMessage> eventMessage = JSON.parseObject(json, new TypeReference<BaseEvent.EventMessage<SyncAwardRecordEvent.SyncRecordMessage>>() {
             }.getType());
-            SendRebateMessageEvent.RebateMessage rebateMessage = eventMessage.getData();
+            SyncAwardRecordEvent.SyncRecordMessage syncRecordMessage = eventMessage.getData();
 
-            // 2.返利入账(我们目前只处理sku抽奖次数返利，后续如果有其他返利像积分可以结合策略模式处理)
-            if (!RebateTypeVO.SKU.getCode().equals(rebateMessage.getRebateType())) {
-                log.info("监听用户行为返利消息 - 非sku奖励暂时不处理 topic: {} message: {}", topic, message);
-                channel.basicAck(deliveryTag, false);
-                return;
-            }
-            SkuRechargeEntity skuRechargeEntity = new SkuRechargeEntity();
-            skuRechargeEntity.setUserId(rebateMessage.getUserId());
-            skuRechargeEntity.setSku(Long.valueOf(rebateMessage.getRebateConfig()));
-            skuRechargeEntity.setOutBusinessNo(rebateMessage.getBizId());
-            raffleActivityAccountQuotaService.createSkuRechargeOrder(skuRechargeEntity);
+            // 2.消费消息
+            UserAwardRecordDocEntity userAwardRecordDoc = new UserAwardRecordDocEntity();
+            userAwardRecordDoc.setUserId(syncRecordMessage.getUserId());
+            userAwardRecordDoc.setActivityId(syncRecordMessage.getActivityId());
+            userAwardRecordDoc.setOrderId(syncRecordMessage.getOrderId());
+            userAwardRecordDoc.setAwardTitle(syncRecordMessage.getAwardTitle());
+            userAwardRecordDoc.setAwardTime(syncRecordMessage.getAwardTime());
+
+            awardService.saveUserAwardRecordDoc(userAwardRecordDoc);
 
             // 3.手动ACK
             channel.basicAck(deliveryTag, false);
-            log.info("用户返利行为消息消费完成，返利业务id：{}，返利类型：{},用户ID：{}", rebateMessage.getBizId(), rebateMessage.getRebateType(), rebateMessage.getUserId());
+            log.info("监听中奖记录数据同步消息消费完成，订单id：{}，用户id：{}, 活动id：{}", syncRecordMessage.getOrderId(), syncRecordMessage.getUserId(), syncRecordMessage.getActivityId());
         } catch (DuplicateKeyException e) {
-            log.info("监听用户返利行为消息消费失败 唯一索引异常，topic：{}，message：{}", topic, message);
+            log.info("监听中奖记录数据同步消息消费失败 唯一索引异常，topic：{}，message：{}", topic, message);
             try {
                 //唯一索引异常，代表重复消费，直接ACK即可
                 channel.basicAck(deliveryTag, false);
@@ -70,7 +70,7 @@ public class UserRebateBeviorCustomer {
             }
 
         } catch (Exception e) {
-            log.info("监听用户返利行为消息消费失败，topic：{}，message：{}", topic, message);
+            log.info("监听中奖记录数据同步消息消费失败，topic：{}，message：{}", topic, message);
             try {
                 // 处理失败,重新压入MQ
                 channel.basicRecover();

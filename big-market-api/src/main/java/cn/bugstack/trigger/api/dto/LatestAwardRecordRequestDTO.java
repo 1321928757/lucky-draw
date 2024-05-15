@@ -7,20 +7,20 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author Luckysj @刘仕杰
- * @description 分页查询获奖记录请求DTO
- * @create 2024/05/07 14:56:39
+ * @description 活动最新获奖记录 请求DTO
+ * @create 2024/05/15 10:29:29
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserAwardRecordRequestDTO {
+public class LatestAwardRecordRequestDTO {
     /**
-     * 当前页码
+     * 活动ID
      */
-    private int page;
+    private Long activityId;
     /**
-     * 页大小
+     * 查询数量
      */
-    private int pageSize;
+    private Integer size;
 }

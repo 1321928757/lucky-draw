@@ -16,7 +16,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserAwardRecordResponseDto {
+public class UserAwardRecordResponseDTO {
 
     /** 抽奖订单ID【作为幂等使用】 */
     private String orderId;

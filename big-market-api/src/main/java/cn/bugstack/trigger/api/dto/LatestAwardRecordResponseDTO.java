@@ -5,26 +5,28 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * @author Luckysj @刘仕杰
- * @description 参与活动抽奖，响应对象
- * @create 2024/04/15 20:50:35
+ * @description 活动最新获奖记录 响应DTO
+ * @create 2024/05/15 10:29:29
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ActivityDrawResponseDTO {
+public class LatestAwardRecordResponseDTO {
     /**
-     * 奖品ID
+     * 脱敏后的用户ID
      */
-    private Integer awardId;
+    private String userId;
     /**
-     * 奖品标题
+     * 奖品名称
      */
     private String awardTitle;
     /**
-     * 排序编号【策略奖品配置的奖品顺序编号】
+     * 中奖时间
      */
-    private Integer awardIndex;
+    private Date awardTime;
 }

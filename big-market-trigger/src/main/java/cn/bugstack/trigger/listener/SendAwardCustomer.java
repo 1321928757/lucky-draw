@@ -43,7 +43,8 @@ public class SendAwardCustomer {
             // 3.手动ACK
             channel.basicAck(deliveryTag, false);
             log.info("中奖发货消息消费完成，奖品ID：{},用户ID：{}",sendAwardMessage.getAwardId(),sendAwardMessage.getUserId());
-        } catch (IOException e) {
+        } catch (Exception e) {
+            log.info("监听中奖发货消息消费失败 唯一索引异常，topic：{}，message：{}", topic, message);
             try {
                 // 处理失败,重新压入MQ
                 channel.basicRecover();
