@@ -105,3 +105,6 @@ DDD架构最核心的部分，根据不同业务划分不同的领域包，为in
 
 基础类型层是为了让提供一些像工具类的通用类，提高代码复用
 
+### 核心业务流程
+参与活动&活动抽奖核心业务流程  
+![](https://github.com/1321928757/static-resources/blob/main/yuque_diagram%20(12).jpg?raw=true)
