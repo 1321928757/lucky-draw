@@ -147,9 +147,9 @@ xxl:
 elastic:
   config:
     username: elastic
-    password: lsj114514
-    ip: 154.201.80.213
-    port: 9200
+    password: 123123
+    ip: 123123
+    port: 123123
 
 # 日志
 logging:
