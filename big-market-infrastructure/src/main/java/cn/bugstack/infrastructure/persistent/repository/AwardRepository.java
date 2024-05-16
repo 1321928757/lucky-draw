@@ -167,7 +167,8 @@ public class AwardRepository implements IAwardRepository {
             // 数据脱敏
             userAwardRecordDoc.setUserId(DesensitizedUtil.idCardNum(userid, 5, 5));
         }
-        // 2.数据转换。
+
+        // 3.数据转换
         return userAwardRecordDocs.stream().map(userAwardRecordDoc -> UserAwardRecordEntity.builder()
                 .userId(userAwardRecordDoc.getUserId())
                 .awardTitle(userAwardRecordDoc.getAwardTitle())
