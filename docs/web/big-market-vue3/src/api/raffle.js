@@ -45,3 +45,8 @@ export const userSignUp = () => {
 export const queryPageAwardRecord = (pageRequest) => {
     return axiosClient.post(`/api/v1/raffle/award/query_page_award_record`, pageRequest)
 }
+
+// 查询活动下最新的获奖记录，展示用
+export const queryLatestAwardRecord = (request) => {
+    return axiosClient.post(`/api/v1/raffle/award/query_activity_award_record`, request)
+}

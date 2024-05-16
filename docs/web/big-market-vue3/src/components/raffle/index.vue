@@ -6,6 +6,7 @@ import {
   queryUserAccountById,
   queryRuleWeightById,
   queryActivityById,
+  queryLatestAwardRecord,
 } from "@/api/raffle.js";
 import { succesMsg, errorMsg, warnMsg } from "@/utils/remind.js";
 import { topathReplace } from "@/utils/router.js";
@@ -18,6 +19,7 @@ import UserAccountInfo from "./userAccountInfo/UserAccountInfo.vue";
 import SignUpBoard from "./signUpBoard/SignUpBoard.vue";
 import MyAwards from "./myEarningAward/MyAwards.vue";
 import ActivityDetail from "./activityDetail/ActivityDetail.vue";
+import EaringAwardBoard from "./earingAwardBoard/EaringAwardBoard.vue";
 import emitter from "@/utils/mitt";
 
 const route = useRoute();
@@ -39,6 +41,9 @@ const originPrizes = ref([]);
 
 // 用户抽奖权重信息
 const ruleWeightInfo = ref({});
+
+// 当前活动的最新获奖记录
+const latestAwardRecords = ref([]);
 
 // 加载动画,防止高频点击
 const load_btn_query = ref(false);
@@ -169,6 +174,20 @@ const queryActivityInfo = async () => {
   }
 };
 
+// 查询当前活动的获奖记录
+const queryLatestRecordInfo = async () => {
+  const requestDto = {
+    activityId: activityInfo.value.activityId,
+    size: 20,
+  };
+  const res = await queryLatestAwardRecord(requestDto);
+  if (res.code == "0000") {
+    latestAwardRecords.value = res.data;
+  } else {
+    // errorMsg(res.info);
+  }
+};
+
 // 初始化函数
 const init = () => {
   // 1.首先检查是否存在用户信息
@@ -182,6 +201,7 @@ const init = () => {
   queryRuleWeightInfo();
   queryUserAccountInfo();
   queryActivityAwards();
+  queryLatestRecordInfo();
 
   // 注册数据更新监听
   emitter.on("updateActivityData", (param) => {
@@ -242,6 +262,12 @@ init();
         >
           <!-- 抽奖主要部分【转盘，权重值】 -->
           <div class="draw-main" style="margin-bottom: 10px">
+            <h3>活动抽奖</h3>
+            <div class="earn-award-board">
+              <EaringAwardBoard
+                :latestAwardRecords="latestAwardRecords"
+              ></EaringAwardBoard>
+            </div>
             <div class="lucky-canvas">
               <RaffleCanvas
                 :activityInfo="activityInfo"
@@ -272,11 +298,6 @@ init();
           <div class="sign-up">
             <SignUpBoard> </SignUpBoard>
           </div>
-        </el-col>
-        <!-- 我的奖品 -->
-        <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8"> </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-          <!-- 最近获奖名单展示，滚动展示 -->
         </el-col>
       </el-row>
     </div>
@@ -334,6 +355,10 @@ init();
       border-radius: 20px;
       font-weight: 550;
       background-color: rgba(195, 195, 195, 0.095);
+      h3{
+        color: gray;
+        margin: 12px 0px 3px 0px;
+      }
       .lucky-canvas {
         display: flex; /* 启用 Flex 布局 */
         justify-content: center; /* 水平居中 */

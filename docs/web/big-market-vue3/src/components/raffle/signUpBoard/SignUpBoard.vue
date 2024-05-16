@@ -26,7 +26,7 @@ const signUp = async() =>{
         // 延时一段时间后重新加载次数信息
         setTimeout(() => {
             emitter.emit("updateAccountData", true);
-        }, 300)
+        }, 600)
     }else{
         warnMsg(res.info)
     }
