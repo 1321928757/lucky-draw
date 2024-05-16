@@ -146,7 +146,7 @@
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
-                <version>5.5.1</version>
+                <version>5.8.16</version>
             </dependency>
 
             <!--xxl-job分布式任务调度,这里使用改进版的，不会额外占用端口-->
