@@ -2,7 +2,7 @@
 
 项目介绍：抽奖系统是各个互联网公司用于拉新、促活、留存、转化的重要手段，此项目针对高并发场景，搭建为各平台促销提效的营销抽奖平台。可通过MQ消息轻松对接外部系统，外部系统用户行为触发抽奖次数增加。
 
-核心技术：SpringBoot、MyBatis、MySQL、Redis、Redisson、Guava、RabbitMQ、Xxj-job。
+核心技术：SpringBoot、MyBatis、MySQL、Redis、Redisson、Guava、RabbitMQ、Xxj-job、ElasticSearch。
 
 ---
 
@@ -32,11 +32,11 @@
 - ✅获奖API的完善，用户可查看获奖记录
 - ✅完善保底策略【为每个用户维护保底计数器，保底后清空计数器】
 - ✅Web添加奖品详细信息，概率等信息的展示
-- ✅实现活动最近获奖记录展示榜【分库分表的聚合操作，整合ES】（前端还没写，找个时间补上）  
+- ✅实现活动最近获奖记录展示榜【分库分表的聚合操作，整合ES】
 
 看这里！！！！！定时任务选用的xxl-job,但原版滥用xxl-job，存在多端口问题，每个服务的定时任务执行器都需要占用一个端口，当我们部署到类似与docker的容器中时，如果两个服务
 执行器占用的端口一样就会产生端口冲突问题，我们需要主动为他们分配不同的端口，这非常不利于我们服务的水平扩容，所以我这里找了一个老哥修改的版本https://github.com/kdyzm/xxl-job
-，这个修改版本任务调用端口和服务端口是同样的，方便多了哈哈  
+，这个修改版本去除了netty组件，任务调用端口和服务端口是同样的，看自己选择吧~如果需要用这个改版可以看我的博客https://blog.csdn.net/qq_35716689/article/details/138769153?spm=1001.2014.3001.5501
 
 ## 🪐前端说明
 
@@ -63,12 +63,14 @@ yarn run dev
 
 活动主界面  
 电脑端网页效果  
-![](https://img-blog.csdnimg.cn/direct/7de9e313b6714ff295a3b84f5f587e09.png)
+![](https://github.com/1321928757/static-resources/blob/main/PC1.png?raw=true)  
+![](https://github.com/1321928757/static-resources/blob/main/PC2.png?raw=true)  
 
 移动端网页效果  
-![](https://img-blog.csdnimg.cn/direct/385be76b39504e6a8411452edbd96baf.png)
-![](https://img-blog.csdnimg.cn/direct/4cff95ebde68493699ad38a0a8aedf96.png)
-![](https://img-blog.csdnimg.cn/direct/f0ae21b949b348b789c4ce72013bb89c.png)
+![](https://github.com/1321928757/static-resources/blob/main/PE1.jpg?raw=true)  
+前端获奖记录展示没有找到合适的组件(有一个上下滚动展示的，但是太吃性能了，就换成这个横向滚动库了)，效果貌似也还行？
+![](https://github.com/1321928757/static-resources/blob/main/PE2.jpg?raw=true)
+![](https://github.com/1321928757/static-resources/blob/main/PE3.jpg?raw=true)
 
 
 ## 🫧项目架构
