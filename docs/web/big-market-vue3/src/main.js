@@ -1,6 +1,9 @@
 import { createApp } from 'vue'
 import './style/global.css'
 
+// 滚动数据组件
+import Vue3Marquee from 'vue3-marquee'
+
 // element-plus
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
@@ -25,6 +28,7 @@ const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
   }
+app.use(Vue3Marquee)
 app.use(pinia)
 app.use(ElementPlus)
 app.use(router)

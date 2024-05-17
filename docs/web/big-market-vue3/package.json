@@ -22,7 +22,9 @@
     "pinia-plugin-persistedstate": "^3.2.1",
     "sass": "^1.75.0",
     "vue": "^3.2.47",
-    "vue-router": "^4.2.2"
+    "vue-router": "^4.2.2",
+    "vue3-marquee": "^4.2.0",
+    "vue3-seamless-scroll": "^2.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",

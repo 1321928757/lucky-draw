@@ -86,7 +86,6 @@ const endCallback = (prize) => {
     
     <!-- 抽奖canvas -->
     <div class="lucky-canvas">
-      <h3>活动抽奖</h3>
       <LuckyGrid
         ref="myLucky"
         width="300px"

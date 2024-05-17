@@ -14,12 +14,12 @@ import cn.bugstack.infrastructure.persistent.dao.mysql.IUserRaffleOrderDao;
 import cn.bugstack.infrastructure.persistent.doc.UserAwardRecordDoc;
 import cn.bugstack.infrastructure.persistent.po.Task;
 import cn.bugstack.infrastructure.persistent.po.UserAwardRecord;
-import cn.bugstack.infrastructure.persistent.redis.IRedisService;
 import cn.bugstack.middleware.db.router.strategy.IDBRouterStrategy;
 import cn.bugstack.types.enums.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import cn.bugstack.types.model.PageData;
 import cn.hutool.core.util.DesensitizedUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
@@ -160,7 +160,15 @@ public class AwardRepository implements IAwardRepository {
         // 1.查询数据
         List<UserAwardRecordDoc> userAwardRecordDocs = userAwardRecordIndex.queryLastestDocByActivityId(activityId, count);
 
-        // 2.数据转换，使用hutool工具对用户id脱敏，页可以引入缓存+定时任务来优化性能，但是及时性没有直接查询好
+        // 2.使用hutool工具对用户id脱敏，可以引入缓存+定时任务来优化性能，但是及时性没有直接查询好
+        for (UserAwardRecordDoc userAwardRecordDoc : userAwardRecordDocs) {
+            // 从第七位开始截取 TODO 这里暂时硬编码了，微信的openid很长，前六位相等，所以截取七位以后的，可以根据系统用户id情况改写这个
+            String userid = StrUtil.subSuf(userAwardRecordDoc.getUserId(), 7);
+            // 数据脱敏
+            userAwardRecordDoc.setUserId(DesensitizedUtil.idCardNum(userid, 5, 5));
+        }
+
+        // 3.数据转换
         return userAwardRecordDocs.stream().map(userAwardRecordDoc -> UserAwardRecordEntity.builder()
                 .userId(userAwardRecordDoc.getUserId())
                 .awardTitle(userAwardRecordDoc.getAwardTitle())

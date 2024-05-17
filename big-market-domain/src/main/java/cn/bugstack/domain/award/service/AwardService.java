@@ -44,7 +44,7 @@ public class AwardService implements IAwardService{
         syncRecordMessage.setAwardTitle(userAwardRecordEntity.getAwardTitle());
         syncRecordMessage.setAwardTime(userAwardRecordEntity.getAwardTime());
         syncRecordMessage.setOrderId(userAwardRecordEntity.getOrderId());
-        syncRecordMessage.setOrderId(userAwardRecordEntity.getOrderId());
+        syncRecordMessage.setActivityId(userAwardRecordEntity.getActivityId());
         BaseEvent.EventMessage<SyncAwardRecordEvent.SyncRecordMessage> syncRecordMessageEventMessage = syncAwardRecordEvent.buildEventMessage(syncRecordMessage);
 
         // 3.构建发货消息任务对象
