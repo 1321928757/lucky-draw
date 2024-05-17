@@ -2,7 +2,7 @@
 
 项目介绍：抽奖系统是各个互联网公司用于拉新、促活、留存、转化的重要手段，此项目针对高并发场景，搭建为各平台促销提效的营销抽奖平台。可通过MQ消息轻松对接外部系统，外部系统用户行为触发抽奖次数增加。
 
-核心技术：SpringBoot、MyBatis、MySQL、Redis、Redisson、Guava、RabbitMQ、Xxj-job、ElasticSearch。
+核心技术：SpringBoot、MyBatis、MySQL、Redis、Redisson、Guava、RabbitMQ、Xxj-job、ElasticSearch、Vue3。
 
 ---
 
@@ -11,10 +11,18 @@
 
 ## 💫运行配置
 
-- 运行环境：JDK 1.8+
-- Springboot：2.7.12
-- mysql：8.2
-- redis：5.0
+### 运行环境
+- Linux: Centos7.6 4H4G
+- Docker:25.0.3
+- Springboot:2.7.12
+- JDK:1.8
+
+### 服务环境
+- Mysql:8.2
+- Redis:5.0
+- xxl-job:2.4.2
+- Rabbitmq:3.8.34
+- Elasticsearch:7.17.21
 
 ## ⭐总体开发进度
 
