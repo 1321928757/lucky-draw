@@ -8,6 +8,9 @@
 
 >在线演示地址 [**www.luckylottery.site/raffle/100301**](www.luckylottery.site/raffle/100301)
 
+>项目出处：小傅哥(京东T8架构师)，小傅哥真的是踏实分享技术的博主，在此推荐给大家，有兴趣的请加入小傅哥星球继续学习~
+
+![](https://github.com/1321928757/static-resources/blob/main/zhishixq.png?raw=true)  
 
 ## 💫运行配置
 
