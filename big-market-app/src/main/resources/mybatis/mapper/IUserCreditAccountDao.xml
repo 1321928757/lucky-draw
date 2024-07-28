@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bugstack.infrastructure.persistent.dao.mysql.IUserCreditAccountDao">
+    <resultMap id="dataMap" type="cn.bugstack.infrastructure.persistent.po.UserCreditAccount">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="total_amount" property="totalAmount"/>
+        <result column="available_amount" property="availableAmount"/>
+        <result column="account_status" property="accountStatus"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <update id="updateAddAmount" parameterType="cn.bugstack.infrastructure.persistent.po.UserAwardRecord">
+        update user_credit_account
+        set total_amount     = total_amount + #{totalAmount},
+            available_amount = available_amount + #{availableAmount}
+        where user_id = #{userId}
+    </update>
+
+    <insert id="insert" parameterType="cn.bugstack.infrastructure.persistent.po.UserAwardRecord">
+        insert into user_credit_account(
+            user_id, total_amount, available_amount, account_status, create_time, update_time
+        ) values (#{userId}, #{totalAmount}, #{availableAmount}, #{accountStatus}, now(), now())
+    </insert>
+
+</mapper>

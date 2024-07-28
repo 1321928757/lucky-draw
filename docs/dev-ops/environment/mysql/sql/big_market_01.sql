@@ -520,6 +520,8 @@ CREATE TABLE `user_raffle_order_002`  (
                                           INDEX `idx_user_id_activity_id`(`user_id` ASC, `activity_id` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户抽奖订单表' ROW_FORMAT = DYNAMIC;
 
+
+-- 用户抽奖订单表
 -- ----------------------------
 -- Records of user_raffle_order_002
 -- ----------------------------
@@ -549,3 +551,19 @@ CREATE TABLE `user_raffle_order_003`  (
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+-- 用户积分表
+DROP TABLE IF EXISTS `user_credit_account`;
+
+CREATE TABLE `user_credit_account` (
+                                       `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+                                       `user_id` varchar(32) NOT NULL COMMENT '用户ID',
+                                       `total_amount` decimal(10,2) NOT NULL COMMENT '总积分，显示总账户值，记得一个人获得的总积分',
+                                       `available_amount` decimal(10,2) NOT NULL COMMENT '可用积分，每次扣减的值',
+                                       `account_status` varchar(8) NOT NULL COMMENT '账户状态【open - 可用，close - 冻结】',
+                                       `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                       `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                                       PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户积分账户';

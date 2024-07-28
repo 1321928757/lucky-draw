@@ -13,10 +13,15 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
-    <select id="queryAwardList" resultMap="dataMap">
-        select award_id, award_key, award_config, award_desc, award_image
+    <select id="queryAwardConfigById" resultType="java.lang.String">
+        select award_config
         from award
-        limit 10
+        where award_id = #{awardId}
+    </select>
+    <select id="queryAwardKeyById" resultType="java.lang.String">
+        select award_key
+        from award
+        where award_id = #{awardId}
     </select>
 
 </mapper>

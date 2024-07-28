@@ -1,5 +1,6 @@
 package cn.bugstack.test.domain.award;
 
+import cn.bugstack.domain.award.model.entity.DistributeAwardEntity;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
 import cn.bugstack.domain.award.model.valobj.AwardStateVO;
 import cn.bugstack.domain.award.service.IAwardService;
@@ -49,4 +50,15 @@ public class AwardServiceTest {
         new CountDownLatch(1).await();
     }
 
+    // 分发奖品测试
+    @Test
+    public void test_distributeAward() throws InterruptedException {
+        DistributeAwardEntity distributeAwardEntity = new DistributeAwardEntity();
+        distributeAwardEntity.setUserId("ogdb46DaYxN6nliqjeveqnZMfqmI");
+        distributeAwardEntity.setOrderId("737118841329");
+        distributeAwardEntity.setAwardId(101);
+        distributeAwardEntity.setAwardConfig("0.01,1"); // 如果没有传递AwardConfig则会走库中奖品默认的配置
+
+        awardService.distributeAward(distributeAwardEntity);
+    }
 }

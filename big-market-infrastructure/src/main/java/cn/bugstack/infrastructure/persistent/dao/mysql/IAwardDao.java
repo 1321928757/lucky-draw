@@ -12,7 +12,19 @@ import java.util.List;
  */
 @Mapper
 public interface IAwardDao {
+    /**
+    * @description 根据id查询奖品配置
+    * @param awardId 奖品id
+    * @return 奖品配置
+    * @date 2023-12-16 13:23
+    */
+    String queryAwardConfigById(Integer awardId);
 
-    List<Award> queryAwardList();
-
+    /**
+    * @description 根据id查询奖品key
+    * @param awardId 奖品id
+    * @return 奖品key
+    * @date 2024/07/28 19:39:07
+    */
+    String queryAwardKeyById(Integer awardId);
 }

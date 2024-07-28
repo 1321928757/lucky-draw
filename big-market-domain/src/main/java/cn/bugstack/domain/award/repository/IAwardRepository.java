@@ -1,5 +1,6 @@
 package cn.bugstack.domain.award.repository;
 
+import cn.bugstack.domain.award.model.aggregate.GiveOutPrizesAggregate;
 import cn.bugstack.domain.award.model.aggregate.UserAwardRecordAggregate;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordDocEntity;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
@@ -48,4 +49,28 @@ public interface IAwardRepository {
     * @date 2024/05/14 19:59:05
     */
     void saveUserAwardRecordDoc(UserAwardRecordDocEntity userAwardRecordDoc) throws IOException;
+
+    /**
+    * @description 查询奖品配置
+    * @param awardId 奖品id
+    * @return 对应的奖品配置
+    * @date 2024/07/27 16:31:20
+    */
+    String queryAwardConfig(Integer awardId);
+
+    /**
+    * @description 转储发奖信息
+    * @param giveOutPrizesAggregate 发奖聚合对象
+    * @return
+    * @date 2024/07/27 16:48:19
+    */
+    void saveGiveOutPrizesAggregate(GiveOutPrizesAggregate giveOutPrizesAggregate);
+
+    /**
+    * @description 根据awardId查询对应的奖品key
+    * @param awardId 奖品id
+    * @return awardKey
+    * @date 2024/07/28 19:37:06
+    */
+    String queryAwardKey(Integer awardId);
 }
