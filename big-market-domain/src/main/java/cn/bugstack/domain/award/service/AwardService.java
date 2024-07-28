@@ -3,24 +3,31 @@ package cn.bugstack.domain.award.service;
 import cn.bugstack.domain.award.event.SendAwardMessageEvent;
 import cn.bugstack.domain.award.event.SyncAwardRecordEvent;
 import cn.bugstack.domain.award.model.aggregate.UserAwardRecordAggregate;
+import cn.bugstack.domain.award.model.entity.DistributeAwardEntity;
 import cn.bugstack.domain.award.model.entity.TaskEntity;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordDocEntity;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
 import cn.bugstack.domain.award.model.valobj.TaskStateVO;
 import cn.bugstack.domain.award.repository.IAwardRepository;
+import cn.bugstack.domain.award.service.distribute.IDistributeAward;
 import cn.bugstack.types.event.BaseEvent;
+import cn.bugstack.types.exception.AppException;
 import cn.bugstack.types.model.PageData;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Luckysj @刘仕杰
  * @description 奖品服务
  * @create 2024/04/13 21:53:12
  */
+@Slf4j
 @Service
 public class AwardService implements IAwardService{
     @Resource
@@ -29,6 +36,13 @@ public class AwardService implements IAwardService{
     private SendAwardMessageEvent sendAwardMessageEvent;
     @Resource
     private SyncAwardRecordEvent syncAwardRecordEvent;
+
+    private final Map<String, IDistributeAward> distributeAwardMap;
+
+    public AwardService(Map<String, IDistributeAward> distributeAwardMap) {
+        this.distributeAwardMap = distributeAwardMap;
+    }
+
     @Override
     public void saveUserAwardRecord(UserAwardRecordEntity userAwardRecordEntity) {
         // 1.构建发货消息对象
@@ -87,6 +101,26 @@ public class AwardService implements IAwardService{
     @Override
     public void saveUserAwardRecordDoc(UserAwardRecordDocEntity userAwardRecordDoc) throws IOException {
         awardRepository.saveUserAwardRecordDoc(userAwardRecordDoc);
+    }
+
+    @Override
+    public void distributeAward(DistributeAwardEntity distributeAwardEntity) {
+        // 1.根据奖品id查询到对应的奖品服务key
+        String awardKey = awardRepository.queryAwardKey(distributeAwardEntity.getAwardId());
+        if(StringUtils.isEmpty(awardKey)){
+            log.error("分发奖品，对应的奖品key不存在，奖品id:{}", distributeAwardEntity.getAwardId());
+            return;
+        }
+
+        // 2.根据key获取到对应的分发服务
+        IDistributeAward distributeAward = distributeAwardMap.get(awardKey);
+        if(null == distributeAward){
+            log.error("分发奖品，awardKey对应的分发服务不存在，awardKey:{}", awardKey);
+            throw new AppException("分发奖品，奖品" + awardKey + "对应的分发服务不存在");
+        }
+
+        // 3.分发奖品
+        distributeAward.giveOutPrizes(distributeAwardEntity);
     }
 
 

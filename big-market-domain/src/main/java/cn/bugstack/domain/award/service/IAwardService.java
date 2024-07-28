@@ -1,5 +1,6 @@
 package cn.bugstack.domain.award.service;
 
+import cn.bugstack.domain.award.model.entity.DistributeAwardEntity;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordDocEntity;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
 import cn.bugstack.types.model.PageData;
@@ -45,4 +46,13 @@ public interface IAwardService {
     * @date 2024/05/14 19:58:07
     */
     void saveUserAwardRecordDoc(UserAwardRecordDocEntity userAwardRecordDoc) throws IOException;
+
+    /**
+    * @description  配送分发奖品
+    * @param
+    * @return
+    * @date 2024/07/27 16:02:52
+    */
+    void distributeAward(DistributeAwardEntity distributeAwardEntity);
+
 }

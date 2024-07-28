@@ -23,6 +23,7 @@
                 #{awardTime}, #{awardState}, now(), now())
     </insert>
 
+
     <select id="pageUserAwardRecord" resultMap="dateMap">
         select user_id, activity_id, strategy_id, order_id, award_id, award_title, award_image, award_time,
                award_state, create_time, update_time
@@ -37,4 +38,12 @@
         from user_award_record
         where user_id = #{userId}
     </select>
+
+    <update id="updateRecordCompleteStatus">
+        update user_award_record
+        set award_state = 'completed'
+        where user_id = #{userId}
+        and order_id = #{orderId}
+        and award_state = 'create'
+    </update>
 </mapper>

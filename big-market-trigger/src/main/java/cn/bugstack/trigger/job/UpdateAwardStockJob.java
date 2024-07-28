@@ -23,21 +23,7 @@ public class UpdateAwardStockJob {
     private IRaffleStock raffleStock;
 
     // 每五秒消费一次redisson等待队列中的库存更新任务
-    @XxlJob("updateAwardStockJob")
-    public void exec() {
-        try {
-            StrategyAwardStockKeyVO strategyAwardStockKeyVO = raffleStock.takeQueueValue();
-            if (null == strategyAwardStockKeyVO) return;
-            log.info("定时任务，更新奖品消耗库存 开始");
-
-            raffleStock.updateStrategyAwardStock(strategyAwardStockKeyVO.getStrategyId(), strategyAwardStockKeyVO.getAwardId());
-            log.info("定时任务，更新奖品消耗库存 完成，strategyId:{} awardId:{}", strategyAwardStockKeyVO.getStrategyId(), strategyAwardStockKeyVO.getAwardId());
-        } catch (Exception e) {
-            log.error("定时任务，更新奖品消耗库存失败", e);
-        }
-    }
-
-    // @Scheduled(cron = "0/5 * * * * ?")
+    // @XxlJob("updateAwardStockJob")
     // public void exec() {
     //     try {
     //         StrategyAwardStockKeyVO strategyAwardStockKeyVO = raffleStock.takeQueueValue();
@@ -50,5 +36,19 @@ public class UpdateAwardStockJob {
     //         log.error("定时任务，更新奖品消耗库存失败", e);
     //     }
     // }
+
+    @Scheduled(cron = "0/5 * * * * ?")
+    public void exec() {
+        try {
+            StrategyAwardStockKeyVO strategyAwardStockKeyVO = raffleStock.takeQueueValue();
+            if (null == strategyAwardStockKeyVO) return;
+            log.info("定时任务，更新奖品消耗库存 开始");
+
+            raffleStock.updateStrategyAwardStock(strategyAwardStockKeyVO.getStrategyId(), strategyAwardStockKeyVO.getAwardId());
+            log.info("定时任务，更新奖品消耗库存 完成，strategyId:{} awardId:{}", strategyAwardStockKeyVO.getStrategyId(), strategyAwardStockKeyVO.getAwardId());
+        } catch (Exception e) {
+            log.error("定时任务，更新奖品消耗库存失败", e);
+        }
+    }
 
 }

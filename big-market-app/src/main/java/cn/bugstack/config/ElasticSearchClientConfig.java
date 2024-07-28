@@ -27,15 +27,15 @@ public class ElasticSearchClientConfig {
 
     @Bean
     public ElasticsearchClient restHighLevelClient(ElasticSearchClientConfigProperties properties) {
-        // 配置认证信息
-        CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-        credentialsProvider.setCredentials(
-                AuthScope.ANY,
-                new UsernamePasswordCredentials(properties.getUsername(), properties.getPassword()));
+        // 配置认证信息 如果配置了账户密码则需要取消注释
+        // CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+        // credentialsProvider.setCredentials(
+        //         AuthScope.ANY,
+        //         new UsernamePasswordCredentials(properties.getUsername(), properties.getPassword()));
 
         RestClientBuilder builder = RestClient.builder(
-                        new HttpHost(properties.getIp(), properties.getPort()))
-                .setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider));
+                        new HttpHost(properties.getIp(), properties.getPort()));
+                // .setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider));
 
         RestClient restClient = builder.build();
 
