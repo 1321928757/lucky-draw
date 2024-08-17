@@ -1,31 +1,37 @@
 package cn.bugstack.infrastructure.persistent.dao.mysql;
 
-
 import cn.bugstack.infrastructure.persistent.po.UserCreditAccount;
-import cn.bugstack.middleware.db.router.annotation.DBRouterStrategy;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author Luckysj @刘仕杰
- * @description 用户积分账户Dao
- * @create 2024/07/27 21:43:59
+ * @description 用户积分账户
+ * @create 2024/08/10 15:09:40
  */
 @Mapper
-@DBRouterStrategy(splitTable = false)
 public interface IUserCreditAccountDao {
     /**
-    * @description 新增积分账户记录
-    * @param userCreditAccount 新增的积分账号记录
+    * @description 新增积分账户
+    * @param userCreditAccountReq 积分账户
     * @return
-    * @date 2024/07/27 21:45:07
+    * @date 2024/08/10 15:10:42
     */
-    void insert(UserCreditAccount userCreditAccount);
+    void insert(UserCreditAccount userCreditAccountReq);
 
     /**
-    * @description 更新账户额度
-    * @param userCreditAccountReq 更新积分账户记得
+    * @description 更新积分额度
+    * @param userCreditAccountReq
     * @return
-    * @date 2024/07/27 21:50:13
+    * @date 2024/08/10 15:11:00
     */
     int updateAddAmount(UserCreditAccount userCreditAccountReq);
+
+    /**
+    * @description 查询积分账户
+    * @param
+    * @return
+    * @date 2024/08/10 15:11:18
+    */
+    UserCreditAccount queryUserCreditAccount(UserCreditAccount userCreditAccountReq);
+
 }

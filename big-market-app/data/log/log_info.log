@@ -1,343 +1,93 @@
-24-05-14.15:36:53.189 [main            ] INFO  EsClientTest           - Starting EsClientTest using Java 11.0.20 on DESKTOP-BU4MLU6 with PID 23492 (started by kitie in D:\javaProject\big-market\big-market-app)
-24-05-14.15:36:53.190 [main            ] INFO  EsClientTest           - The following 1 profile is active: "local"
-24-05-14.15:36:54.309 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-24-05-14.15:36:54.312 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-24-05-14.15:36:54.358 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 32 ms. Found 0 Redis repository interfaces.
-24-05-14.15:36:55.637 [main            ] INFO  Version                - Redisson 3.26.0
-24-05-14.15:36:56.220 [redisson-netty-1-6] INFO  ConnectionsHolder      - 1 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:36:56.516 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:36:59.636 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
-24-05-14.15:36:59.660 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:sendMessageTaskJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@e763080[class cn.bugstack.trigger.job.SendMessageTaskJob#doJob]
-24-05-14.15:36:59.660 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateActivitySkuStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@21252bef[class cn.bugstack.trigger.job.UpdateActivitySkuStockJob#exec]
-24-05-14.15:36:59.660 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateAwardStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@599cf2cd[class cn.bugstack.trigger.job.UpdateAwardStockJob#exec]
-24-05-14.15:36:59.761 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.80.213:5672]
-24-05-14.15:37:00.309 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#4a3516fd:0/SimpleConnection@309ac89e [delegate=amqp://admin@154.201.80.213:5672/, localPort= 59009]
-24-05-14.15:37:01.165 [main            ] INFO  EsClientTest           - Started EsClientTest in 8.35 seconds (JVM running for 9.119)
-24-05-14.15:37:01.261 [main            ] ERROR TestContextManager     - Caught exception while allowing TestExecutionListener [org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@59a008ba] to prepare test instance [cn.bugstack.test.client.EsClientTest@4578d654]
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cn.bugstack.test.client.EsClientTest': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'cn.bugstack.infrastructure.persistent.dao.elasticsearch.UserAwardRecordIndex' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@javax.annotation.Resource(shareable=true, lookup="", name="", description="", authenticationType=CONTAINER, type=java.lang.Object.class, mappedName="")}
-	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:332)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireBeanProperties(AbstractAutowireCapableBeanFactory.java:417)
-	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:119)
-	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
-	at org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener.prepareTestInstance(SpringBootDependencyInjectionTestExecutionListener.java:43)
-	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:248)
-	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:227)
-	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:289)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:291)
-	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:246)
-	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:97)
-	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
-	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
-	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
-	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
-	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
-	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:190)
-	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
-	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:69)
-	at com.intellij.rt.junit.IdeaTestRunner$Repeater$1.execute(IdeaTestRunner.java:38)
-	at com.intellij.rt.execution.junit.TestsRepeater.repeat(TestsRepeater.java:11)
-	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35)
-	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:232)
-	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:55)
-Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'cn.bugstack.infrastructure.persistent.dao.elasticsearch.UserAwardRecordIndex' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@javax.annotation.Resource(shareable=true, lookup="", name="", description="", authenticationType=CONTAINER, type=java.lang.Object.class, mappedName="")}
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1801)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1357)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
-	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:544)
-	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:520)
-	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$ResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:673)
-	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:228)
-	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
-	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:329)
-	... 29 common frames omitted
-24-05-14.15:37:01.320 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:37:01.346 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:37:01.373 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:37:01.902 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:37:02.030 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:37:02.193 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:37:02.252 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:37:02.253 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:37:02.253 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:37:02.290 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job registry-remove success, registryParam:RegistryParam{registryGroup='EXECUTOR', registryKey='lucky-draw-handler', registryValue='http://154.201.80.213:11111/'}, registryResult:ReturnT [code=200, msg=null, content=null]
-24-05-14.15:37:02.290 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job, executor registry thread destory.
-24-05-14.15:37:02.290 [SpringApplicationShutdownHook] INFO  EmbedServer            - >>>>>>>>>>> xxl-job remoting server destroy success.
-24-05-14.15:37:02.291 [xxl-job, executor JobLogFileCleanThread] INFO  JobLogFileCleanThread  - >>>>>>>>>>> xxl-job, executor JobLogFileCleanThread thread destory.
-24-05-14.15:37:02.291 [xxl-job, executor TriggerCallbackThread] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor callback thread destory.
-24-05-14.15:37:02.291 [Thread-6        ] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor retry callback thread destory.
-24-05-14.15:37:40.670 [main            ] INFO  EsClientTest           - Starting EsClientTest using Java 11.0.20 on DESKTOP-BU4MLU6 with PID 14360 (started by kitie in D:\javaProject\big-market\big-market-app)
-24-05-14.15:37:40.671 [main            ] INFO  EsClientTest           - The following 1 profile is active: "local"
-24-05-14.15:37:41.668 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-24-05-14.15:37:41.671 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-24-05-14.15:37:41.720 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 37 ms. Found 0 Redis repository interfaces.
-24-05-14.15:37:42.816 [main            ] INFO  Version                - Redisson 3.26.0
-24-05-14.15:37:43.416 [redisson-netty-1-6] INFO  ConnectionsHolder      - 1 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:37:43.685 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:37:46.497 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
-24-05-14.15:37:46.523 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:sendMessageTaskJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@7c290246[class cn.bugstack.trigger.job.SendMessageTaskJob#doJob]
-24-05-14.15:37:46.523 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateActivitySkuStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@3021e31[class cn.bugstack.trigger.job.UpdateActivitySkuStockJob#exec]
-24-05-14.15:37:46.523 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateAwardStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@4d305059[class cn.bugstack.trigger.job.UpdateAwardStockJob#exec]
-24-05-14.15:37:46.609 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.80.213:5672]
-24-05-14.15:37:46.777 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#4a3516fd:0/SimpleConnection@d0456ad [delegate=amqp://admin@154.201.80.213:5672/, localPort= 59455]
-24-05-14.15:37:47.432 [main            ] INFO  EsClientTest           - Started EsClientTest in 7.194 seconds (JVM running for 7.988)
-24-05-14.15:37:47.898 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:37:47.936 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:37:47.962 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:37:48.181 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:37:48.309 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:37:48.461 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:37:48.554 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:37:48.555 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:37:48.555 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:37:48.588 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job registry-remove success, registryParam:RegistryParam{registryGroup='EXECUTOR', registryKey='lucky-draw-handler', registryValue='http://154.201.80.213:11111/'}, registryResult:ReturnT [code=200, msg=null, content=null]
-24-05-14.15:37:48.588 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job, executor registry thread destory.
-24-05-14.15:37:48.588 [SpringApplicationShutdownHook] INFO  EmbedServer            - >>>>>>>>>>> xxl-job remoting server destroy success.
-24-05-14.15:37:48.588 [xxl-job, executor JobLogFileCleanThread] INFO  JobLogFileCleanThread  - >>>>>>>>>>> xxl-job, executor JobLogFileCleanThread thread destory.
-24-05-14.15:37:48.590 [xxl-job, executor TriggerCallbackThread] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor callback thread destory.
-24-05-14.15:37:48.590 [Thread-6        ] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor retry callback thread destory.
-24-05-14.15:40:04.219 [main            ] INFO  EsClientTest           - Starting EsClientTest using Java 11.0.20 on DESKTOP-BU4MLU6 with PID 22516 (started by kitie in D:\javaProject\big-market\big-market-app)
-24-05-14.15:40:04.220 [main            ] INFO  EsClientTest           - The following 1 profile is active: "local"
-24-05-14.15:40:05.316 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-24-05-14.15:40:05.318 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-24-05-14.15:40:05.360 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 29 ms. Found 0 Redis repository interfaces.
-24-05-14.15:40:06.613 [main            ] INFO  Version                - Redisson 3.26.0
-24-05-14.15:40:07.265 [redisson-netty-1-6] INFO  ConnectionsHolder      - 1 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:40:07.510 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:40:10.421 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
-24-05-14.15:40:10.443 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:sendMessageTaskJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@76e10574[class cn.bugstack.trigger.job.SendMessageTaskJob#doJob]
-24-05-14.15:40:10.443 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateActivitySkuStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@7c290246[class cn.bugstack.trigger.job.UpdateActivitySkuStockJob#exec]
-24-05-14.15:40:10.443 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateAwardStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@3021e31[class cn.bugstack.trigger.job.UpdateAwardStockJob#exec]
-24-05-14.15:40:10.536 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.80.213:5672]
-24-05-14.15:40:10.713 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#55c20a91:0/SimpleConnection@f14d079 [delegate=amqp://admin@154.201.80.213:5672/, localPort= 60495]
-24-05-14.15:40:11.403 [main            ] INFO  EsClientTest           - Started EsClientTest in 7.57 seconds (JVM running for 8.318)
-24-05-14.15:40:11.950 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:40:11.981 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:40:12.009 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:40:12.116 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:40:12.267 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:40:12.434 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:40:12.489 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:40:12.489 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:40:12.490 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:40:12.524 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job registry-remove success, registryParam:RegistryParam{registryGroup='EXECUTOR', registryKey='lucky-draw-handler', registryValue='http://154.201.80.213:11111/'}, registryResult:ReturnT [code=200, msg=null, content=null]
-24-05-14.15:40:12.524 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job, executor registry thread destory.
-24-05-14.15:40:12.524 [SpringApplicationShutdownHook] INFO  EmbedServer            - >>>>>>>>>>> xxl-job remoting server destroy success.
-24-05-14.15:40:12.524 [xxl-job, executor JobLogFileCleanThread] INFO  JobLogFileCleanThread  - >>>>>>>>>>> xxl-job, executor JobLogFileCleanThread thread destory.
-24-05-14.15:40:12.525 [xxl-job, executor TriggerCallbackThread] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor callback thread destory.
-24-05-14.15:40:12.525 [Thread-6        ] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor retry callback thread destory.
-24-05-14.15:43:02.261 [main            ] INFO  EsClientTest           - Starting EsClientTest using Java 11.0.20 on DESKTOP-BU4MLU6 with PID 23272 (started by kitie in D:\javaProject\big-market\big-market-app)
-24-05-14.15:43:02.262 [main            ] INFO  EsClientTest           - The following 1 profile is active: "local"
-24-05-14.15:43:03.268 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-24-05-14.15:43:03.270 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-24-05-14.15:43:03.307 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 27 ms. Found 0 Redis repository interfaces.
-24-05-14.15:43:04.474 [main            ] INFO  Version                - Redisson 3.26.0
-24-05-14.15:43:05.216 [redisson-netty-1-6] INFO  ConnectionsHolder      - 1 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:43:05.485 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:43:08.062 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
-24-05-14.15:43:08.086 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:sendMessageTaskJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@102dff25[class cn.bugstack.trigger.job.SendMessageTaskJob#doJob]
-24-05-14.15:43:08.086 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateActivitySkuStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@216de23a[class cn.bugstack.trigger.job.UpdateActivitySkuStockJob#exec]
-24-05-14.15:43:08.086 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateAwardStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@76e10574[class cn.bugstack.trigger.job.UpdateAwardStockJob#exec]
-24-05-14.15:43:08.178 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.80.213:5672]
-24-05-14.15:43:08.343 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#6cf3b3d7:0/SimpleConnection@f14d079 [delegate=amqp://admin@154.201.80.213:5672/, localPort= 61978]
-24-05-14.15:43:08.992 [main            ] INFO  EsClientTest           - Started EsClientTest in 7.116 seconds (JVM running for 7.852)
-24-05-14.15:43:09.419 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:43:09.452 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:43:09.479 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:43:09.731 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:43:09.888 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:43:10.015 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:43:10.078 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:43:10.079 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:43:10.079 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:43:10.109 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job registry-remove success, registryParam:RegistryParam{registryGroup='EXECUTOR', registryKey='lucky-draw-handler', registryValue='http://154.201.80.213:11111/'}, registryResult:ReturnT [code=200, msg=null, content=null]
-24-05-14.15:43:10.109 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job, executor registry thread destory.
-24-05-14.15:43:10.109 [SpringApplicationShutdownHook] INFO  EmbedServer            - >>>>>>>>>>> xxl-job remoting server destroy success.
-24-05-14.15:43:10.109 [xxl-job, executor JobLogFileCleanThread] INFO  JobLogFileCleanThread  - >>>>>>>>>>> xxl-job, executor JobLogFileCleanThread thread destory.
-24-05-14.15:43:10.110 [xxl-job, executor TriggerCallbackThread] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor callback thread destory.
-24-05-14.15:43:10.110 [Thread-6        ] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor retry callback thread destory.
-24-05-14.15:46:30.917 [main            ] INFO  EsClientTest           - Starting EsClientTest using Java 11.0.20 on DESKTOP-BU4MLU6 with PID 20416 (started by kitie in D:\javaProject\big-market\big-market-app)
-24-05-14.15:46:30.918 [main            ] INFO  EsClientTest           - The following 1 profile is active: "local"
-24-05-14.15:46:31.847 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-24-05-14.15:46:31.850 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-24-05-14.15:46:31.889 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 29 ms. Found 0 Redis repository interfaces.
-24-05-14.15:46:32.935 [main            ] INFO  Version                - Redisson 3.26.0
-24-05-14.15:46:33.506 [redisson-netty-1-6] INFO  ConnectionsHolder      - 1 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:46:33.765 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:46:36.404 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
-24-05-14.15:46:36.427 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:sendMessageTaskJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@31b4c003[class cn.bugstack.trigger.job.SendMessageTaskJob#doJob]
-24-05-14.15:46:36.428 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateActivitySkuStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@74214ac3[class cn.bugstack.trigger.job.UpdateActivitySkuStockJob#exec]
-24-05-14.15:46:36.428 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateAwardStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@e00c94e[class cn.bugstack.trigger.job.UpdateAwardStockJob#exec]
-24-05-14.15:46:36.522 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.80.213:5672]
-24-05-14.15:46:36.687 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#41289e88:0/SimpleConnection@57f9f387 [delegate=amqp://admin@154.201.80.213:5672/, localPort= 63623]
-24-05-14.15:46:37.366 [main            ] INFO  EsClientTest           - Started EsClientTest in 6.815 seconds (JVM running for 7.565)
-24-05-14.15:46:37.841 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:46:37.867 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:46:37.899 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:46:38.098 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:46:38.265 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:46:38.391 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:46:38.444 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:46:38.444 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:46:38.445 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:46:38.474 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job registry-remove success, registryParam:RegistryParam{registryGroup='EXECUTOR', registryKey='lucky-draw-handler', registryValue='http://154.201.80.213:11111/'}, registryResult:ReturnT [code=200, msg=null, content=null]
-24-05-14.15:46:38.474 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job, executor registry thread destory.
-24-05-14.15:46:38.474 [SpringApplicationShutdownHook] INFO  EmbedServer            - >>>>>>>>>>> xxl-job remoting server destroy success.
-24-05-14.15:46:38.474 [xxl-job, executor JobLogFileCleanThread] INFO  JobLogFileCleanThread  - >>>>>>>>>>> xxl-job, executor JobLogFileCleanThread thread destory.
-24-05-14.15:46:38.475 [xxl-job, executor TriggerCallbackThread] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor callback thread destory.
-24-05-14.15:46:38.475 [Thread-6        ] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor retry callback thread destory.
-24-05-14.15:49:38.585 [main            ] INFO  EsClientTest           - Starting EsClientTest using Java 11.0.20 on DESKTOP-BU4MLU6 with PID 16056 (started by kitie in D:\javaProject\big-market\big-market-app)
-24-05-14.15:49:38.585 [main            ] INFO  EsClientTest           - The following 1 profile is active: "local"
-24-05-14.15:49:39.636 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-24-05-14.15:49:39.639 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-24-05-14.15:49:39.685 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 32 ms. Found 0 Redis repository interfaces.
-24-05-14.15:49:40.849 [main            ] INFO  Version                - Redisson 3.26.0
-24-05-14.15:49:41.427 [redisson-netty-1-6] INFO  ConnectionsHolder      - 1 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:49:41.701 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:49:44.405 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
-24-05-14.15:49:44.431 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:sendMessageTaskJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@a486851[class cn.bugstack.trigger.job.SendMessageTaskJob#doJob]
-24-05-14.15:49:44.431 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateActivitySkuStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@52539624[class cn.bugstack.trigger.job.UpdateActivitySkuStockJob#exec]
-24-05-14.15:49:44.431 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateAwardStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@1001b435[class cn.bugstack.trigger.job.UpdateAwardStockJob#exec]
-24-05-14.15:49:44.527 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.80.213:5672]
-24-05-14.15:49:44.689 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#19e5e110:0/SimpleConnection@17af9f67 [delegate=amqp://admin@154.201.80.213:5672/, localPort= 64944]
-24-05-14.15:49:45.364 [main            ] INFO  EsClientTest           - Started EsClientTest in 7.214 seconds (JVM running for 7.961)
-24-05-14.15:49:46.029 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:49:46.055 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:49:46.083 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:49:46.099 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:49:46.231 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:49:46.387 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:49:46.458 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:49:46.458 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:49:46.458 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:49:46.495 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job registry-remove success, registryParam:RegistryParam{registryGroup='EXECUTOR', registryKey='lucky-draw-handler', registryValue='http://154.201.80.213:11111/'}, registryResult:ReturnT [code=200, msg=null, content=null]
-24-05-14.15:49:46.495 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job, executor registry thread destory.
-24-05-14.15:49:46.496 [SpringApplicationShutdownHook] INFO  EmbedServer            - >>>>>>>>>>> xxl-job remoting server destroy success.
-24-05-14.15:49:46.496 [xxl-job, executor JobLogFileCleanThread] INFO  JobLogFileCleanThread  - >>>>>>>>>>> xxl-job, executor JobLogFileCleanThread thread destory.
-24-05-14.15:49:46.496 [xxl-job, executor TriggerCallbackThread] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor callback thread destory.
-24-05-14.15:49:46.496 [Thread-6        ] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor retry callback thread destory.
-24-05-14.15:51:53.809 [main            ] INFO  EsClientTest           - Starting EsClientTest using Java 11.0.20 on DESKTOP-BU4MLU6 with PID 11004 (started by kitie in D:\javaProject\big-market\big-market-app)
-24-05-14.15:51:53.810 [main            ] INFO  EsClientTest           - The following 1 profile is active: "local"
-24-05-14.15:51:54.906 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-24-05-14.15:51:54.908 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-24-05-14.15:51:54.959 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 33 ms. Found 0 Redis repository interfaces.
-24-05-14.15:51:56.099 [main            ] INFO  Version                - Redisson 3.26.0
-24-05-14.15:51:56.667 [redisson-netty-1-6] INFO  ConnectionsHolder      - 1 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:51:56.923 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:51:59.892 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
-24-05-14.15:51:59.924 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:sendMessageTaskJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@3b45a3e6[class cn.bugstack.trigger.job.SendMessageTaskJob#doJob]
-24-05-14.15:51:59.924 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateActivitySkuStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@7927209f[class cn.bugstack.trigger.job.UpdateActivitySkuStockJob#exec]
-24-05-14.15:51:59.925 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateAwardStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@283595db[class cn.bugstack.trigger.job.UpdateAwardStockJob#exec]
-24-05-14.15:52:00.020 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.80.213:5672]
-24-05-14.15:52:00.236 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#5dbc4598:0/SimpleConnection@704ddfad [delegate=amqp://admin@154.201.80.213:5672/, localPort= 49788]
-24-05-14.15:52:00.954 [main            ] INFO  EsClientTest           - Started EsClientTest in 7.601 seconds (JVM running for 8.416)
-24-05-14.15:52:01.418 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:52:01.460 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:52:01.488 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:52:01.665 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:52:01.833 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:52:01.975 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:52:02.034 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:52:02.035 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:52:02.035 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:52:02.066 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job registry-remove success, registryParam:RegistryParam{registryGroup='EXECUTOR', registryKey='lucky-draw-handler', registryValue='http://154.201.80.213:11111/'}, registryResult:ReturnT [code=200, msg=null, content=null]
-24-05-14.15:52:02.066 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job, executor registry thread destory.
-24-05-14.15:52:02.066 [SpringApplicationShutdownHook] INFO  EmbedServer            - >>>>>>>>>>> xxl-job remoting server destroy success.
-24-05-14.15:52:02.066 [xxl-job, executor JobLogFileCleanThread] INFO  JobLogFileCleanThread  - >>>>>>>>>>> xxl-job, executor JobLogFileCleanThread thread destory.
-24-05-14.15:52:02.066 [xxl-job, executor TriggerCallbackThread] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor callback thread destory.
-24-05-14.15:52:02.066 [Thread-6        ] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor retry callback thread destory.
-24-05-14.15:55:25.540 [main            ] INFO  EsClientTest           - Starting EsClientTest using Java 11.0.20 on DESKTOP-BU4MLU6 with PID 23700 (started by kitie in D:\javaProject\big-market\big-market-app)
-24-05-14.15:55:25.541 [main            ] INFO  EsClientTest           - The following 1 profile is active: "local"
-24-05-14.15:55:26.481 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-24-05-14.15:55:26.483 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-24-05-14.15:55:26.521 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 27 ms. Found 0 Redis repository interfaces.
-24-05-14.15:55:27.644 [main            ] INFO  Version                - Redisson 3.26.0
-24-05-14.15:55:28.261 [redisson-netty-1-6] INFO  ConnectionsHolder      - 1 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:55:28.512 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:55:31.034 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
-24-05-14.15:55:31.062 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:sendMessageTaskJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@3021e31[class cn.bugstack.trigger.job.SendMessageTaskJob#doJob]
-24-05-14.15:55:31.062 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateActivitySkuStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@4d305059[class cn.bugstack.trigger.job.UpdateActivitySkuStockJob#exec]
-24-05-14.15:55:31.062 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateAwardStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@3304362e[class cn.bugstack.trigger.job.UpdateAwardStockJob#exec]
-24-05-14.15:55:31.148 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.80.213:5672]
-24-05-14.15:55:31.329 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#1e295f7f:0/SimpleConnection@12dd3501 [delegate=amqp://admin@154.201.80.213:5672/, localPort= 51232]
-24-05-14.15:55:32.017 [main            ] INFO  EsClientTest           - Started EsClientTest in 6.868 seconds (JVM running for 7.612)
-24-05-14.15:55:33.064 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:55:33.090 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:55:33.126 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:55:33.752 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:55:33.887 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:55:34.044 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:55:34.111 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:55:34.111 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:55:34.111 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:55:34.143 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job registry-remove success, registryParam:RegistryParam{registryGroup='EXECUTOR', registryKey='lucky-draw-handler', registryValue='http://154.201.80.213:11111/'}, registryResult:ReturnT [code=200, msg=null, content=null]
-24-05-14.15:55:34.143 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job, executor registry thread destory.
-24-05-14.15:55:34.143 [SpringApplicationShutdownHook] INFO  EmbedServer            - >>>>>>>>>>> xxl-job remoting server destroy success.
-24-05-14.15:55:34.143 [xxl-job, executor JobLogFileCleanThread] INFO  JobLogFileCleanThread  - >>>>>>>>>>> xxl-job, executor JobLogFileCleanThread thread destory.
-24-05-14.15:55:34.143 [xxl-job, executor TriggerCallbackThread] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor callback thread destory.
-24-05-14.15:55:34.144 [Thread-6        ] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor retry callback thread destory.
-24-05-14.15:55:49.244 [main            ] INFO  EsClientTest           - Starting EsClientTest using Java 11.0.20 on DESKTOP-BU4MLU6 with PID 448 (started by kitie in D:\javaProject\big-market\big-market-app)
-24-05-14.15:55:49.245 [main            ] INFO  EsClientTest           - The following 1 profile is active: "local"
-24-05-14.15:55:50.186 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-24-05-14.15:55:50.188 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-24-05-14.15:55:50.226 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28 ms. Found 0 Redis repository interfaces.
-24-05-14.15:55:51.298 [main            ] INFO  Version                - Redisson 3.26.0
-24-05-14.15:55:51.913 [redisson-netty-1-6] INFO  ConnectionsHolder      - 1 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:55:52.166 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:55:54.737 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
-24-05-14.15:55:54.760 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:sendMessageTaskJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@747476f1[class cn.bugstack.trigger.job.SendMessageTaskJob#doJob]
-24-05-14.15:55:54.761 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateActivitySkuStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@6238b10a[class cn.bugstack.trigger.job.UpdateActivitySkuStockJob#exec]
-24-05-14.15:55:54.761 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateAwardStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@225b460a[class cn.bugstack.trigger.job.UpdateAwardStockJob#exec]
-24-05-14.15:55:54.846 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.80.213:5672]
-24-05-14.15:55:55.015 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#776a3365:0/SimpleConnection@7b6558aa [delegate=amqp://admin@154.201.80.213:5672/, localPort= 51526]
-24-05-14.15:55:55.664 [main            ] INFO  EsClientTest           - Started EsClientTest in 6.8 seconds (JVM running for 7.547)
-24-05-14.15:55:56.161 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:55:56.210 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:55:56.238 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:55:56.453 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:55:56.550 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:55:56.691 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:55:56.754 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:55:56.755 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:55:56.755 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:55:56.782 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job registry-remove success, registryParam:RegistryParam{registryGroup='EXECUTOR', registryKey='lucky-draw-handler', registryValue='http://154.201.80.213:11111/'}, registryResult:ReturnT [code=200, msg=null, content=null]
-24-05-14.15:55:56.782 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job, executor registry thread destory.
-24-05-14.15:55:56.783 [SpringApplicationShutdownHook] INFO  EmbedServer            - >>>>>>>>>>> xxl-job remoting server destroy success.
-24-05-14.15:55:56.783 [xxl-job, executor JobLogFileCleanThread] INFO  JobLogFileCleanThread  - >>>>>>>>>>> xxl-job, executor JobLogFileCleanThread thread destory.
-24-05-14.15:55:56.783 [xxl-job, executor TriggerCallbackThread] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor callback thread destory.
-24-05-14.15:55:56.783 [Thread-6        ] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor retry callback thread destory.
-24-05-14.15:57:11.276 [main            ] INFO  EsClientTest           - Starting EsClientTest using Java 11.0.20 on DESKTOP-BU4MLU6 with PID 8452 (started by kitie in D:\javaProject\big-market\big-market-app)
-24-05-14.15:57:11.277 [main            ] INFO  EsClientTest           - The following 1 profile is active: "local"
-24-05-14.15:57:12.192 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-24-05-14.15:57:12.194 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-24-05-14.15:57:12.228 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 24 ms. Found 0 Redis repository interfaces.
-24-05-14.15:57:13.226 [main            ] INFO  Version                - Redisson 3.26.0
-24-05-14.15:57:13.746 [redisson-netty-1-6] INFO  ConnectionsHolder      - 1 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:57:14.024 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 154.12.27.76/154.12.27.76:6379
-24-05-14.15:57:16.503 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
-24-05-14.15:57:16.527 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:sendMessageTaskJobHandler, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@139da216[class cn.bugstack.trigger.job.SendMessageTaskJob#doJob]
-24-05-14.15:57:16.527 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateActivitySkuStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@6a35cccf[class cn.bugstack.trigger.job.UpdateActivitySkuStockJob#exec]
-24-05-14.15:57:16.527 [main            ] INFO  XxlJobExecutor         - >>>>>>>>>>> xxl-job register jobhandler success, name:updateAwardStockJob, jobHandler:com.xxl.job.core.handler.impl.MethodJobHandler@3ce067bd[class cn.bugstack.trigger.job.UpdateAwardStockJob#exec]
-24-05-14.15:57:16.611 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [154.201.80.213:5672]
-24-05-14.15:57:16.812 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#2e20c20b:0/SimpleConnection@53f18591 [delegate=amqp://admin@154.201.80.213:5672/, localPort= 52156]
-24-05-14.15:57:17.552 [main            ] INFO  EsClientTest           - Started EsClientTest in 6.661 seconds (JVM running for 7.386)
-24-05-14.15:57:18.026 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:57:18.057 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:57:18.087 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
-24-05-14.15:57:18.252 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:57:18.434 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:57:18.577 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
-24-05-14.15:57:18.640 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:57:18.641 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:57:18.641 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
-24-05-14.15:57:18.675 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job registry-remove success, registryParam:RegistryParam{registryGroup='EXECUTOR', registryKey='lucky-draw-handler', registryValue='http://154.201.80.213:11111/'}, registryResult:ReturnT [code=200, msg=null, content=null]
-24-05-14.15:57:18.675 [xxl-job, executor ExecutorRegistryThread] INFO  ExecutorRegistryThread - >>>>>>>>>>> xxl-job, executor registry thread destory.
-24-05-14.15:57:18.675 [SpringApplicationShutdownHook] INFO  EmbedServer            - >>>>>>>>>>> xxl-job remoting server destroy success.
-24-05-14.15:57:18.676 [xxl-job, executor JobLogFileCleanThread] INFO  JobLogFileCleanThread  - >>>>>>>>>>> xxl-job, executor JobLogFileCleanThread thread destory.
-24-05-14.15:57:18.676 [xxl-job, executor TriggerCallbackThread] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor callback thread destory.
-24-05-14.15:57:18.676 [Thread-6        ] INFO  TriggerCallbackThread  - >>>>>>>>>>> xxl-job, executor retry callback thread destory.
+24-08-10.16:48:12.753 [main            ] INFO  AwardServiceTest       - Starting AwardServiceTest using Java 17.0.6 on DESKTOP-BU4MLU6 with PID 11576 (started by kitie in D:\javaProject\big-market\big-market-app)
+24-08-10.16:48:12.754 [main            ] INFO  AwardServiceTest       - The following 1 profile is active: "local"
+24-08-10.16:48:13.927 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-08-10.16:48:13.930 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-08-10.16:48:13.982 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 36 ms. Found 0 Redis repository interfaces.
+24-08-10.16:48:14.933 [main            ] INFO  Version                - Redisson 3.26.0
+24-08-10.16:48:15.297 [redisson-netty-1-5] INFO  ConnectionsHolder      - 1 connections initialized for localhost/127.0.0.1:6379
+24-08-10.16:48:15.310 [redisson-netty-1-14] INFO  ConnectionsHolder      - 5 connections initialized for localhost/127.0.0.1:6379
+24-08-10.16:48:19.198 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-08-10.16:48:19.340 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [localhost:5672]
+24-08-10.16:48:19.468 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#3f33bb6f:0/SimpleConnection@69b436a7 [delegate=amqp://admin@127.0.0.1:5672/, localPort= 49314]
+24-08-10.16:48:19.676 [main            ] INFO  AwardServiceTest       - Started AwardServiceTest in 7.288 seconds (JVM running for 8.063)
+24-08-10.16:48:20.073 [pool-4-thread-1 ] INFO  HikariDataSource       - Retail_HikariCP - Starting...
+24-08-10.16:48:20.073 [pool-4-thread-2 ] INFO  HikariDataSource       - Retail_HikariCP - Starting...
+24-08-10.16:48:20.370 [main            ] INFO  HikariDataSource       - Retail_HikariCP - Starting...
+24-08-10.16:48:20.387 [pool-4-thread-1 ] INFO  HikariDataSource       - Retail_HikariCP - Start completed.
+24-08-10.16:48:20.387 [pool-4-thread-2 ] INFO  HikariDataSource       - Retail_HikariCP - Start completed.
+24-08-10.16:48:20.391 [main            ] INFO  HikariDataSource       - Retail_HikariCP - Start completed.
+24-08-10.16:48:20.827 [main            ] WARN  AwardRepository        - 更新中奖记录，重复更新拦截 userId:ogdb46DaYxN6nliqjeveqnZMfqmI giveOutPrizesAggregate:{"userAwardRecordEntity":{"awardId":101,"awardState":"complete","orderId":"737118841329","userId":"ogdb46DaYxN6nliqjeveqnZMfqmI"},"userCreditAwardEntity":{"creditAmount":0.113,"userId":"ogdb46DaYxN6nliqjeveqnZMfqmI"},"userId":"ogdb46DaYxN6nliqjeveqnZMfqmI"}
+24-08-10.16:48:20.867 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-08-10.16:48:20.869 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-08-10.16:48:20.871 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-08-10.16:48:20.873 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#3-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-08-10.16:48:21.635 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-08-10.16:48:21.635 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-08-10.16:48:21.649 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-08-10.16:48:21.664 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#3-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-08-10.16:48:21.667 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-08-10.16:48:21.667 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-08-10.16:48:21.667 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-08-10.16:48:21.667 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-08-10.16:48:37.743 [main            ] INFO  AwardServiceTest       - Starting AwardServiceTest using Java 17.0.6 on DESKTOP-BU4MLU6 with PID 28968 (started by kitie in D:\javaProject\big-market\big-market-app)
+24-08-10.16:48:37.744 [main            ] INFO  AwardServiceTest       - The following 1 profile is active: "local"
+24-08-10.16:48:38.834 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-08-10.16:48:38.836 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-08-10.16:48:38.887 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 36 ms. Found 0 Redis repository interfaces.
+24-08-10.16:48:39.796 [main            ] INFO  Version                - Redisson 3.26.0
+24-08-10.16:48:40.157 [redisson-netty-1-5] INFO  ConnectionsHolder      - 1 connections initialized for localhost/127.0.0.1:6379
+24-08-10.16:48:40.170 [redisson-netty-1-14] INFO  ConnectionsHolder      - 5 connections initialized for localhost/127.0.0.1:6379
+24-08-10.16:48:44.686 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-08-10.16:48:44.797 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [localhost:5672]
+24-08-10.16:48:44.852 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#3f33bb6f:0/SimpleConnection@1d2aa638 [delegate=amqp://admin@127.0.0.1:5672/, localPort= 49788]
+24-08-10.16:48:44.963 [main            ] INFO  AwardServiceTest       - Started AwardServiceTest in 7.563 seconds (JVM running for 8.243)
+24-08-10.16:48:45.084 [pool-4-thread-2 ] INFO  HikariDataSource       - Retail_HikariCP - Starting...
+24-08-10.16:48:45.084 [pool-4-thread-1 ] INFO  HikariDataSource       - Retail_HikariCP - Starting...
+24-08-10.16:48:45.358 [pool-4-thread-1 ] INFO  HikariDataSource       - Retail_HikariCP - Start completed.
+24-08-10.16:48:45.358 [pool-4-thread-2 ] INFO  HikariDataSource       - Retail_HikariCP - Start completed.
+24-08-10.16:48:45.456 [main            ] INFO  HikariDataSource       - Retail_HikariCP - Starting...
+24-08-10.16:48:45.488 [main            ] INFO  HikariDataSource       - Retail_HikariCP - Start completed.
+24-08-10.16:48:45.836 [main            ] WARN  AwardRepository        - 更新中奖记录，重复更新拦截 userId:ogdb46DaYxN6nliqjeveqnZMfqmI giveOutPrizesAggregate:{"userAwardRecordEntity":{"awardId":101,"awardState":"complete","orderId":"7371188413291123","userId":"ogdb46DaYxN6nliqjeveqnZMfqmI"},"userCreditAwardEntity":{"creditAmount":0.211,"userId":"ogdb46DaYxN6nliqjeveqnZMfqmI"},"userId":"ogdb46DaYxN6nliqjeveqnZMfqmI"}
+24-08-10.16:48:45.860 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-08-10.16:48:45.862 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-08-10.16:48:45.863 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-08-10.16:48:45.864 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#3-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-08-10.16:48:45.928 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-08-10.16:48:45.928 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-08-10.16:48:45.942 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-08-10.16:48:45.942 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#3-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-08-10.16:48:45.945 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-08-10.16:48:45.947 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-08-10.16:48:45.947 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-08-10.16:48:45.947 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-08-10.16:50:34.393 [main            ] INFO  AwardServiceTest       - Starting AwardServiceTest using Java 17.0.6 on DESKTOP-BU4MLU6 with PID 18632 (started by kitie in D:\javaProject\big-market\big-market-app)
+24-08-10.16:50:34.394 [main            ] INFO  AwardServiceTest       - The following 1 profile is active: "local"
+24-08-10.16:50:35.535 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-08-10.16:50:35.540 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-08-10.16:50:35.587 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 34 ms. Found 0 Redis repository interfaces.
+24-08-10.16:50:36.687 [main            ] INFO  Version                - Redisson 3.26.0
+24-08-10.16:50:37.082 [redisson-netty-1-5] INFO  ConnectionsHolder      - 1 connections initialized for localhost/127.0.0.1:6379
+24-08-10.16:50:37.100 [redisson-netty-1-14] INFO  ConnectionsHolder      - 5 connections initialized for localhost/127.0.0.1:6379
+24-08-10.16:50:42.003 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-08-10.16:50:42.171 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [localhost:5672]
+24-08-10.16:50:42.266 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#25172993:0/SimpleConnection@2f53e07d [delegate=amqp://admin@127.0.0.1:5672/, localPort= 50506]
+24-08-10.16:50:42.388 [main            ] INFO  AwardServiceTest       - Started AwardServiceTest in 8.351 seconds (JVM running for 9.472)
+24-08-10.16:50:42.828 [main            ] INFO  HikariDataSource       - Retail_HikariCP - Starting...
+24-08-10.16:50:43.000 [main            ] INFO  HikariDataSource       - Retail_HikariCP - Start completed.
+24-08-10.16:50:43.052 [main            ] INFO  HikariDataSource       - Retail_HikariCP - Starting...
+24-08-10.16:50:43.068 [main            ] INFO  HikariDataSource       - Retail_HikariCP - Start completed.
+24-08-10.16:50:47.685 [pool-4-thread-1 ] INFO  HikariDataSource       - Retail_HikariCP - Starting...
+24-08-10.16:50:47.699 [pool-4-thread-1 ] INFO  HikariDataSource       - Retail_HikariCP - Start completed.
+24-08-10.16:51:03.258 [main            ] WARN  AwardRepository        - 更新中奖记录，重复更新拦截 userId:ogdb46DaYxN6nliqjeveqnZMfqmI giveOutPrizesAggregate:{"userAwardRecordEntity":{"awardId":101,"awardState":"complete","orderId":"73711884112312313","userId":"ogdb46DaYxN6nliqjeveqnZMfqmI"},"userCreditAwardEntity":{"creditAmount":0.319,"userId":"ogdb46DaYxN6nliqjeveqnZMfqmI"},"userId":"ogdb46DaYxN6nliqjeveqnZMfqmI"}
+24-08-10.16:51:13.955 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-08-10.16:51:13.957 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-08-10.16:51:13.958 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-08-10.16:51:13.960 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#3-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-08-10.16:51:14.933 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#3-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-08-10.16:51:14.933 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-08-10.16:51:14.933 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-08-10.16:51:14.935 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-08-10.16:51:14.937 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-08-10.16:51:14.939 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-08-10.16:51:14.939 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-08-10.16:51:14.939 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped

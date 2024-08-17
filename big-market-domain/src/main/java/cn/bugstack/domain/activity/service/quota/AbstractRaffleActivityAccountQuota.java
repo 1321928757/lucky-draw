@@ -25,7 +25,7 @@ public abstract class AbstractRaffleActivityAccountQuota extends RaffleActivityA
     }
 
     @Override
-    public String createSkuRechargeOrder(SkuRechargeEntity skuRechargeEntity) {
+    public String createOrder(SkuRechargeEntity skuRechargeEntity) {
         // 1.参数校验
         if(skuRechargeEntity.getSku() == null || Strings.isEmpty(skuRechargeEntity.getUserId()) ||
                 Strings.isEmpty(skuRechargeEntity.getOutBusinessNo())){

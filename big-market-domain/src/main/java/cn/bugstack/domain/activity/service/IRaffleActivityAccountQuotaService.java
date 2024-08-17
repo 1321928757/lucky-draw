@@ -16,7 +16,7 @@ public interface IRaffleActivityAccountQuotaService {
      * @param activityShopCartEntity 活动sku实体，通过sku领取活动。
      * @return 活动参与记录实体
      */
-    String createSkuRechargeOrder(SkuRechargeEntity activityShopCartEntity);
+    String createOrder(SkuRechargeEntity activityShopCartEntity);
 
     /**
     * @description 根据活动id和用户id查询用户在活动中当日的抽取次数

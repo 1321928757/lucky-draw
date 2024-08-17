@@ -18,10 +18,15 @@
         where user_id = #{userId}
     </update>
 
+
     <insert id="insert" parameterType="cn.bugstack.infrastructure.persistent.po.UserAwardRecord">
         insert into user_credit_account(
             user_id, total_amount, available_amount, account_status, create_time, update_time
         ) values (#{userId}, #{totalAmount}, #{availableAmount}, #{accountStatus}, now(), now())
     </insert>
 
+    <select id="queryUserCreditAccount" parameterType="cn.bugstack.infrastructure.persistent.po.UserCreditAccount" resultMap="dataMap">
+        select user_id, total_amount, available_amount, account_status from user_credit_account
+        where user_id = #{userId}
+    </select>
 </mapper>

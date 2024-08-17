@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bugstack.infrastructure.persistent.dao.mysql.IUserCreditOrderDao">
+    <resultMap id="dataMap" type="cn.bugstack.infrastructure.persistent.po.UserCreditOrder">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="order_id" property="orderId"/>
+        <result column="trade_name" property="tradeName"/>
+        <result column="trade_type" property="tradeType"/>
+        <result column="trade_amount" property="tradeAmount"/>
+        <result column="out_business_no" property="outBusinessNo"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="cn.bugstack.infrastructure.persistent.po.UserCreditOrder">
+        insert into user_credit_order(user_id, order_id, trade_name, trade_type, trade_amount, out_business_no, create_time, update_time)
+        values(
+                  #{userId},#{orderId},#{tradeName},#{tradeType},#{tradeAmount},#{outBusinessNo},now(),now()
+              )
+    </insert>
+</mapper>

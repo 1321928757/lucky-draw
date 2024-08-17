@@ -30,8 +30,8 @@ public class ActivitySkuStockZeroCustomer {
     private IRaffleActivitySkuStockService skuStock;
 
     // ackMode指定为手动提交模式
-    @RabbitListener(queuesToDeclare = @Queue("${spring.rabbitmq.topic.activity_sku_stock_zero}"), ackMode="MANUAL")
-    public void stockUpdateHandler(String json , Message message, Channel channel) {
+    @RabbitListener(queuesToDeclare = @Queue("${spring.rabbitmq.topic.activity_sku_stock_zero}"), ackMode = "MANUAL")
+    public void stockUpdateHandler(String json, Message message, Channel channel) {
         //  如果手动ACK,消息会被监听消费,但是消息在队列中依旧存在,如果 未配置 acknowledge-mode 默认是会在消费完毕后自动ACK掉
         final long deliveryTag = message.getMessageProperties().getDeliveryTag();
         try {
@@ -50,10 +50,10 @@ public class ActivitySkuStockZeroCustomer {
 
             log.info("监听活动sku库存消耗为0消息，消费完成，topic: {} message: {}", topic, json);
         } catch (Exception e) {
+            log.error("监听活动sku库存消耗为0消息，消费失败 topic: {} message: {}", topic, json);
             try {
-                log.error("监听活动sku库存消耗为0消息，消费失败 topic: {} message: {}", topic, json);
-                // 处理失败,重新压入MQ
-                channel.basicRecover();
+                //唯一索引异常，代表重复消费，直接ACK即可
+                channel.basicAck(deliveryTag, false);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

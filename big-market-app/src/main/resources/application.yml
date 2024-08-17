@@ -2,4 +2,4 @@ spring:
   config:
     name: big-market-app
   profiles:
-    active: cloud
+    active: local

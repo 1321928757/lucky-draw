@@ -16,7 +16,9 @@ import cn.bugstack.infrastructure.persistent.doc.UserAwardRecordDoc;
 import cn.bugstack.infrastructure.persistent.po.Task;
 import cn.bugstack.infrastructure.persistent.po.UserAwardRecord;
 import cn.bugstack.infrastructure.persistent.po.UserCreditAccount;
+import cn.bugstack.infrastructure.persistent.redis.IRedisService;
 import cn.bugstack.middleware.db.router.strategy.IDBRouterStrategy;
+import cn.bugstack.types.common.Constants;
 import cn.bugstack.types.enums.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import cn.bugstack.types.model.PageData;
@@ -24,6 +26,7 @@ import cn.hutool.core.util.DesensitizedUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -33,6 +36,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -52,8 +56,13 @@ public class AwardRepository implements IAwardRepository {
     private IAwardDao awardDao;
 
     @Resource
-    private IUserCreditAccountDao creditAccountDao;
+    private IUserCreditAccountDao userCreditAccountDao;
 
+    @Resource
+    private IRedisService redisService;
+
+    @Resource
+    private IUserCreditAccountDao userCreditAccountReq;
     @Resource
     private UserAwardRecordIndex userAwardRecordIndex;
 
@@ -247,45 +256,51 @@ public class AwardRepository implements IAwardRepository {
         UserCreditAwardEntity userCreditAwardEntity = giveOutPrizesAggregate.getUserCreditAwardEntity();
 
         // 1.更新中奖记录发奖状态
-        UserAwardRecord awardRecordUpdateReq = new UserAwardRecord();
-        awardRecordUpdateReq.setUserId(userAwardRecordEntity.getUserId());
-        awardRecordUpdateReq.setOrderId(userAwardRecordEntity.getOrderId());
-        awardRecordUpdateReq.setAwardState(userAwardRecordEntity.getAwardState().getCode());
+        UserAwardRecord userAwardRecordReq = new UserAwardRecord();
+        userAwardRecordReq.setUserId(userId);
+        userAwardRecordReq.setOrderId(userAwardRecordEntity.getOrderId());
+        userAwardRecordReq.setAwardState(userAwardRecordEntity.getAwardState().getCode());
+
 
         // 2.待添加的积分实体(如果没有积分账户就创建
-        UserCreditAccount creditUpdateReq = new UserCreditAccount();
-        creditUpdateReq.setAvailableAmount(userCreditAwardEntity.getCreditAmount());
-        creditUpdateReq.setTotalAmount(userCreditAwardEntity.getCreditAmount());
-        creditUpdateReq.setUserId(userCreditAwardEntity.getUserId());
-        creditUpdateReq.setAccountStatus(AccountStatusVO.open.getCode());
+        UserCreditAccount userCreditAccountReq = new UserCreditAccount();
+        userCreditAccountReq.setUserId(userCreditAwardEntity.getUserId());
+        userCreditAccountReq.setTotalAmount(userCreditAwardEntity.getCreditAmount());
+        userCreditAccountReq.setAvailableAmount(userCreditAwardEntity.getCreditAmount());
+        userCreditAccountReq.setAccountStatus(AccountStatusVO.open.getCode());
+
 
         // 3.同一事务下统一路由
+        RLock lock = redisService.getLock(Constants.RedisKey.ACTIVITY_ACCOUNT_LOCK + userId);
         try {
-            dbRouter.doRouter(userId);
+            lock.lock(3, TimeUnit.SECONDS);
+            dbRouter.doRouter(giveOutPrizesAggregate.getUserId());
             transactionTemplate.execute(status -> {
                 try {
-                    // 尝试更新用户积分账户
-                    int row1 = creditAccountDao.updateAddAmount(creditUpdateReq);
-                    if(row1 == 0){
-                        // row为0说明对应积分账户记录不存在，则插入
-                        creditAccountDao.insert(creditUpdateReq);
+                    // 更新积分 || 创建积分账户
+                    UserCreditAccount userCreditAccountRes = userCreditAccountDao.queryUserCreditAccount(userCreditAccountReq);
+                    if (null == userCreditAccountRes) {
+                        userCreditAccountDao.insert(userCreditAccountReq);
+                    } else {
+                        userCreditAccountDao.updateAddAmount(userCreditAccountReq);
                     }
-                    // 更新中奖记录状态
-                    int row2 = userAwardRecordDao.updateRecordCompleteStatus(awardRecordUpdateReq);
-                    if(row2 == 0){
-                        log.warn("更新中奖记录，发现重复更新，用户id：{}，聚合对象：{}", userId, JSON.toJSONString(giveOutPrizesAggregate));
+
+                    // 更新奖品记录
+                    int updateAwardCount = userAwardRecordDao.updateRecordCompleteStatus(userAwardRecordReq);
+                    if (0 == updateAwardCount) {
+                        log.warn("更新中奖记录，重复更新拦截 userId:{} giveOutPrizesAggregate:{}", userId, com.alibaba.fastjson.JSON.toJSONString(giveOutPrizesAggregate));
                         status.setRollbackOnly();
                     }
+                    return 1;
                 } catch (DuplicateKeyException e) {
-                    log.error("更新中奖记录，唯一索引冲突，用户id：{}，聚合对象：{}", userId, JSON.toJSONString(giveOutPrizesAggregate));
                     status.setRollbackOnly();
+                    log.error("更新中奖记录，唯一索引冲突 userId: {} ", userId, e);
                     throw new AppException(ResponseCode.INDEX_DUP.getCode(), e);
                 }
-
-                return 1;
             });
         } finally {
             dbRouter.clear();
+            lock.unlock();
         }
     }
 

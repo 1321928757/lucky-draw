@@ -55,7 +55,7 @@ public class AwardServiceTest {
     public void test_distributeAward() throws InterruptedException {
         DistributeAwardEntity distributeAwardEntity = new DistributeAwardEntity();
         distributeAwardEntity.setUserId("ogdb46DaYxN6nliqjeveqnZMfqmI");
-        distributeAwardEntity.setOrderId("737118841329");
+        distributeAwardEntity.setOrderId("73711884112312313");
         distributeAwardEntity.setAwardId(101);
         distributeAwardEntity.setAwardConfig("0.01,1"); // 如果没有传递AwardConfig则会走库中奖品默认的配置
 

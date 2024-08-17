@@ -48,7 +48,7 @@ public class UserCreditRandomAward implements IDistributeAward {
                 distributeAwardEntity.getUserId(),
                 distributeAwardEntity.getOrderId(),
                 distributeAwardEntity.getAwardId(),
-                AwardStateVO.complete
+                AwardStateVO.completed
         );
         UserCreditAwardEntity userCreditAwardEntity = GiveOutPrizesAggregate.buildUserCreditAwardEntity(distributeAwardEntity.getUserId(), creditAmount);
         GiveOutPrizesAggregate giveOutPrizesAggregate = new GiveOutPrizesAggregate();

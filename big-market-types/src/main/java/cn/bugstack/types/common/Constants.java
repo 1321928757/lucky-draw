@@ -35,6 +35,9 @@ public class Constants {
         public static String ACTIVITY_SKU_COUNT_QUERY_KEY = "strategy_sku_count_query_key";
         /** 最新获奖记录 Key*/
         public static  String AWARD_LASTEST_LIST = "award_lastest_list";
+        public static String ACTIVITY_ACCOUNT_LOCK = "activity_account_lock_";
+        public static String USER_CREDIT_ACCOUNT_LOCK = "user_credit_account_lock_";
+
 
     }
 

@@ -3,6 +3,10 @@ package cn.bugstack.trigger.listener;
 import cn.bugstack.domain.activity.model.entity.SkuRechargeEntity;
 import cn.bugstack.domain.activity.service.IRaffleActivityAccountQuotaService;
 import cn.bugstack.domain.award.event.SendAwardMessageEvent;
+import cn.bugstack.domain.credit.model.entity.TradeEntity;
+import cn.bugstack.domain.credit.model.valobj.TradeNameVO;
+import cn.bugstack.domain.credit.model.valobj.TradeTypeVO;
+import cn.bugstack.domain.credit.service.ICreditAdjustService;
 import cn.bugstack.domain.rebate.event.SendRebateMessageEvent;
 import cn.bugstack.domain.rebate.model.valobj.RebateTypeVO;
 import cn.bugstack.types.event.BaseEvent;
@@ -19,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 /**
  * @author Luckysj @刘仕杰
@@ -33,9 +38,12 @@ public class UserRebateBeviorCustomer {
     @Resource
     private IRaffleActivityAccountQuotaService raffleActivityAccountQuotaService;
 
+    @Resource
+    private ICreditAdjustService creditAdjustService;
+
     // ackMode指定为手动提交模式
     @RabbitListener(queuesToDeclare = @Queue("${spring.rabbitmq.topic.rebate_send}"), ackMode = "MANUAL")
-    public void sendRebateHandler(String json, Message message, Channel channel) {
+    public void sendRebateHandler(String json, Message message, Channel channel) throws IOException {
         //  如果手动ACK,消息会被监听消费,但是消息在队列中依旧存在,如果 未配置 acknowledge-mode 默认是会在消费完毕后自动ACK掉
         final long deliveryTag = message.getMessageProperties().getDeliveryTag();
         try {
@@ -45,35 +53,33 @@ public class UserRebateBeviorCustomer {
             }.getType());
             SendRebateMessageEvent.RebateMessage rebateMessage = eventMessage.getData();
 
-            // 2.返利入账(我们目前只处理sku抽奖次数返利，后续如果有其他返利像积分可以结合策略模式处理)
-            if (!RebateTypeVO.SKU.getCode().equals(rebateMessage.getRebateType())) {
-                log.info("监听用户行为返利消息 - 非sku奖励暂时不处理 topic: {} message: {}", topic, message);
-                channel.basicAck(deliveryTag, false);
-                return;
+            // 2. 入账奖励
+            switch (rebateMessage.getRebateType()) {
+                case "sku":
+                    SkuRechargeEntity skuRechargeEntity = new SkuRechargeEntity();
+                    skuRechargeEntity.setUserId(rebateMessage.getUserId());
+                    skuRechargeEntity.setSku(Long.valueOf(rebateMessage.getRebateConfig()));
+                    skuRechargeEntity.setOutBusinessNo(rebateMessage.getBizId());
+                    raffleActivityAccountQuotaService.createOrder(skuRechargeEntity);
+                    break;
+                case "integral":
+                    TradeEntity tradeEntity = new TradeEntity();
+                    tradeEntity.setUserId(rebateMessage.getUserId());
+                    tradeEntity.setTradeName(TradeNameVO.REBATE);
+                    tradeEntity.setTradeType(TradeTypeVO.FORWARD);
+                    tradeEntity.setAmount(new BigDecimal(rebateMessage.getRebateConfig()));
+                    tradeEntity.setOutBusinessNo(rebateMessage.getBizId());
+                    creditAdjustService.createOrder(tradeEntity);
+                    break;
             }
-            SkuRechargeEntity skuRechargeEntity = new SkuRechargeEntity();
-            skuRechargeEntity.setUserId(rebateMessage.getUserId());
-            skuRechargeEntity.setSku(Long.valueOf(rebateMessage.getRebateConfig()));
-            skuRechargeEntity.setOutBusinessNo(rebateMessage.getBizId());
-            raffleActivityAccountQuotaService.createSkuRechargeOrder(skuRechargeEntity);
-
             // 3.手动ACK
             channel.basicAck(deliveryTag, false);
             log.info("用户返利行为消息消费完成，返利业务id：{}，返利类型：{},用户ID：{}", rebateMessage.getBizId(), rebateMessage.getRebateType(), rebateMessage.getUserId());
-        } catch (DuplicateKeyException e) {
+        } catch (Exception e)  {
             log.info("监听用户返利行为消息消费失败 唯一索引异常，topic：{}，message：{}", topic, message);
             try {
                 //唯一索引异常，代表重复消费，直接ACK即可
                 channel.basicAck(deliveryTag, false);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-
-        } catch (Exception e) {
-            log.info("监听用户返利行为消息消费失败，topic：{}，message：{}", topic, message);
-            try {
-                // 处理失败,重新压入MQ
-                channel.basicRecover();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

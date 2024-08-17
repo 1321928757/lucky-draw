@@ -50,6 +50,8 @@ public class AwardService implements IAwardService{
         sendAwardMessage.setUserId(userAwardRecordEntity.getUserId());
         sendAwardMessage.setAwardId(userAwardRecordEntity.getAwardId());
         sendAwardMessage.setAwardTitle(userAwardRecordEntity.getAwardTitle());
+        sendAwardMessage.setUserId(userAwardRecordEntity.getUserId());
+        sendAwardMessage.setOrderId(userAwardRecordEntity.getOrderId());
         BaseEvent.EventMessage<SendAwardMessageEvent.SendAwardMessage> sendAwardMessageEventMessage = sendAwardMessageEvent.buildEventMessage(sendAwardMessage);
 
         // 2.构建中奖记录同步消息对象【可以改用Canal同步数据到ES】

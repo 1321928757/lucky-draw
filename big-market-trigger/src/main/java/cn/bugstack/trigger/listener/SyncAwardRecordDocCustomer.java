@@ -69,11 +69,11 @@ public class SyncAwardRecordDocCustomer {
                 e1.printStackTrace();
             }
 
-        } catch (Exception e) {
+        } catch (Exception e)  {
             log.info("监听中奖记录数据同步消息消费失败，topic：{}，message：{}", topic, message);
             try {
-                // 处理失败,重新压入MQ
-                channel.basicRecover();
+                //唯一索引异常，代表重复消费，直接ACK即可
+                channel.basicAck(deliveryTag, false);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
